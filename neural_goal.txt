@@ -1,0 +1,57 @@
+JARVIS-NEURAL — LOCKED GOAL
+
+Repository: jarvis-core
+Branch: jarvis-neural
+
+MAIN OBJECTIVE:
+Jarvis में एक experimental, connectome-inspired neural layer बनाना और
+मापकर verify करना कि इससे वास्तविक functional improvement आता है या नहीं।
+
+PHASE 1 — SAFE BASELINE
+1. Current jarvis-core code को exactly preserve करना।
+2. jarvis-neural branch बनाना।
+3. Baseline को बिना बदलाव के सुरक्षित रखना।
+4. पहले architecture/code audit करना।
+
+PHASE 2 — METRICS
+5. Existing Jarvis में lightweight metrics harness बनाना।
+6. Measure:
+   - response latency
+   - context carryover
+   - interruption handling
+   - action success/failure
+   - state stability
+   - LLM calls/tokens
+7. छोटे repeatable test cases बनाना।
+8. Neural layer से पहले baseline results रिकॉर्ड करना।
+
+PHASE 3 — FRUIT-FLY CONNECTOME EXPERIMENT
+9. Public fruit-fly connectome dataset को study/use करना।
+10. पूरे 166K+ neurons को copy नहीं करना।
+11. Relevant छोटे neural subcircuits/subgraphs identify करना।
+12. उन्हें computational neural simulator में run करना।
+13. Neural state + signal propagation + feedback को observe करना।
+
+PHASE 4 — JARVIS POC
+14. Neural circuit को Jarvis के एक सीमित workflow से connect करना।
+15. Existing LLM/Jarvis brain को तुरंत replace नहीं करना।
+16. Neural layer को experimental perception/state/feedback controller
+    की तरह test करना।
+
+PHASE 5 — COMPARISON
+17. Same test cases:
+      A = Current Jarvis
+      B = Jarvis + neural experiment
+18. Metrics compare करना।
+19. केवल measurable improvement होने पर आगे scale करना।
+20. Improvement न मिले तो circuit/architecture को modify या discard करना।
+
+PHASE 6 — VISUALIZATION
+21. Foundation काम करने के बाद phone/Android पर 3D neural visualization।
+22. Live neurons, connections, activation और signal flow दिखाना।
+
+IMPORTANT:
+- पहले foundation → metrics → small POC → measurement → scale.
+- Existing Jarvis को बिना वजह disturb नहीं करना।
+- Fruit-fly brain की blind copy नहीं करनी।
+- कोई improvement assume नहीं करनी; experiment से prove करनी है।

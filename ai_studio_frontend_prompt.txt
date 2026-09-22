@@ -1,0 +1,286 @@
+==========================================================
+GOOGLE AI STUDIO PROMPT -- JARVIS Organism Web Console
+==========================================================
+Copy everything below this line into Google AI Studio's app builder.
+This is written to generate a React + TypeScript + Vite app so it
+drops into an existing `web_frontend/` Vite project with minimal
+changes during integration.
+
+----------------------------------------------------------------
+PROMPT STARTS HERE
+----------------------------------------------------------------
+
+Build a React + TypeScript + Vite single-page web app called
+"JARVIS Organism Console" -- a live operator console for a personal
+AI-assistant backend called JARVIS. It is a dark-themed, dense,
+professional systems-monitoring dashboard (think: a mix of a
+terminal, Grafana, and a chat app), NOT a consumer chat-bot UI.
+
+--------------------------------
+1. AUTH / LOGIN
+--------------------------------
+- A simple login screen gates the whole app. Single user, no signup
+  flow needed: a username + password form (or password-only is fine)
+  that POSTs to an auth endpoint and stores a token/session.
+- Until integrated with the real backend, mock this: any non-empty
+  password succeeds and stores a fake token in memory (not
+  localStorage -- keep everything in React state/context so it's easy
+  to swap for a real call later).
+- After login, land on the Dashboard (section 3).
+- Include a visible "Log out" control.
+
+--------------------------------
+2. OVERALL LAYOUT
+--------------------------------
+- Persistent left sidebar (or top tab bar on narrow screens) with
+  three sections:
+    a) DASHBOARD -- the live organism monitor (section 3)
+    b) VIRTUAL CLI -- a terminal-style chat replica (section 4)
+    c) TRACE INSPECTOR -- full per-turn deep trace viewer (section 5)
+- Dark theme: near-black background, cyan/green accent for "healthy/
+  online" states, amber for warnings, red for errors, muted gray for
+  idle/dim text -- matches a terminal aesthetic, monospace font for
+  all data values and the CLI panel (a regular sans-serif is fine for
+  labels/headers).
+- Everything on the Dashboard auto-refreshes by polling every 1-2
+  seconds (configurable). Build a small typed API client module
+  (e.g. `src/api/client.ts`) that every screen calls through -- do
+  NOT scatter fetch() calls across components -- so swapping mock
+  data for the real backend later is a one-file change.
+
+--------------------------------
+3. DASHBOARD SCREEN
+--------------------------------
+This mirrors a terminal tool called `monitor.py` that already exists
+for this backend. Recreate its content as a proper web dashboard with
+cards/panels instead of monospace text blocks:
+
+  a) STATUS HEADER
+     - Big, unmissable "● WORKING" (green, pulsing) or "○ IDLE" (gray)
+       indicator.
+     - Current pipeline stage as a horizontal step indicator:
+       IDLE -> PERCEIVING -> INDEXING -> EXECUTING (highlight the
+       active one).
+     - A warning banner that appears only when `fallback_active` is
+       true: "Last extraction used the deterministic safe fallback".
+     - pid, runtime status (ONLINE/OFFLINE), last-updated timestamp
+       ("3s ago" style, recomputed client-side every second).
+
+  b) SYSTEM RESOURCES card
+     - RAM (max RSS, in MB), CPU user/system seconds, thread count.
+     - LLM backend name, ready boolean, whether the local model is
+       loaded, and a small "budget" gauge: calls used / max calls
+       this turn, tokens reserved / max tokens this turn.
+
+  c) RECENT ACTIVITY HISTORY card
+     - A vertical timeline / table: each row is one completed "turn"
+       -- start time, end time, duration, and the stage path it took
+       (e.g. "PERCEIVING > INDEXING > EXECUTING > IDLE"). Show the
+       last 10. An in-progress turn (no end time yet) shows as an
+       active/pulsing row instead of a finished one.
+
+  d) RECENT SCHEMA EXTRACTIONS card
+     - A list: schema name, which stage resolved it (primary /
+       refined / safe_fallback -- color-code: green / amber / red),
+       and the per-attempt sequence (e.g. "primary:fail -> refined:ok").
+
+  e) BACKGROUND LEARNING QUEUE card
+     - worker alive (bool), currently running a job right now (bool,
+       show as an animated dot), pending / processed / failed /
+       dropped counters.
+
+  f) LEARNING & EVOLUTION card -- "what has JARVIS actually learned"
+     - Self-evaluation: turns evaluated, success rate (%), average
+       score, last-evaluated time.
+     - Knowledge: built / accepted / rejected / pending-review counts.
+     - Evolution: proposals / approved / applied counts. If proposals
+       exist but none are applied, show a small note explaining that
+       evolution requires explicit approval (nothing auto-applies).
+
+  g) ORGANISM HEALTH card
+     - Heartbeat alive + beat count, organs online/total (as a small
+       grid of organ-name chips, green if attached).
+
+  h) RECENT INTERNAL LOG card
+     - Last 5-8 warning/error log lines with timestamp, level badge,
+       tag, message. This is internal diagnostic noise that used to
+       print into a terminal -- style it like a compact log viewer.
+
+--------------------------------
+4. VIRTUAL CLI SCREEN
+--------------------------------
+A terminal-style replica of the backend's own CLI chat tool:
+  - A scrolling message history (user messages right-aligned or
+    marked, JARVIS replies left-aligned/marked) with monospace font
+    and a blinking cursor input line at the bottom, styled like a
+    real terminal prompt (e.g. "UK > ").
+  - After every JARVIS reply, render a compact "workflow panel"
+    directly under that reply showing 5 stage rows, exactly like the
+    Dashboard's pipeline stages but scoped to that one turn:
+        1. PERCEPTION   source=... intent=... confidence=...
+        2. INDEXING     memory=N knowledge=N graph=N
+        3. ROUTING      route=... confidence=... reason
+        4. EXECUTION    mode=... status=...
+        5. LEARNING     queued -> pending=N processed=N failed=N
+  - A "verbose" toggle switch that, when on, also expands a full raw
+    trace tree under the workflow panel (see section 5 -- reuse the
+    same trace-tree component here as a collapsed-by-default child).
+  - Sending a message should optimistically show the user's message
+    immediately, then show a "thinking..." indicator until the reply
+    arrives (mock this with a ~1-2s delay against sample data for
+    now).
+
+--------------------------------
+5. TRACE INSPECTOR SCREEN
+--------------------------------
+A detailed, collapsible tree view of the FULL per-turn cognitive
+trace (this already exists as backend data called `last_turn_trace`
+-- see the schema below). Render it as nested, expandable/collapsible
+sections, not a flat JSON dump:
+
+  TURN
+    query, response preview, total duration, pipeline_success
+  PERCEPTION
+    normalized_input, language, confidence, basic_intent, entities,
+    metadata (source, uncertainty, goal, reason)
+  COGNITIVE ROUTE
+    route, confidence, fallback_allowed, evidence (key/value list)
+  BRAIN DECISION
+    mode, status, any skill/goal/error fields present
+  ACTION RESPONSE
+    mode, status, response text, action payload, error (if any)
+  CONTRACT VALIDATION TRACE (if present)
+    a chronological list of {schema, status: PASS/FAIL, error?,
+    timestamp} entries -- render PASS in green, FAIL in red.
+  LLM BUDGET (if present)
+    calls used/max, tokens reserved/max, remaining of each.
+
+Include a dropdown/search to pick which recent turn to inspect (the
+Dashboard's Activity History rows should each be clickable and jump
+here with that turn pre-selected).
+
+--------------------------------
+6. DATA MODEL -- build against this exact shape (mock it for now)
+--------------------------------
+Two REST endpoints already exist on the real backend (base URL will
+be supplied during integration, something like http://<host>:8000):
+
+GET /api/live_state  -->
+{
+  "version": 1, "pid": 4242, "updated_at": 1234567890.1,
+  "runtime": "ONLINE",
+  "stage": "EXECUTING",
+  "stage_detail": {}, "stage_since": 1234567885.4,
+  "fallback_active": false,
+  "pipeline_trace": [
+    {"stage": "PERCEIVING", "previous_stage": "IDLE",
+     "timestamp": 1234567880.1, "duration_in_previous": 5.0,
+     "detail": {}}
+    /* ... more transitions, oldest first, ring buffer of ~40 */
+  ],
+  "extractions": [
+    {"schema": "perception", "stage_used": "refined",
+     "fallback_active": false,
+     "attempts": [{"stage": "primary", "ok": false, "reason": "...",
+                    "timestamp": 1234567880.2},
+                   {"stage": "refined", "ok": true, "reason": null,
+                    "timestamp": 1234567880.5}],
+     "timestamp": 1234567880.5}
+  ],
+  "learning": {"active": true, "alive": true, "pending": 1,
+               "processed": 12, "failed": 0, "dropped": 0},
+  "logs": [
+    {"tag": "llm_bridge", "message": "groq key #1 error: timeout",
+     "level": "warning", "timestamp": 1234567860.0}
+  ],
+  "organs": {"brain": {"type": "BlueprintBrain", "attached": true}},
+  "heartbeat": {"running": true, "beats": 88, "idle": false},
+  "llm_ready": true
+}
+
+GET /api/status  -->
+{
+  "status": "success",
+  "organs": { "<name>": {"type": "...", "attached": true}, ... },
+  "heartbeat": {"running": true, "beat_count": 88, "is_idle": false},
+  "brain": { "async_learning_queue": {"alive": true, "pending": 0,
+             "processed": 12, "failed": 0, "dropped": 0}, ... },
+  "goals": { /* goal manager snapshot */ },
+  "scheduler": { /* scheduler snapshot */ },
+  "last_turn_trace": {
+    "source": "brain", "query": "...", "response_preview": "...",
+    "perception": { "normalized_input": "...", "language": "...",
+      "confidence": 0.9, "basic_intent": {}, "entities": [],
+      "metadata": {"source": "native", "uncertainty": 0.1,
+                    "goal": null, "reason": "..."} },
+    "cognitive_route": {"mode": "llm", "confidence": 0.9,
+      "fallback_allowed": true, "evidence": [["memory_matches", 3]]},
+    "brain_decision": {"mode": "llm", "status": "completed"},
+    "action_response": {"mode": "llm", "status": "completed",
+      "response": "..."},
+    "llm_available": true, "pipeline_success": true,
+    "timings": {"total": 1.62},
+    "contract_validation_trace": [
+      {"schema": "perception.output", "status": "PASS",
+       "timestamp": 1234567880.5}
+    ],
+    "llm_budget": {"active": true, "calls": 2, "max_calls": 4,
+      "reserved_output_tokens": 600, "max_output_tokens": 1800}
+  }
+}
+
+Sending a chat message will POST to /api/chat with
+{"message": "...", "sessionId": "main_session"} and get back a reply
+string plus trace info -- build the Virtual CLI screen's send action
+against this shape, mocked for now.
+
+NOTE: A "SYSTEM RESOURCES" and "LEARNING & EVOLUTION" data source
+(RAM/CPU, self-evaluation stats, knowledge-builder stats, evolution
+stats) exists on the backend today in a local file, not yet exposed
+over HTTP. Build those two Dashboard cards against this shape as
+realistic mock data -- the real endpoint will be added and wired in
+during integration, so keep the fetch for it isolated in the API
+client module:
+{
+  "timestamp": 1234567882.0,
+  "process": {"max_rss_mb": 412.3, "user_cpu_seconds": 22.1,
+              "system_cpu_seconds": 3.4, "threads": 9},
+  "llm": {"backend": "groq", "ready": true, "local_loaded": false,
+          "last_error": null,
+          "budget": {"calls": 2, "max_calls": 4}},
+  "self_evaluation": {"evaluations": 27, "success_rate": 0.888,
+                       "average_score": 0.81, "last_evaluated_at": 0},
+  "knowledge": {"built": 9, "accepted": 6, "rejected": 1,
+                "pending": 2, "last_built_at": 0},
+  "evolution": {"proposals": 3, "approved": 0, "applied": 0,
+                "last_evolution_at": 0}
+}
+
+--------------------------------
+7. NOT YET AVAILABLE -- placeholder only
+--------------------------------
+A "hot reload / file watcher" feed (recent source-file changes
+detected by the backend's dev-mode watcher) has no API endpoint yet.
+Add a small placeholder card/section for it on the Dashboard with an
+empty-state message ("Not connected yet") rather than building real
+logic against it.
+
+--------------------------------
+8. NON-GOALS
+--------------------------------
+- No user registration/multi-tenant auth -- single operator only.
+- No mobile-first design required, but should not break on a phone
+  screen (this may be viewed from Termux's browser too).
+- Don't invent additional unrelated features (settings pages,
+  notifications, etc.) -- keep it scoped to the three screens above.
+
+----------------------------------------------------------------
+PROMPT ENDS HERE
+----------------------------------------------------------------
+
+After generating the app in AI Studio, export/download the project
+and paste the resulting code back in your next message here -- ask
+for it to be integrated into the existing `web_frontend/` Vite
+project (wiring the real /api/live_state and /api/status calls,
+adding the /api/chat send action, and adding the still-missing
+health-stats endpoint on the backend side).

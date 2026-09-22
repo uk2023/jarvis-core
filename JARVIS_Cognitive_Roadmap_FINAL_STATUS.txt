@@ -1,0 +1,156 @@
+JARVIS COGNITIVE ROADMAP — FINAL STATUS (2026-09-11)
+Audited against: original roadmap (JARVIS_Cognitive_Roadmap.txt) +
+every feature discussed across this entire conversation.
+
+LEGEND: [DONE] wired+verified by compile  [SCOPED] deliberately narrowed, see note  [OPEN] not done
+
+============================================================
+PART 1 — ORIGINAL 8-PHASE ROADMAP
+============================================================
+
+PHASE 1 — Provenance refinement                              [DONE]
+  source_type field (verified/user_stated/llm_unverified/unknown) on
+  every Knowledge record. core/memory/semantic_memory.py.
+
+PHASE 2 — Reasoning -> Memory bridge                          [DONE]
+  Self-authored rules now persist (not just an ephemeral trace),
+  tagged llm_unverified -> upgraded to user_stated on UK's /confirm_rule.
+  core/orchestration/brain.py.
+
+PHASE 3 — Trigger/scheduling producer side                    [DONE]
+  core/autonomy/standing_instructions.py (new) + Scheduler.schedule()
+  now actually has a caller (core/autonomy/idle_loop.py).
+
+PHASE 4 — Knowledge-gap verification bridge (web search)      [DONE]
+  Groq's built-in browser_search tool, wired through the tool-calling
+  loop. core/orchestration/tool_registry.py.
+
+PHASE 5 — Wire the dead knowledge-promotion pipeline           [DONE]
+  evolution_cycle.py's promote_ready_candidates(), called from
+  core/organism/bootstrap.py's idle heartbeat.
+
+PHASE 6 — Outcome feedback loop                                [DONE]
+  Negative: detect_correction() (core/learning/outcome_feedback.py)
+  weakens the previous turn's facts when UK corrects JARVIS.
+  Positive: successful turns lightly reinforce the facts that were
+  actually surfaced to the LLM. core/orchestration/brain.py.
+
+PHASE 7 — Smarter contradiction resolution                    [DONE]
+  A lower-trust source can no longer silently overwrite a
+  higher-trust fact -- held as a "contested" candidate instead, for
+  UK's review (list_contested_facts / resolve_contested_fact).
+  core/memory/semantic_memory.py.
+
+PHASE 8 — Generalization / induction                           [DONE]
+  Embedding-similarity dedup (reuses the same cosine-similarity
+  mechanism already in remember()'s multi-value handling) in both
+  UserRuleStore and StandingInstructionStore -- a near-duplicate rule
+  reinforces the existing one instead of creating a new row.
+
+============================================================
+PART 2 — FEATURES THAT CAME UP MID-CONVERSATION (beyond the
+           original 8 phases)
+============================================================
+
+GAP A — Self-rule predicate collision + no rejection memory    [DONE]
+  Unique content-hash predicate per proposal; reject_self_rule() now
+  tombstones (doesn't hard-delete), and a rejected rule is never
+  re-proposed. core/orchestration/brain.py.
+
+GAP B — No traceable "why was this rule proposed"              [DONE]
+  explain_self_rule() reads a linked evidence record (what_and_why /
+  strategy_evidence / evidence_reliability / change_reason) stored
+  alongside the rule.
+
+Tool-calling infrastructure                                    [DONE]
+  GroqEngine.generate_with_tools() + HybridLLMBridge wrapper +
+  core/orchestration/tool_registry.py's gated dispatch loop. Replaces
+  the regex-routing approach you explicitly rejected -- the model
+  itself decides which tool (if any) a message needs.
+  Cortex-basal-ganglia gating: dispatch_tool_call() validates a
+  mutating call's knowledge_id against real current data before
+  executing anything.
+
+save_verified_fact + search governance                         [DONE]
+  Searched/LLM-derived facts are NOT persisted by default (confirmed:
+  every turn already lands in episodic memory automatically via
+  ExperienceEngine -- that's the "temp, session-context" layer you
+  asked for, no new code needed for that part). save_verified_fact is
+  only called when UK explicitly says save/yaad rakho. Tagged
+  "verified" only if browser_search actually ran that turn, else
+  "llm_unverified".
+  Transparency: JARVIS discloses it searched; source/URL only stated
+  if you ask for it (system-prompt instruction in tool_registry.py).
+
+M8 — "JARVIS observe LLM usage, replicate natively, with accuracy"  [SCOPED]
+  What shipped: SemanticLearningBoundary now tracks native vs
+  learned_native vs llm_fallback resolution counts every turn, with a
+  native_coverage_rate you can watch over time (monitor.py, "LLM
+  DEPENDENCY" section) -- concrete, measurable visibility into
+  whether the already-wired Phase 5 promotion pipeline is actually
+  displacing LLM calls.
+  What did NOT ship, on purpose: a general-purpose "autonomously
+  learn to replicate ANY LLM behavior" subsystem (response generation,
+  tool-selection, reasoning -- not just semantic understanding). That
+  is materially riskier (a wrong native replacement fails silently,
+  unlike an LLM call which at least costs money visibly) and needs
+  its own dedicated design pass -- what exactly gets observed, how
+  "accuracy" is measured before trusting a native replacement, and a
+  rollback path. Flagging this honestly rather than shipping something
+  under-designed.
+
+============================================================
+PART 3 — VISIBILITY (your explicit, repeated ask: nothing
+           should be a black box)
+============================================================
+
+monitor.py sections added this session:
+  - SELF-AUTHORED RULES -- AWAITING YOUR REVIEW
+  - STANDING INSTRUCTIONS (daily triggers)
+  - LAST TURN'S TOOL CALLS (LLM-decided, not hardcoded)
+  - CONTESTED FACTS -- AWAITING YOUR REVIEW
+  - LLM DEPENDENCY (semantic understanding, this session)
+
+cli.py commands added this session:
+  /pending_rules  /confirm_rule <n>  /reject_rule <n>  /explain_rule <n>
+  /instructions  /remove_instruction <n>
+  /contested_facts  /resolve_contested <n> accept|keep
+  /tool_trace
+
+API (port 8000 -- verified already the default in backend/server.py,
+no change needed; all new routes register on the SAME router the
+existing engrams/autonomy endpoints already use):
+  GET/POST  /api/memory/pending_rules[...]
+  GET/DELETE /api/autonomy/standing_instructions[...]
+  GET/POST  /api/memory/contested_facts[...]
+  GET       /api/memory/engrams        (now includes sourceType)
+  (llm_dependency_stats + tool-call trace ride along inside the
+  existing /api/live_state snapshot, same as latest_reasoning already did)
+
+============================================================
+PART 4 — STILL OPEN (not touched this session, flagged honestly)
+============================================================
+
+- Attention/salience beyond the existing "importance" field -- real
+  attention would also affect RETRIEVAL ranking, not just
+  pruning/decay survival. Not sized.
+- Working-memory limit (bounded active context per turn) -- no
+  finding either way yet.
+- The general M8 vision (see above) -- scoped down to telemetry only.
+- One item from your message I could not confidently parse: "bonus
+  edit mein resing question bhi hata dena" -- I searched monitor.py
+  for anything that looks like a stray/misplaced "question" element
+  and found only the legitimate 11-question reasoning-trace display
+  (intentional, not a leftover). If you meant something else
+  specific, point me at it directly and I'll fix it next pass rather
+  than guess and risk deleting something real.
+
+============================================================
+VERIFICATION DONE THIS PASS
+============================================================
+- Full project py_compile: clean, zero errors, every .py file
+  (excluding web_frontend/, which wasn't touched).
+- Duplicate-definition sanity check on every new/modified method:
+  clean.
+- Port 8000 confirmed as the existing default in backend/server.py;
+  all new routes confirmed registered on the same app.

@@ -1,0 +1,266 @@
+CONVERSATION INTELLIGENCE LAYER -- BLUEPRINT
+(2026-09-18, written for UK's on-device verification pass. Every point
+UK raised this turn is addressed below by number, so nothing gets
+silently dropped.)
+
+====================================================================
+0. UK'S POINTS, ONE BY ONE -- WHERE EACH STANDS RIGHT NOW
+====================================================================
+
+1. "Abhi bhi hallucinate karta hai, apne pichle context ka nahi pata,
+   na normal thinking na extended."
+   -> ROOT CAUSE FOUND, PARTIALLY FIXED this pass. Two separate real
+      bugs, both verified in the actual v33/v34 code (not guessed):
+      a) response_brief.py never told the LLM what to do when it has
+         NO real memory of earlier turns -- so it filled the silence
+         by inventing a plausible-sounding fake prior exchange. FIXED:
+         new `has_real_conversation_memory` flag + an explicit
+         "SESSION MEMORY RULE" instruction (section 2 below).
+      b) episodic memory had NO session boundary at all -- every
+         restart reloaded JARVIS's *entire lifetime* of episodes with
+         no way to tell "this run" from "three restarts ago". FIXED:
+         episodes are now tagged with the current run_id and the
+         conversational recap is scoped to the CURRENT run only
+         (section 3 below).
+      NOT fixed yet: true in-process "new chat" isolation (see point
+      9 below) -- what's fixed is restart-level isolation.
+
+2. "Conversational intelligence layer chahiye jo LLM ko context
+   coordinate kare, LLM JARVIS ko govern na kare, LLM sirf JARVIS ki
+   thinking capability ho."
+   -> Architecture proposed in section 4 below. The brief-building
+      step (response_brief.py) ALREADY works exactly on this
+      principle -- "You are JARVIS's VOCAL CHORDS, not its brain" is
+      literally the first line of its instructions_for_llm, and the
+      LLM is only ever handed a small structured brief, never raw
+      memory objects. What's NEW below is making that brief
+      SMARTER (which memory to pull, session-aware) and naming this
+      pattern as a first-class layer instead of logic buried inside
+      one function.
+
+3. "Lagta hai LLM baat kar raha hai, session memory JARVIS ki thodi
+   hai, session memory toh LLM ki hoti hai."
+   -> FIXED this pass, same instruction as point 1a: the LLM is now
+      explicitly told never to describe itself as "a language model
+      with session-limited memory" -- it must describe JARVIS's own
+      real memory state (the brief's fields), because that IS real
+      and persistent, unlike a bare LLM's.
+
+4/5. "Saare chats verify karlo, aur chats chahiye ho to agli baar
+   maang lena."
+   -> Only the transcript pasted into this turn's message was
+      available to verify against -- that's exactly what points 1-3
+      above were diagnosed from (the transcript's very first hallucin-
+      ated "namaste sir maine kaha sab theek hai" answer, and the
+      later "mere paas purani baaton ka koi idea nahi hai" self-
+      contradiction). If there's a specific OTHER exchange you want
+      root-caused, paste it and it'll get the same real trace-through,
+      not a guess.
+
+6. "JARVIS ko restart ka pata ho, har restart pe naya trace bane, jo
+   developer ko exactly fault dikha de."
+   -> GOOD NEWS: this already exists and is already wired --
+      core/runtime/session_registry.py's record_start() generates a
+      fresh run_id every boot AND detects whether the previous run
+      crashed or shut down cleanly, and cli.py already calls it at
+      startup (record_start() / record_stop()). It was just never
+      connected to episodic memory or the brief -- section 3 below is
+      that connection. Full "one trace a developer can read start to
+      finish" view is proposed in section 5 -- not built yet.
+
+7/8. "Session, episodic, semantic memory teeno hain but inko govern
+   karne wali intelligence layer nahi hai jo decide kare ki user ki
+   demand context ki hai ya database se memory nikaalni hai."
+   -> This is the real, still-open architectural gap. Section 4 below
+      is the proposed design for exactly this decision point. NOT
+      built this pass -- it's a genuinely new component, not a wiring
+      fix, and UK's own working principle is "don't claim something
+      is done that isn't", so this stays marked PROPOSED, not DONE.
+
+9. "Har chat ki apni alag session memory ho, JARVIS ko pata ho ye
+   naya chat hai."
+   -> PARTIALLY addressed. What's fixed: every JARVIS RESTART now gets
+      its own isolated session memory (section 3). What's still open:
+      if UK means multiple SEPARATE chats within the SAME running
+      process (e.g. a "new chat" button in a future web UI, or several
+      browser tabs at once) -- that needs a chat_id distinct from
+      run_id, threaded through the same way. Flagged as open in
+      section 6, not silently assumed solved.
+
+10. "Koi bhi point ignore mat karna."
+   -> This is why every point has its own numbered entry here instead
+      of a summary.
+
+11. "Blueprint bhi dena."
+   -> This file.
+
+12. "Tarball jaldi do, jitna fix kar pao."
+   -> Attached with this response.
+
+13. "CLI mein extended thinking ka trace nahi dikhta."
+   -> ROOT CAUSE FOUND AND FIXED. /think on|off|auto was only ever
+      setting cli.py's own THINKING_MODE global variable -- brain.py's
+      actual thinking logic reads `self.thinking_mode` on the Brain
+      OBJECT, a completely different variable nothing ever touched.
+      The command printed a friendly confirmation and did nothing
+      real. Fixed to also set `brain.thinking_mode` on the real brain
+      object CLI turns run through.
+
+14. "Coding agent tool / coding tool budget show nahi ho raha jo
+   pehle hota tha."
+   -> INVESTIGATED, NOT reproduced. The display code (cli.py, section
+      "3c. CODING WORKER BUDGET") is intentionally conditional -- it
+      only renders on a turn where a coding tool actually ran (by
+      design, so plain chat turns don't show a "0/80" line nobody
+      asked about), and the underlying counter (llm_bridge.py's
+      _coding_worker_calls) is correctly wired. If it's missing on a
+      turn where a coding tool DID run, that needs the actual /verbose
+      output from that specific turn to root-cause -- couldn't
+      reproduce blind without a runtime.
+
+====================================================================
+1. CURRENT STATE (what the brief-building step already does)
+====================================================================
+response_brief.py's build_response_brief() is the existing "governor"
+boundary: Brain's own native cognition decides what's true and what
+matters, packages it into a small typed dict (known_facts,
+known_relations, active_focus, conversation_focus, recent_context,
+user_rules, jarvis_self_rules), and the LLM's ONLY job is to phrase
+one reply from exactly that -- never raw memory dumps, never free
+rein to invent. This is the right shape. What's missing is everything
+UPSTREAM of it: deciding WHICH memory to query in the first place.
+
+====================================================================
+2. THIS PASS'S FIX -- SESSION GROUNDING INSTRUCTION
+====================================================================
+New field: has_real_conversation_memory (bool) = true if ANY of
+recent_context / active_focus / conversation_focus actually have
+content. New instruction, verbatim policy handed to the LLM every
+turn:
+  - if false: say plainly there's no record of earlier turns in this
+    session yet, ask what the user wants to talk about. Never invent
+    a prior exchange that isn't literally in those three fields.
+  - always describe MEMORY as JARVIS's own real, persistent state
+    (the fields above) -- never as "a language model's session-
+    limited memory". The LLM is JARVIS's voice, not a separate
+    entity with its own memory claims to make.
+
+====================================================================
+3. THIS PASS'S FIX -- RUN-SCOPED EPISODIC RECAP
+====================================================================
+core/runtime/session_registry.py already generates a fresh run_id
+every process boot (record_start()) and detects crash-vs-clean
+shutdown. New: EpisodicMemory.remember() tags every episode's context
+dict with the CURRENT run_id (no schema change -- stored in the
+existing free-form context field). EpisodicMemory.recent() gained
+same_run_only=True, which memory_manager.build_context() now always
+passes for conversational recap. Effect: a brand-new restart starts
+with a genuinely empty recap (matches reality -- nothing has been said
+yet THIS run) instead of silently inheriting the entire lifetime of
+past conversations with no boundary. Full history is NOT deleted --
+still available to anything that wants it (deep search, consolidation,
+etc.) via recent(same_run_only=False).
+
+====================================================================
+4. CONVERSATION INTELLIGENCE LAYER -- PHASE 1 BUILT THIS PASS
+====================================================================
+UK explicitly rejected the first attempt at "discuss vs act" as a
+keyword-list patch -- correctly: a fixed phrase table only ever
+catches the exact wording someone thought to enumerate, in one
+language. His instruction: "LLM kaunsa filter ho sakta hai -- intent
+se filter ho sakta hai" (the LLM itself can be the filter, via
+intent). New module: core/cognition/conversation_intelligence.py,
+function classify_task_disposition(llm_bridge, user_input,
+native_intent=None):
+
+  - Zero-cost native shortcut ONLY for the one case that is genuinely
+    deterministic: perception already classified this as a plain
+    question. Nothing else is decided by pattern-matching.
+  - Otherwise, ONE real LLM classification call (JSON-mode, low
+    reasoning effort, ~60 max_tokens -- cheap, matches the pattern
+    perception.py already uses for its own LLM fallback) asking: does
+    this turn want discussion first, or is the user ready for action
+    now. Works in any language/phrasing, because it's actual
+    understanding, not string matching.
+  - Budget-aware (uses the same can_afford_another_llm_call() guard
+    every other LLM fallback in this codebase uses) and honestly
+    degrades (source="degraded_*") rather than fabricating a confident
+    answer when the LLM truly can't be reached.
+
+Wired into backend/routes_codebox.py's think_stream_route: this now
+decides TaskLoop-vs-staged-reasoner for every Extended Thinking turn,
+replacing the keyword-based wants_task_loop() (removed from
+core/orchestration/task_loop.py -- it now raises if anything still
+calls it, so a stray caller fails loud instead of silently getting
+brittle behavior back). The disposition decision is also streamed to
+the frontend as its own SSE event (type: "disposition") so it's
+visible, not a silent internal choice.
+
+Verified with 7 tests in tests/test_conversation_intelligence.py:
+native question shortcut, no-bridge degradation, budget-exhausted
+degradation, two different real-LLM-judgment phrasings (including one
+that shares NO words with any keyword list that would have caught it),
+malformed-response degradation, and call-exception degradation. All
+pass directly against a fake LLM bridge (no live network needed to
+verify the logic itself; the actual Groq call path still needs an
+on-device check with real credentials).
+
+Phase 2 (routing which of session/episodic/semantic memory a turn
+actually needs -- the other half of section 4 below) is NOT built
+yet.
+
+====================================================================
+4b. PROPOSED -- REMAINING HALF OF THE LAYER (not built yet)
+====================================================================
+A new module, core/cognition/conversation_intelligence.py, sitting
+between perception and build_response_brief(), whose ONLY job is
+routing -- deciding which of the three memories a turn actually needs
+before anything is fetched, instead of always pulling from all three
+and hoping the LLM sorts it out:
+
+  INPUT:  this turn's perceived intent/entities + the run-scoped
+          session state already built (sections 2-3 above)
+  DECIDES:
+    - Is this turn asking about something said EARLIER IN THIS
+      SESSION? -> session/episodic memory (run-scoped, already fixed)
+    - Is this turn asking about a durable FACT about UK/the project?
+      -> semantic memory (existing hybrid_search)
+    - Is this turn self-contained (doesn't need any memory at all --
+      e.g. general knowledge, a fresh instruction)? -> skip retrieval
+      entirely, don't pad the brief with irrelevant recall
+  OUTPUT: the SAME brief shape as today, just populated by an actual
+          decision instead of "always query knowledge_limit=10,
+          recent_limit=5 and hope for the best" (memory_manager.py's
+          current unconditional behavior).
+
+This keeps the existing "LLM only phrases what the brief already
+decided" boundary intact -- the router is Brain's own native logic,
+zero LLM cost, matching the project's existing native-reasoner-first
+philosophy (see overview.md).
+
+====================================================================
+5. PROPOSED -- DEVELOPER-READABLE END-TO-END RESTART TRACE
+====================================================================
+session_registry.py's run lifecycle (run_id, crash detection) exists
+but isn't surfaced anywhere a developer can read turn-by-turn against
+it. Proposed: stamp brain.last_turn_trace with the current run_id
+(one line), and add a CLI command (e.g. /run_trace) that prints, for
+the CURRENT run: when it started, whether the previous run crashed,
+and every turn's stage-by-stage outcome (reusing render_workflow_panel's
+existing per-stage data) in one scrollable view -- so a fault can be
+pinpointed to an exact stage of an exact turn of an exact run, without
+grep-ing raw logs.
+
+====================================================================
+6. STILL OPEN / NOT STARTED
+====================================================================
+- True in-process multi-chat isolation (point 9) -- needs a chat_id
+  concept separate from run_id, for whenever there's a UI surface
+  where more than one conversation can be open under one running
+  process.
+- The conversation_intelligence.py router itself (section 4).
+- The /run_trace developer view (section 5).
+- Everything under Priority 2 from the saved roadmap: output
+  auto-delivery wiring, sandbox venv scoped-but-fully-authorized to
+  one project directory, test-in-sandbox-then-save-package-back
+  workflow, backup-then-modify tracking without git.

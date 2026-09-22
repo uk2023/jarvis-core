@@ -1,0 +1,21 @@
+/* JARVIS VOICE INPUT — robust live composer, day/night safe */
+.jarvis-command-actions{position:relative;overflow:visible}
+.jarvis-voice-shell{position:relative;width:34px;height:34px;flex:0 0 34px;overflow:visible}
+.jarvis-voice-live{position:absolute;right:0;top:0;width:34px;height:34px;border:1px solid var(--jarvis-border,#d7dce5);border-radius:12px;background:var(--jarvis-surface,#fff);box-shadow:0 8px 26px rgba(0,0,0,.12);opacity:0;transform:scaleX(.18);transform-origin:right center;pointer-events:none;display:flex;align-items:center;gap:8px;padding:0 42px 0 11px;overflow:hidden;transition:width .32s cubic-bezier(.22,1,.36,1),opacity .18s ease,transform .32s cubic-bezier(.22,1,.36,1),border-color .22s,box-shadow .22s}
+.jarvis-voice-shell.is-listening .jarvis-voice-live{width:174px;opacity:1;transform:scaleX(1);border-color:var(--jarvis-accent,#4b78ff);box-shadow:0 10px 32px rgba(0,0,0,.18),0 0 22px rgba(75,120,255,.16);pointer-events:auto}
+.jarvis-voice-status{min-width:0;display:flex;flex-direction:column;gap:2px;text-align:left;white-space:nowrap;overflow:hidden}
+.jarvis-voice-status strong{font-size:7px;line-height:1;letter-spacing:.13em;font-weight:950;color:var(--jarvis-text,#182033)}
+.jarvis-voice-status span{font-size:8px;line-height:1.15;color:var(--jarvis-text-muted,#6b7280);overflow:hidden;text-overflow:ellipsis;max-width:78px}
+.jarvis-voice-wave{height:20px;display:flex;align-items:center;gap:2px;flex:1;min-width:44px}
+.jarvis-voice-wave i{display:block;width:2px;height:7px;border-radius:99px;background:var(--jarvis-accent,#4b78ff);box-shadow:0 0 7px rgba(80,130,255,.42);animation:jarvis-voice-bar .72s ease-in-out infinite}
+.jarvis-voice-wave i:nth-child(2){height:13px;animation-delay:-.58s}.jarvis-voice-wave i:nth-child(3){height:18px;animation-delay:-.42s}.jarvis-voice-wave i:nth-child(4){height:10px;animation-delay:-.27s}.jarvis-voice-wave i:nth-child(5){height:16px;animation-delay:-.11s}.jarvis-voice-wave i:nth-child(6){height:8px;animation-delay:-.5s}.jarvis-voice-wave i:nth-child(7){height:14px;animation-delay:-.34s}.jarvis-voice-wave i:nth-child(8){height:6px;animation-delay:-.19s}
+.jarvis-mic-button{position:absolute!important;right:0;top:0;z-index:4;border:1px solid rgba(40,55,85,.18)!important;background:var(--jarvis-surface-raised,#fff)!important;color:var(--jarvis-text,#182033)!important;box-shadow:0 2px 9px rgba(0,0,0,.08)}
+.jarvis-mic-button:hover{border-color:var(--jarvis-accent,#4b78ff)!important}
+.jarvis-voice-shell.is-listening .jarvis-mic-button{background:var(--jarvis-accent,#4b78ff)!important;color:#fff!important;border-color:var(--jarvis-accent,#4b78ff)!important;box-shadow:0 0 0 4px rgba(75,120,255,.14),0 0 22px rgba(75,120,255,.28)!important;animation:jarvis-mic-glow 1.25s ease-in-out infinite}
+.jarvis-voice-shell.is-error .jarvis-voice-live{border-color:#ef4444;box-shadow:0 0 20px rgba(239,68,68,.18)}
+.jarvis-home-light .jarvis-mic-button{background:rgba(255,255,255,.96)!important;color:#182033!important;border-color:rgba(40,55,85,.18)!important;box-shadow:0 3px 12px rgba(25,40,75,.12)}
+.jarvis-home-light .jarvis-voice-live{background:rgba(255,255,255,.98)}
+@keyframes jarvis-voice-bar{0%,100%{transform:scaleY(.35);opacity:.55}50%{transform:scaleY(1);opacity:1}}
+@keyframes jarvis-mic-glow{0%,100%{box-shadow:0 0 0 3px rgba(75,120,255,.10),0 0 15px rgba(75,120,255,.20)}50%{box-shadow:0 0 0 6px rgba(75,120,255,.17),0 0 28px rgba(75,120,255,.38)}}
+@media (max-width:640px){.jarvis-voice-live{height:36px}.jarvis-voice-shell,.jarvis-mic-button{height:34px!important;width:34px!important}.jarvis-voice-shell.is-listening .jarvis-voice-live{width:min(174px,calc(100vw - 104px))}}
+@media (prefers-reduced-motion:reduce){.jarvis-voice-wave i,.jarvis-mic-button{animation:none!important}.jarvis-voice-live{transition:none}}

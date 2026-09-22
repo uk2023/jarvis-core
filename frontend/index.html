@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+    <meta name="theme-color" content="#07080c">
+    <title>JARVIS.console 2030</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyberDark: '#07090e',
+                        cyberCard: '#0e131f',
+                        cyberBorder: '#1f293d',
+                        accentCyan: '#00f0ff',
+                        accentViolet: '#a855f7'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cyberDark text-gray-200 flex h-full w-full overflow-hidden relative text-xs selection:bg-cyan-500/30 selection:text-cyan-200">
+
+<!-- Mobile Backdrop Overlay -->
+<div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+
+<!-- Left Sidebar -->
+<aside id="appSidebar" class="fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out w-72 sm:w-80 bg-cyberCard/95 backdrop-blur-xl border-r border-cyberBorder flex flex-col justify-between p-4 shrink-0 h-full shadow-2xl">
+    <div class="flex flex-col h-[calc(100%-60px)] min-h-0">
+        <!-- Fixed top section -->
+        <div class="shrink-0 flex items-center justify-between mb-4 pb-3 border-b border-cyberBorder">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()" title="Return to dashboard">
+                <div class="relative w-8 h-8 flex items-center justify-center shrink-0">
+                    <div class="absolute inset-0 rounded-full border border-cyan-400/50 animate-spin" style="animation-duration: 6s;"></div>
+                    <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-lg animate-pulse">J</div>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xs tracking-wider text-white">JARVIS.console <span class="text-cyan-400 font-mono text-[9px]">v3.0</span></h1>
+                    <span class="text-[9px] text-cyan-400 flex items-center gap-1.5 font-mono mt-0.5">
+                        <span id="sync-ping-dot" class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                        <span id="sync-status">Core Live</span>
+                    </span>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white p-1.5 rounded-xl transition" title="Close sidebar">
+                <i class="fa-solid fa-chevron-left text-base"></i>
+            </button>
+        </div>
+
+        <button onclick="createNewThread()" class="shrink-0 w-full mb-4 py-2.5 px-4 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 border border-cyan-500/30 shadow-md transition group">
+            <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition duration-300"></i>
+            <span>New Neural Thread</span>
+        </button>
+
+        <!-- Only this scrolls -->
+        <div class="flex-1 min-h-0 overflow-y-auto pr-1 space-y-3 mb-2" id="session-history-container">
+            <div>
+                <div class="text-[9px] text-gray-500 uppercase font-bold mb-1.5 tracking-widest px-2">Today</div>
+                <div class="space-y-1.5" id="sessions-today">
+                    <div class="text-[11px] text-gray-500 italic p-2">Loading threads...</div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="text-[9px] text-gray-500 uppercase font-bold mb-1.5 tracking-widest px-2">Previous</div>
+                <div class="space-y-1.5" id="sessions-previous"></div>
+            </div>
+        </div>
+
+        <!-- Fixed bottom telemetry -->
+        <div class="shrink-0 bg-black/60 border border-cyberBorder rounded-2xl p-3.5 mb-2 shadow-inner font-mono">
+            <div class="flex items-center justify-between text-[10px] text-cyan-400 uppercase font-bold mb-2.5 tracking-wider border-b border-cyberBorder pb-2">
+                <span><i class="fa-solid fa-microchip mr-1"></i> Telemetry & Uptime</span>
+                <span id="beat-count" class="px-2 py-0.5 rounded-lg bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[9px]">0 bpm</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5 text-center">
+                <div class="bg-cyberCard p-2 rounded-xl border border-cyberBorder shadow-sm">
+                    <div class="text-[9px] text-gray-400 uppercase tracking-wider">Runtime</div>
+                    <div id="jarvis-timer" class="text-cyan-300 font-bold text-xs mt-0.5">00:00:00</div>
+                </div>
+                <div class="bg-cyberCard p-2 rounded-xl border border-cyberBorder shadow-sm">
+                    <div class="text-[9px] text-gray-400 uppercase tracking-wider">State</div>
+                    <div id="sub-state" class="text-purple-300 font-bold text-[10px] truncate mt-0.5">Active</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed profile row -->
+    <div class="shrink-0 pt-3 border-t border-cyberBorder flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-xl bg-purple-600/30 border border-purple-500/40 flex items-center justify-center font-bold text-purple-300 text-[10px] shadow-sm">UK</div>
+            <div>
+                <div class="text-[10px] font-semibold text-white">UK Admin</div>
+                <div class="text-[9px] text-gray-500">Root Node</div>
+            </div>
+        </div>
+        <button id="installBtn" onclick="installApp()" class="hidden text-cyan-400 hover:text-cyan-300 text-xs p-2 rounded-xl transition" title="Install App">
+            <i class="fa-solid fa-download"></i>
+        </button>
+    </div>
+</aside>
+
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col h-full w-full relative bg-cyberDark overflow-hidden">
+
+    <!--
+        BUG FIX (header/chat avatar alignment): the header and
+        #workspace-container both now use the shared `.gutter-x` class
+        (defined once in style.css) instead of two separate Tailwind
+        utilities, so the JARVIS brand icon here and every chat-message
+        avatar below sit on the exact same left edge, guaranteed.
+    -->
+    <header class="h-14 gutter-x border-b border-cyberBorder flex items-center justify-between bg-cyberCard/90 shrink-0 z-30 shadow-sm backdrop-blur-md">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()" title="Return to dashboard">
+            <div onclick="event.stopPropagation(); toggleSidebar()" class="relative w-8 h-8 flex items-center justify-center shrink-0 cursor-pointer group" title="Toggle Sidebar">
+                <div class="absolute inset-0 rounded-full border border-cyan-400/60 animate-spin group-hover:border-cyan-400" style="animation-duration: 4s;"></div>
+                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-lg animate-pulse">J</div>
+            </div>
+            <span class="font-bold text-xs sm:text-sm text-white truncate max-w-[170px] sm:max-w-xs" id="active-thread-title">JARVIS Dashboard</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button id="diagnostics-btn" onclick="toggleDiagnosticsModal()" class="text-[11px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 px-3.5 py-1.5 rounded-xl font-semibold flex items-center gap-2 hover:bg-cyan-500/20 transition shadow-md relative">
+                <i class="fa-solid fa-terminal text-cyan-400"></i>
+                <span class="hidden sm:inline">Virtual CLI</span>
+                <span id="cli-alert-badge" class="hidden absolute -top-1.5 -right-1.5 px-1.5 py-0.2 rounded-full bg-red-600 text-white font-bold text-[9px] shadow-lg animate-pulse">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Dynamic View Area -->
+    <div id="workspace-container" class="flex-1 overflow-y-auto gutter-x py-3 sm:py-6 flex flex-col justify-between w-full max-w-4xl mx-auto pb-28 sm:pb-32 relative" onscroll="onChatScroll()">
+
+        <!-- Homepage View -->
+        <div id="home-view" class="view-visible flex flex-col items-center justify-center my-auto py-8 text-center">
+
+            <div class="black-hole-container">
+                <div class="accretion-disk-2"></div>
+                <div class="accretion-disk-1"></div>
+                <div class="event-horizon flex items-center justify-center">
+                    <span class="text-cyan-400 font-bold text-xs tracking-widest drop-shadow-[0_0_10px_#00f0ff]">J</span>
+                </div>
+            </div>
+
+            <h1 class="text-xs sm:text-sm font-semibold text-white tracking-wider mb-1">UK, How can I assist you today?</h1>
+            <p id="home-subtitle" class="text-[9px] sm:text-[10px] text-gray-400 max-w-xs mb-8 font-mono">Quantum neural architecture active & synchronized.</p>
+
+            <div id="quick-prompts-grid" class="grid grid-cols-3 gap-2 w-full max-w-md mt-6 px-2">
+                <button onclick="quickPrompt('Status check of all active subsystems')" class="px-2.5 py-2 bg-cyberCard/80 hover:bg-cyberBorder border border-cyberBorder rounded-xl text-center transition shadow-sm group">
+                    <div class="text-[9px] text-cyan-400 font-semibold flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-microchip text-[10px]"></i> <span>Organ matrix</span>
+                    </div>
+                </button>
+                <button onclick="quickPrompt('What are my recent memory contexts?')" class="px-2.5 py-2 bg-cyberCard/80 hover:bg-cyberBorder border border-cyberBorder rounded-xl text-center transition shadow-sm group">
+                    <div class="text-[9px] text-purple-400 font-semibold flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-database text-[10px]"></i> <span>FAISS store</span>
+                    </div>
+                </button>
+                <button onclick="quickPrompt('Run a diagnostic trace on neural pipeline')" class="px-2.5 py-2 bg-cyberCard/80 hover:bg-cyberBorder border border-cyberBorder rounded-xl text-center transition shadow-sm group">
+                    <div class="text-[9px] text-emerald-400 font-semibold flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-bolt text-[10px]"></i> <span>LlamaCpp bridge</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat View Container -->
+        <div id="chat-box" class="view-hidden space-y-4 w-full"></div>
+
+    </div>
+
+    <!-- Floating Input Bar -->
+    <div id="floatingInputBar" class="absolute bottom-0 left-0 right-0 p-3 sm:p-5 bg-gradient-to-t from-cyberDark via-cyberDark/95 to-transparent z-25">
+        <div class="max-w-3xl mx-auto relative">
+            <div class="flex items-end bg-cyberCard border border-cyberBorder focus-within:border-cyan-400/70 focus-within:shadow-[0_0_0_3px_rgba(0,240,255,0.15)] rounded-[26px] px-3 py-1.5 shadow-2xl transition-all">
+                <button class="w-9 h-9 shrink-0 flex items-center justify-center text-gray-400 hover:text-cyan-300 hover:border-cyan-400/50 rounded-full border border-cyberBorder bg-cyberDark/60 transition mb-0.5" title="Attach file">
+                    <i class="fa-solid fa-paperclip text-[13px]"></i>
+                </button>
+                <textarea id="userInput" rows="1" placeholder="Ask Jarvis..."
+                    class="flex-1 bg-transparent border-none outline-none px-2 py-2 text-white placeholder-gray-500 text-base font-mono resize-none max-h-32 min-h-[36px]"
+                    oninput="autoResizeTextarea(this)"
+                    onkeydown="handleKeyDown(event)"
+                    onfocus="onInputFocus()"
+                    onblur="onInputBlur()"></textarea>
+                <button id="sendBtn" onclick="sendMessage()" class="w-9 h-9 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white flex items-center justify-center hover:opacity-90 transition shadow-lg shrink-0 mb-0.5">
+                    <i class="fa-solid fa-arrow-up text-xs"></i>
+                </button>
+            </div>
+            <div class="text-[10px] text-center text-gray-500 mt-2 font-mono" id="footer-status">
+                UK Workspace &bull; Neural Bridge &bull; Mode: <span class="uppercase text-cyan-400" id="mode-label">DEV</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Virtual CLI Diagnostics Modal -->
+<div id="diagnosticsModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col p-3 sm:p-6">
+    <div class="flex items-center justify-between pb-3 border-b border-cyberBorder">
+        <button onclick="toggleDiagnosticsModal()" class="text-cyan-400 hover:text-white text-xs font-mono flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-cyberCard border border-cyberBorder shadow-sm">
+            <i class="fa-solid fa-chevron-left text-[10px]"></i> <span>Back</span>
+        </button>
+        <span class="text-cyan-400 font-bold font-mono text-xs sm:text-sm">&gt;_ jarvis.console CLI</span>
+        <span class="w-[68px]"></span>
+    </div>
+
+    <div class="flex-1 overflow-y-auto font-mono text-[11px] mt-3 p-3 sm:p-5 bg-cyberDark rounded-2xl border border-cyberBorder space-y-3 shadow-inner" id="diagnostics-log">
+        <div class="text-gray-500 italic p-4 text-center">Listening for real-time CLI telemetry & memory logs...</div>
+    </div>
+</div>
+
+<!-- Session Action Sheet (rename / pin / delete) -->
+<div id="sessionSheetOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] hidden" onclick="closeSessionSheet()"></div>
+<div id="sessionActionSheet" class="fixed left-0 right-0 bottom-0 z-[61] bg-cyberCard border-t border-cyberBorder rounded-t-3xl p-2 pb-[max(1rem,env(safe-area-inset-bottom))] transition-transform duration-200 shadow-2xl hidden">
+    <div class="w-10 h-1 bg-cyberBorder rounded-full mx-auto my-2"></div>
+    <div class="px-4 pb-2 text-[10px] text-gray-500 truncate font-mono" id="sessionSheetTitle"></div>
+    <button onclick="handleSheetPin()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyberBorder text-gray-200 text-xs transition">
+        <i id="sheetPinIcon" class="fa-solid fa-thumbtack w-4 text-cyan-400"></i>
+        <span id="sheetPinLabel">Pin</span>
+    </button>
+    <button onclick="handleSheetRename()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cyberBorder text-gray-200 text-xs transition">
+        <i class="fa-solid fa-pen w-4 text-cyan-400"></i>
+        <span>Rename</span>
+    </button>
+    <button onclick="handleSheetDelete()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-400 text-xs transition">
+        <i class="fa-solid fa-trash w-4"></i>
+        <span>Delete</span>
+    </button>
+    <button onclick="closeSessionSheet()" class="w-full flex items-center justify-center px-4 py-3 mt-1 rounded-xl border border-cyberBorder text-gray-400 text-xs transition">
+        Cancel
+    </button>
+</div>
+
+<!-- Rename Modal -->
+<div id="renameModalOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[70] hidden items-center justify-center p-6">
+    <div class="bg-cyberCard border border-cyberBorder rounded-2xl p-5 w-full max-w-xs shadow-2xl">
+        <h3 class="text-xs font-bold text-white mb-3">Rename Thread</h3>
+        <input id="renameInput" type="text" maxlength="60"
+            class="w-full bg-cyberDark border border-cyberBorder rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-cyan-400/70 mb-4 font-mono"
+            onkeydown="if(event.key==='Enter'){submitRename();}">
+        <div class="flex justify-end gap-2">
+            <button onclick="closeRenameModal()" class="px-3.5 py-1.5 rounded-xl text-[11px] text-gray-400 hover:text-white transition">Cancel</button>
+            <button onclick="submitRename()" class="px-3.5 py-1.5 rounded-xl text-[11px] bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold transition">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

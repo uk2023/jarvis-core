@@ -1,0 +1,1232 @@
+JARVIS — NEURO-SYMBOLIC COGNITIVE ORGANISM BLUEPRINT
+==========================================================
+VERSION: NS-2026.1
+STATUS: PROPOSED SMART EXTENSION OF THE LOCKED CANONICAL ARCHITECTURE
+
+PURPOSE
+-------
+Turn JARVIS from an LLM-centered assistant into a local cognitive organism
+that can understand, remember, reason, learn and operate without requiring
+an LLM for every interaction.
+
+The existing canonical lifecycle remains LOCKED:
+
+PERCEIVE → UNDERSTAND → ROUTE → THINK → DECIDE → ACT
+→ EXPERIENCE → EVALUATE → LEARN → EVOLVE
+
+The technologies below are implementation layers INSIDE that skeleton.
+They do not replace the architectural boundaries.
+
+==========================================================
+1. CORE DESIGN PRINCIPLE
+==========================================================
+
+JARVIS must be:
+
+    LLM-ASSISTED
+NOT:
+    LLM-DEPENDENT
+
+Neural systems handle:
+    language, ambiguity, pattern recognition, semantic parsing,
+    generalization and difficult reasoning.
+
+Symbolic systems handle:
+    entities, relations, facts, rules, constraints, state,
+    provenance, deterministic reasoning and executable structure.
+
+Retrieval supplies:
+    relevant memories, documents, experiences and graph neighborhoods.
+
+GraphRAG supplies:
+    relationship-aware retrieval and multi-hop context.
+
+SLMs supply:
+    fast local semantic/NLP reasoning when native symbolic methods
+    are insufficient but a full LLM is unnecessary.
+
+Agentic orchestration supplies:
+    bounded planning, tool selection, verification and iterative execution.
+
+==========================================================
+2. HIGH-LEVEL ARCHITECTURE
+==========================================================
+
+                         USER / SENSOR / EVENT
+                                  |
+                                  v
+                         +----------------+
+                         |   PERCEPTION   |
+                         +----------------+
+                                  |
+                                  v
+                    +---------------------------+
+                    |       COGNITION           |
+                    |---------------------------|
+                    | Working Memory             |
+                    | Episodic Memory            |
+                    | Semantic Memory             |
+                    | Knowledge Graph             |
+                    | Goals / State               |
+                    | Capabilities                |
+                    | Experience                  |
+                    +-------------+---------------+
+                                  |
+                                  v
+                    +---------------------------+
+                    | SEMANTIC UNDERSTANDING    |
+                    |---------------------------|
+                    | Normalization               |
+                    | Entity Resolution            |
+                    | Coreference Resolution       |
+                    | Relation Resolution          |
+                    | Temporal Resolution          |
+                    | Intent / Goal Interpretation |
+                    | Fact Candidate Extraction    |
+                    | Confidence / Provenance      |
+                    +-------------+---------------+
+                                  |
+                                  v
+                    +---------------------------+
+                    |   COGNITIVE ROUTER         |
+                    +---------------------------+
+                       /          |           \
+                      /           |            \
+                     v            v             v
+                 NATIVE        HYBRID        LLM FALLBACK
+                   |              |               |
+                   |              |               |
+                   |        SLM / LOCAL LLM       |
+                   |        + Retrieval           |
+                   |        + GraphRAG             |
+                   |              |               |
+                   +--------------+---------------+
+                                  |
+                                  v
+                         +----------------+
+                         | BRAIN DECISION |
+                         +----------------+
+                                  |
+                                  v
+                         ACTION / RESPONSE
+                                  |
+                                  v
+                           +-------------+
+                           | EXPERIENCE  |
+                           +-------------+
+                                  |
+                                  v
+                         +----------------+
+                         | SELF-EVALUATOR |
+                         +----------------+
+                                  |
+                                  v
+                      +-------------------------+
+                      | LEARNING COORDINATOR    |
+                      +-------------------------+
+                           /                 \
+                          v                   v
+                 KNOWLEDGE PATH          CAPABILITY PATH
+                          |                   |
+                          v                   v
+                 KNOWLEDGE BUILDER       SKILL LEARNER
+                          |                   |
+                          v                   v
+                  CANDIDATE/VALIDATE    REPEATED SUCCESS
+                          |                   |
+                          v                   v
+                    ACCEPTANCE          SKILL PROPOSAL
+                          |                   |
+                          v                   v
+                 SEMANTIC MEMORY        APPROVAL GATE
+                          |                   |
+                          v                   v
+                  KNOWLEDGE GRAPH       ACTIVATION
+                                              |
+                                              v
+                                         SKILL REGISTRY
+                                              |
+                                              v
+                                         SKILL EXECUTOR
+                                              |
+                                              v
+                                         EXPERIENCE
+
+                       LEARNING / EVALUATION
+                                |
+                                v
+                       EVOLUTION BOUNDARY
+                                |
+                                v
+                            EVOLUTION
+
+==========================================================
+3. SEMANTIC UNDERSTANDING LAYER
+==========================================================
+
+THIS IS THE MAIN GAP-FILLING LAYER.
+
+Do NOT make LLMBridge the permanent owner of fact extraction.
+
+Create:
+
+    core/cognition/semantic_understanding/
+
+Suggested modules:
+
+    semantic_parser.py
+    entity_resolver.py
+    relation_resolver.py
+    coreference_resolver.py
+    temporal_resolver.py
+    fact_extractor.py
+    confidence.py
+    provenance.py
+
+Input:
+
+    raw user message
+    + perception
+    + current context
+    + retrieved memories
+
+Output:
+
+    SemanticFrame
+
+Example:
+
+    User:
+        "mera favorite color blue hai"
+
+    SemanticFrame:
+
+        subject: USER
+        predicate: PREFERS_COLOR
+        value: BLUE
+        confidence: 0.97
+        source: USER_UTTERANCE
+        provenance: current_turn
+        temporal_scope: persistent
+        evidence: exact/normalized utterance
+
+==========================================================
+4. SEMANTIC PARSER CASCADE
+==========================================================
+
+JARVIS should NOT immediately call an LLM.
+
+Use an escalation cascade:
+
+    LEVEL 0 — deterministic normalization
+        |
+        v
+    LEVEL 1 — native semantic rules
+        |
+        v
+    LEVEL 2 — entity/relation resolver
+        |
+        v
+    LEVEL 3 — memory + graph retrieval
+        |
+        v
+    LEVEL 4 — local SLM
+        |
+        v
+    LEVEL 5 — hybrid SLM + GraphRAG
+        |
+        v
+    LEVEL 6 — LLM FALLBACK
+
+Router decision:
+
+    confidence >= threshold
+        -> native/hybrid
+
+    confidence below threshold
+        -> SLM
+
+    still ambiguous / complex
+        -> LLM
+
+The LLM is therefore the final semantic fallback, not the first dependency.
+
+==========================================================
+5. MEMORY ARCHITECTURE
+==========================================================
+
+JARVIS should maintain multiple complementary memory types.
+
+A. WORKING MEMORY
+    Current turn, active task, immediate context.
+
+B. EPISODIC MEMORY
+    What happened:
+        input, decision, action, result, failure, timing,
+        route, evidence.
+
+C. SEMANTIC MEMORY
+    Stable accepted facts:
+        subject -> predicate -> value.
+
+D. KNOWLEDGE GRAPH
+    Connected semantic structure:
+
+        USER --works_on--> JARVIS
+        USER --prefers--> BLUE
+        JARVIS --contains--> SEMANTIC_MEMORY
+        PROJECT --has_component--> MODULE
+
+E. PROCEDURAL/CAPABILITY MEMORY
+    Approved executable skills.
+
+F. PROVENANCE
+    Every important fact should know:
+        where it came from,
+        when,
+        confidence,
+        evidence count,
+        update history.
+
+==========================================================
+6. SEMANTIC FACT EXTRACTION
+==========================================================
+
+Current:
+
+    Qwen
+      |
+      +--> response
+      |
+      +--> memory_signal
+              |
+              v
+          Experience
+
+TARGET:
+
+    Semantic Understanding
+          |
+          +--> semantic_candidate
+          |
+          v
+       Experience
+          |
+          v
+     SelfEvaluator
+          |
+          v
+   KnowledgeBuilder
+          |
+          v
+   Candidate / Reject
+          |
+          v
+      Acceptance
+          |
+          v
+   Semantic Memory
+          |
+          v
+   Knowledge Graph
+
+The existing LLM memory_signal may remain temporarily as:
+
+    LLM_FALLBACK_SEMANTIC_SIGNAL
+
+It must NOT directly write memory.
+
+==========================================================
+7. MEMORY SIGNAL CONTRACT
+==========================================================
+
+Canonical semantic candidate:
+
+    {
+        "subject": "...",
+        "predicate": "...",
+        "value": "...",
+        "confidence": 0.0,
+        "source": "...",
+        "provenance": {...},
+        "temporal_scope": "...",
+        "evidence": [...]
+    }
+
+Important:
+
+    candidate != knowledge
+
+Only:
+
+    candidate
+       -> experience
+       -> evaluation
+       -> knowledge candidate
+       -> acceptance
+       -> semantic memory
+
+==========================================================
+8. GRAPH MEMORY
+==========================================================
+
+SemanticMemory remains the trusted persistence layer.
+
+KnowledgeGraph becomes the relational reasoning layer.
+
+Example:
+
+    USER
+      |
+      +-- works_on --> JARVIS
+      |
+      +-- prefers --> BLUE
+      |
+      +-- interested_in --> NEURO_SYMBOLIC_AI
+      |
+      +-- uses --> ANDROID
+
+Graph operations:
+
+    entity lookup
+    relation lookup
+    neighborhood retrieval
+    multi-hop traversal
+    temporal filtering
+    confidence filtering
+    provenance filtering
+
+Never treat an unverified graph edge as trusted fact.
+
+==========================================================
+9. GRAPH-RAG
+==========================================================
+
+GraphRAG is NOT the memory itself.
+
+It is a retrieval/reasoning layer over:
+
+    documents
+    semantic memory
+    knowledge graph
+    episodic memory
+
+Pipeline:
+
+    Query
+      |
+      v
+    Query Understanding
+      |
+      v
+    Entity/Relation Detection
+      |
+      v
+    Graph Retrieval
+      |
+      +--> direct facts
+      +--> neighboring entities
+      +--> multi-hop paths
+      +--> relevant documents
+      +--> episodic evidence
+      |
+      v
+    Context Assembly
+      |
+      v
+    Native Reasoner / SLM / LLM
+      |
+      v
+    Answer / Decision
+
+Use GraphRAG especially for:
+    multi-hop questions,
+    relationship-heavy context,
+    project knowledge,
+    document knowledge,
+    cross-memory reasoning.
+
+Do not use GraphRAG for every trivial query.
+
+==========================================================
+10. DOCUMENT KNOWLEDGE
+==========================================================
+
+Documents should NOT be dumped directly into semantic memory.
+
+Pipeline:
+
+    Document
+       |
+       v
+    Parser
+       |
+       v
+    Chunk / Structure Extraction
+       |
+       v
+    Entity + Relation Extraction
+       |
+       v
+    Document Knowledge Graph
+       |
+       +--> Vector/semantic index
+       |
+       +--> Graph index
+       |
+       v
+    Retrieval
+       |
+       v
+    Reasoning
+
+Keep source documents and provenance.
+
+A document-derived statement is evidence, not automatically a
+personal/user fact.
+
+==========================================================
+11. NATIVE REASONING
+==========================================================
+
+NativeReasoner should grow over time.
+
+Start with:
+
+    entity matching
+    aliases
+    relation rules
+    temporal rules
+    confidence scoring
+    state transitions
+    deterministic calculations
+    graph traversal
+    constraint checking
+    simple inference
+
+Example:
+
+    USER --works_on--> JARVIS
+    JARVIS --contains--> SemanticMemory
+
+Question:
+
+    "mera project kya hai?"
+
+Native graph traversal can answer without an LLM.
+
+==========================================================
+12. SLM ROLE
+==========================================================
+
+SLM is the middle layer.
+
+Use it for:
+
+    ambiguous language
+    paraphrase understanding
+    semantic classification
+    intent interpretation
+    lightweight reasoning
+    fact extraction
+    query rewriting
+    context compression
+
+Do NOT use SLM for:
+
+    unrestricted execution
+    direct database writes
+    automatic skill activation
+    bypassing Brain Decision
+
+SLM remains subordinate to the architecture.
+
+==========================================================
+13. LLM FALLBACK
+==========================================================
+
+LLM remains available.
+
+But its role becomes:
+
+    difficult language understanding
+    unresolved ambiguity
+    complex synthesis
+    difficult reasoning
+    novel situations
+    recovery from native failure
+
+LLM output must return through structured boundaries.
+
+Never:
+
+    LLM -> direct tool execution
+
+Instead:
+
+    LLM
+      |
+      v
+    Structured Cognitive Result
+      |
+      v
+    Brain Decision
+      |
+      v
+    Action
+
+==========================================================
+14. CONTEXT GAP SOLUTION
+==========================================================
+
+The brain does not need to "understand everything" natively.
+
+It needs a progressive competence stack:
+
+    Memory
+       +
+    Retrieval
+       +
+    Entity Resolution
+       +
+    Knowledge Graph
+       +
+    Native Rules
+       +
+    SLM
+       +
+    LLM fallback
+
+Over time, repeated experiences should reduce fallback usage.
+
+Example:
+
+FIRST OCCURRENCE
+
+    "woh wala project"
+        |
+        v
+    unresolved
+        |
+        v
+    LLM fallback
+        |
+        v
+    context resolved:
+        "JARVIS"
+
+REPEATED OCCURRENCES
+
+    "woh wala project"
+        |
+        v
+    episodic evidence
+        +
+    graph relation
+        +
+    recency
+        +
+    frequency
+        |
+        v
+    native resolution
+        |
+        v
+    confidence = high
+
+Thus:
+
+    experience -> better retrieval/resolution
+
+NOT:
+
+    experience -> blind model retraining
+
+==========================================================
+15. PERSONAL CONTEXT LEARNING
+==========================================================
+
+JARVIS should learn user-specific semantic patterns.
+
+Maintain:
+
+    aliases
+    recurring phrases
+    preferred terminology
+    entity associations
+    temporal habits
+    project associations
+    task patterns
+
+Example:
+
+    "woh project"
+       ->
+    JARVIS project
+
+This is contextual learning through memory and graph structure,
+not necessarily neural model retraining.
+
+==========================================================
+16. AGENTIC LAYER
+==========================================================
+
+Agentic behavior must remain inside Brain Decision boundaries.
+
+Planner:
+
+    Goal
+      |
+      v
+    Plan
+      |
+      v
+    Step
+      |
+      v
+    Skill/Tool
+      |
+      v
+    Result
+      |
+      v
+    Verify
+      |
+      v
+    Experience
+
+Agent cannot:
+
+    bypass Brain
+    bypass permission
+    auto-register skills
+    silently modify trusted knowledge
+
+==========================================================
+17. LEARNING LOOP
+==========================================================
+
+Action
+  |
+  v
+Experience
+  |
+  v
+SelfEvaluator
+  |
+  v
+LearningCoordinator
+  |
+  +-----------------------+
+  |                       |
+  v                       v
+KnowledgeBuilder       SkillLearner
+  |                       |
+  v                       v
+Candidate              Pattern detection
+  |                       |
+  v                       v
+Acceptance             Proposal
+  |                       |
+  v                       v
+SemanticMemory         Approval
+  |                       |
+  v                       v
+KnowledgeGraph         SkillRegistry
+
+==========================================================
+18. SEMANTIC LEARNING LOOP
+==========================================================
+
+Repeated interaction:
+
+    User language
+       |
+       v
+    SemanticFrame
+       |
+       v
+    Retrieval
+       |
+       v
+    Resolution
+       |
+       v
+    Experience
+       |
+       v
+    Evaluation
+       |
+       v
+    Accepted semantic knowledge
+       |
+       v
+    Graph update
+       |
+       v
+    Better future resolution
+
+This creates gradual contextual competence.
+
+==========================================================
+19. CONFIDENCE MODEL
+==========================================================
+
+Every inferred fact should have confidence.
+
+Possible evidence:
+
+    direct user statement
+    repeated user statement
+    successful task outcome
+    trusted document
+    accepted knowledge
+    graph consistency
+    temporal consistency
+    semantic similarity
+
+Confidence should NOT be a single magic number.
+
+Track evidence sources separately.
+
+Example:
+
+    confidence = 0.94
+    direct_evidence = 2
+    supporting_episodes = 8
+    graph_consistency = high
+    last_confirmed = timestamp
+
+==========================================================
+20. CONTRADICTION HANDLING
+==========================================================
+
+Never silently overwrite important facts.
+
+Example:
+
+    USER --lives_in--> Varanasi
+
+Later:
+
+    USER --lives_in--> Lucknow
+
+Create:
+
+    competing hypotheses / temporal facts
+
+Resolve using:
+
+    timestamp
+    directness
+    recency
+    repeated evidence
+    explicit correction
+
+Semantic memory should support history.
+
+==========================================================
+21. DOCUMENT + PERSONAL MEMORY SEPARATION
+==========================================================
+
+Keep separate namespaces:
+
+    PERSONAL
+    PROJECT
+    DOCUMENT
+    WORLD
+    SYSTEM
+    EXPERIENCE
+
+A scientific document saying:
+
+    "X causes Y"
+
+must not become:
+
+    USER believes X causes Y
+
+unless the user actually states that.
+
+==========================================================
+22. OFFLINE-FIRST OPERATING MODES
+==========================================================
+
+MODE A — FULL LOCAL
+
+    Native
+    Memory
+    Graph
+    SLM
+    Local tools
+
+MODE B — DEGRADED LOCAL
+
+    Native
+    Memory
+    Graph
+    No SLM
+
+MODE C — LLM AVAILABLE
+
+    Native
+    SLM
+    GraphRAG
+    Local LLM
+
+MODE D — USER INTERFACE UNAVAILABLE
+
+    Cognitive core can still:
+        process queued events
+        run scheduled jobs
+        perform idle learning
+        consolidate memory
+        evaluate experiences
+        maintain graph
+        generate internal plans
+
+UI failure MUST NOT equal cognitive death.
+
+==========================================================
+23. JARVIS SURVIVAL PRINCIPLE
+==========================================================
+
+The organism must be modular.
+
+Presentation layer failure:
+    JARVIS continues internally.
+
+LLM failure:
+    JARVIS degrades to native cognition.
+
+SLM failure:
+    JARVIS degrades to symbolic/retrieval cognition.
+
+Graph failure:
+    JARVIS degrades to semantic/vector/episodic memory.
+
+Semantic memory failure:
+    JARVIS retains episodic state where possible.
+
+Internet failure:
+    JARVIS remains operational offline.
+
+No single optional component should define whether JARVIS
+is "alive."
+
+==========================================================
+24. IDLE COGNITION
+==========================================================
+
+When no user is interacting:
+
+    IdleLoop
+       |
+       +--> memory consolidation
+       +--> duplicate detection
+       +--> contradiction detection
+       +--> graph maintenance
+       +--> experience clustering
+       +--> semantic pattern discovery
+       +--> skill observation
+       +--> knowledge candidate review
+       +--> self-evaluation
+       +--> context association learning
+       +--> system health evaluation
+
+Idle learning MUST use controlled boundaries.
+
+No silent skill activation.
+
+No unrestricted self-modification.
+
+==========================================================
+25. EVOLUTION
+==========================================================
+
+Evolution is a separate boundary.
+
+Possible evolution signals:
+
+    repeated failure
+    repeated ambiguity
+    recurring missing capability
+    inefficient route
+    high LLM fallback rate
+    memory retrieval failure
+    skill gap
+
+Evolution proposes:
+
+    new rule
+    new resolver
+    new retrieval strategy
+    new skill proposal
+    architecture improvement
+
+Evolution proposal != automatic code execution.
+
+==========================================================
+26. LLM FALLBACK REDUCTION METRIC
+==========================================================
+
+Track:
+
+    total_interactions
+    native_success
+    hybrid_success
+    slm_success
+    llm_fallback_count
+    llm_fallback_rate
+    semantic_resolution_accuracy
+    retrieval_success
+    contradiction_rate
+
+Goal:
+
+    Over time, repeated known situations should require
+    less LLM assistance.
+
+Do NOT optimize for "zero LLM."
+
+Optimize for:
+
+    minimum necessary LLM usage
+    maximum reliable local cognition
+
+==========================================================
+27. CANONICAL COGNITIVE ROUTING POLICY
+==========================================================
+
+    Can native cognition answer reliably?
+        YES -> NATIVE
+
+        NO
+        |
+        v
+    Can retrieval + graph resolve it?
+        YES -> HYBRID/NATIVE
+
+        NO
+        |
+        v
+    Can local SLM resolve it?
+        YES -> HYBRID
+
+        NO
+        |
+        v
+    LLM FALLBACK
+
+Every route returns to:
+
+    BRAIN DECISION
+
+==========================================================
+28. FINAL TARGET ARCHITECTURE
+==========================================================
+
+USER
+ |
+ v
+PERCEPTION
+ |
+ v
+COGNITION
+ |
+ +--> Working Memory
+ +--> Episodic Memory
+ +--> Semantic Memory
+ +--> Knowledge Graph
+ +--> Goals
+ +--> State
+ +--> Capabilities
+ |
+ v
+SEMANTIC UNDERSTANDING
+ |
+ +--> Native Parser
+ +--> Entity Resolver
+ +--> Relation Resolver
+ +--> Coreference
+ +--> Temporal Resolver
+ +--> Confidence
+ |
+ v
+RETRIEVAL FABRIC
+ |
+ +--> Semantic Retrieval
+ +--> Episodic Retrieval
+ +--> Graph Retrieval
+ +--> Document Retrieval
+ |
+ v
+COGNITIVE ROUTER
+ |
+ +----------+-----------+-----------+
+ |          |           |           |
+ v          v           v           |
+NATIVE    HYBRID       SLM          |
+ |          |           |           |
+ +----------+-----------+           |
+              |                      |
+              v                      |
+           GRAPHRAG                  |
+              |                      |
+              +----------+-----------+
+                         |
+                         v
+                    LLM FALLBACK
+                         |
+                         v
+                  STRUCTURED RESULT
+                         |
+                         v
+                    BRAIN DECISION
+                         |
+                         v
+                  ACTION / RESPONSE
+                         |
+                         v
+                    EXPERIENCE
+                         |
+                         v
+                  SELF-EVALUATION
+                         |
+                         v
+                LEARNING COORDINATOR
+                    /           \
+                   v             v
+          KNOWLEDGE PATH     SKILL PATH
+                   |             |
+                   v             v
+          KNOWLEDGE BUILDER  SKILL LEARNER
+                   |             |
+                   v             v
+              ACCEPTANCE      PROPOSAL
+                   |             |
+                   v             v
+           SEMANTIC MEMORY    APPROVAL
+                   |             |
+                   v             v
+           KNOWLEDGE GRAPH    REGISTRY
+                                 |
+                                 v
+                              EXECUTOR
+                                 |
+                                 v
+                             EXPERIENCE
+
+                    |
+                    v
+              EVOLUTION
+                    |
+                    v
+              NEXT CYCLE
+
+==========================================================
+29. IMPLEMENTATION ORDER
+==========================================================
+
+PHASE 1
+    Keep current pipeline stable.
+    Keep LLM memory_signal as fallback only.
+
+PHASE 2
+    Build SemanticFrame contract.
+
+PHASE 3
+    Extract native entity/relation/coreference resolution.
+
+PHASE 4
+    Connect SemanticMemory + KnowledgeGraph retrieval.
+
+PHASE 5
+    Add confidence + provenance + contradiction handling.
+
+PHASE 6
+    Add SLM semantic parser.
+
+PHASE 7
+    Add GraphRAG for multi-hop/document reasoning.
+
+PHASE 8
+    Move LLM to final fallback position.
+
+PHASE 9
+    Measure fallback reduction and resolution quality.
+
+PHASE 10
+    Add idle consolidation and evolution proposals.
+
+==========================================================
+30. NON-NEGOTIABLE BOUNDARIES
+==========================================================
+
+Perception != Action
+
+Cognition != Final Decision
+
+Router != Brain
+
+Experience != Knowledge
+
+Experience != Skill
+
+Candidate != Accepted Knowledge
+
+Proposal != Executable Skill
+
+LLM != Architecture Owner
+
+Retrieval != Truth
+
+Graph Edge != Automatically Trusted Fact
+
+Self-Evaluation != Evolution
+
+Evolution Proposal != Automatic Code Execution
+
+==========================================================
+31. FINAL PRINCIPLE
+==========================================================
+
+JARVIS does not become intelligent by removing the LLM.
+
+JARVIS becomes intelligent by making the LLM one component
+inside a larger cognitive system.
+
+The desired progression is:
+
+    LLM DEPENDENT
+         |
+         v
+    LLM ASSISTED
+         |
+         v
+    HYBRID COGNITION
+         |
+         v
+    MEMORY + GRAPH + REASONING
+         |
+         v
+    LOCAL COGNITIVE AUTONOMY
+
+The final organism should be capable of:
+
+    understanding
+    remembering
+    retrieving
+    relating
+    reasoning
+    acting
+    evaluating
+    learning
+    consolidating
+    improving
+
+while remaining operational when optional components fail.
+
+==========================================================
+END OF BLUEPRINT
+==========================================================

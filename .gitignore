@@ -1,0 +1,15 @@
+.env
+*.db
+*.index
+__pycache__/
+*.pyc
+*.log
+*.bak
+
+models/*.gguf
+*.onnx
+
+# SQLite runtime files
+*.db-wal
+*.db-shm
+*.db-journal

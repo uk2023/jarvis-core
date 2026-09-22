@@ -1,0 +1,10 @@
+/* Six admin actions moved from the top sub-header into the sidebar. */
+.jarvis-admin-sidebar-nav-host{width:100%;padding:8px 10px 10px;flex:0 0 auto;}
+.jarvis-admin-sidebar-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;}
+.jarvis-admin-sidebar-nav-item{min-width:0;height:42px;border-radius:11px;border:1px solid var(--jarvis-border);background:var(--jarvis-surface-raised);color:var(--jarvis-text-muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px 2px;cursor:pointer;transition:all .18s ease;}
+.jarvis-admin-sidebar-nav-item span{font-size:8px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.jarvis-admin-sidebar-nav-item:hover{color:var(--jarvis-text);border-color:var(--jarvis-border-strong);background:var(--jarvis-surface);transform:translateY(-1px);}
+.jarvis-admin-sidebar-nav-item.is-active{color:#fff;background:var(--jarvis-accent);border-color:var(--jarvis-accent);box-shadow:0 4px 14px color-mix(in srgb,var(--jarvis-accent) 24%,transparent);}
+/* Remove the old authenticated six-item sub-header from the main content. */
+#app-root > div > header + div:has(button[title="Monitor (System Telemetry & Vitals)"]){display:none!important;}
+@media (max-width:767px){.jarvis-admin-sidebar-nav-host{padding:8px 8px 10px;}.jarvis-admin-sidebar-nav-item{height:40px;}.jarvis-admin-sidebar-nav-item span{font-size:7.5px;}}

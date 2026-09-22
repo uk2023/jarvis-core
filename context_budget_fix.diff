@@ -1,0 +1,81 @@
+--- /home/claude/pristine/Jarvis_Work/core/orchestration/brain.py	2026-09-02 11:48:03.000000000 +0000
++++ /home/claude/work/Jarvis_Work/core/orchestration/brain.py	2026-09-03 09:52:29.071927305 +0000
+@@ -627,20 +627,20 @@
+             f"5. Keep responses loyal, calm, and concise.\\n"
+             f"6. Dont use emojis in response.\\n"
+             f"7. Behave alike Marvel Iron Man's JARVIS: savage, funny, and useful.\\n"
+-            f"8. Always loyal to {creator_name}."
++            f"8. Always loyal to {creator_name}.\\n\\n"
++            f"{self._bounded_context_block(context)}"
+         )
+ 
+-        context_prompt = (
+-            f"=== RETRIEVED MEMORIES ===\\n"
+-            f"{context.get('recent_experiences', [])}\\n\\n"
+-            f"=== SEMANTIC KNOWLEDGE ===\\n"
+-            f"{context.get('relevant_knowledge', [])}\\n\\n"
+-            f"=== KNOWLEDGE GRAPH EDGES ===\\n"
+-            f"{context.get('graph_relations', [])}\\n\\n"
+-            f"=== CURRENT USER MESSAGE ===\\n"
+-            f"{creator_name}: {user_input}\\n\\n"
+-            f"{bot_name}:"
+-        )
++        # The current user message must NEVER be lost to context-budget
++        # truncation. CognitiveBudgeter trims each side of the payload
++        # by *dropping the tail*, so anything that must survive has to
++        # live in its own short, isolated blob rather than at the end
++        # of a long, unbounded memory dump. Retrieved memory/knowledge/
++        # graph context therefore goes into system_prompt above (capped
++        # to a small item count, so a truncated tail there only costs
++        # the least-relevant retrieved items, never the live question),
++        # and this stays just the live turn.
++        context_prompt = f"{creator_name}: {user_input}\\n\\n{bot_name}:"
+ 
+         try:
+             generate = getattr(self.llm, "generate", None)
+@@ -1360,6 +1360,45 @@
+         self.last_turn_trace = {"source": "brain", "query": user_input, "response_preview": response[:200], "perception": perception, "cognitive_route": route, "brain_decision": self.last_brain_decision, "action_response": self.last_action_response, "llm_available": llm, "pipeline_success": True, "timings": {"total": time.time() - started}}
+         self._emit("BRAIN_CYCLE_COMPLETED", {"trace": self.last_turn_trace})
+ 
++    # Retrieval-based context bound for the LLM fallback route (blueprint
++    # Phase 4: never dump full memory/knowledge/graph state into an LLM
++    # prompt). Caps item count and per-item length *before* the string
++    # ever reaches CognitiveBudgeter, so the hard 4096-token guard is a
++    # backstop rather than the only thing standing between this and an
++    # unbounded prompt.
++    _CONTEXT_MAX_ITEMS = 5
++    _CONTEXT_MAX_ITEM_CHARS = 200
++
++    @classmethod
++    def _bounded_context_items(cls, items: Any) -> list:
++        if not items:
++            return []
++        try:
++            sequence = list(items)
++        except TypeError:
++            return []
++        bounded = []
++        for item in sequence[: cls._CONTEXT_MAX_ITEMS]:
++            text = str(item)
++            if len(text) > cls._CONTEXT_MAX_ITEM_CHARS:
++                text = text[: cls._CONTEXT_MAX_ITEM_CHARS] + "…"
++            bounded.append(text)
++        return bounded
++
++    @classmethod
++    def _bounded_context_block(cls, context: Dict[str, Any]) -> str:
++        experiences = cls._bounded_context_items(context.get("recent_experiences"))
++        knowledge = cls._bounded_context_items(context.get("relevant_knowledge"))
++        graph = cls._bounded_context_items(context.get("graph_relations"))
++        return (
++            f"=== RETRIEVED MEMORIES (most relevant, max {cls._CONTEXT_MAX_ITEMS}) ===\\n"
++            f"{experiences}\\n\\n"
++            f"=== SEMANTIC KNOWLEDGE (max {cls._CONTEXT_MAX_ITEMS}) ===\\n"
++            f"{knowledge}\\n\\n"
++            f"=== KNOWLEDGE GRAPH EDGES (max {cls._CONTEXT_MAX_ITEMS}) ===\\n"
++            f"{graph}"
++        )
++
+     def _fallback(self, user_input: str) -> str:
+         lower = (user_input or "").strip().lower()
+         if lower in {"status", "health", "ping"}:

@@ -1,0 +1,28 @@
+:root {
+  --jarvis-table-bg: #ffffff;
+  --jarvis-table-header: #f3f6fb;
+  --jarvis-table-row-hover: #f7f9fc;
+  --jarvis-table-border: #dfe5ee;
+  --jarvis-table-text: #172033;
+  --jarvis-table-muted: #718096;
+  --jarvis-table-accent: #315fbe;
+}
+
+html.dark {
+  --jarvis-table-bg: #0f141d;
+  --jarvis-table-header: #151c27;
+  --jarvis-table-row-hover: #18212d;
+  --jarvis-table-border: #293446;
+  --jarvis-table-text: #edf3fb;
+  --jarvis-table-muted: #9aa8ba;
+  --jarvis-table-accent: #8eb3ff;
+}
+
+.jarvis-table-surface { background: var(--jarvis-table-bg); border-color: var(--jarvis-table-border); color: var(--jarvis-table-text); }
+.jarvis-table-header { background: var(--jarvis-table-header); border-color: var(--jarvis-table-border); color: var(--jarvis-table-muted); }
+.jarvis-table-row { border-color: var(--jarvis-table-border); color: var(--jarvis-table-text); }
+.jarvis-table-row:hover { background: var(--jarvis-table-row-hover); }
+.jarvis-table-muted { color: var(--jarvis-table-muted); }
+.jarvis-table-accent { color: var(--jarvis-table-accent); }
+.jarvis-table-modal { background: var(--jarvis-table-bg); color: var(--jarvis-table-text); border-color: var(--jarvis-table-border); }
+.jarvis-table-modal-head { background: var(--jarvis-table-header); border-color: var(--jarvis-table-border); }

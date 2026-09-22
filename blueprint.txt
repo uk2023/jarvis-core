@@ -1,0 +1,406 @@
+==========================================================
+JARVIS ORGANISM -- AS-BUILT RUNTIME WORKFLOW (v6)
+==========================================================
+This document describes the ACTUAL implemented workflow after the
+runtime/orchestration/monitoring upgrade -- not the aspirational
+design. Every mechanism named here exists in code, at the file/
+function named, and was exercised by a live test before being
+written down here.
+
+----------------------------------------------------------------
+1. END-TO-END TURN FLOW
+----------------------------------------------------------------
+One user message travels through exactly this sequence. Every arrow
+is a real function call, not a conceptual boundary.
+
+    User Input (cli.py / web backend)
+        |
+        v
+    Brain.think_and_respond()            [core/orchestration/brain.py]
+        |
+        |  emits BRAIN_CYCLE_STARTED  ---------------------------+
+        v                                                        |
+    Brain._perceive()                                            |
+        |                                                        |
+        |-- Brain.build_context() [cache miss only]               |  state bus
+        |      emits CONTEXT_RETRIEVAL_STARTED/COMPLETED          |  (see  6)
+        |      -> MemoryManager.build_context()                   |  derives
+        |         (FAISS similarity + graph retrieval)            |  pipeline
+        |                                                         |  stage from
+        |-- PerceptionEngine.perceive()                           |  these
+        |      -> NativePerceptionProvider   (deterministic,      |  events
+        |         Level-0 pattern match: greeting/status/thanks)  |
+        |      -> LLMPerceptionProvider      (falls through to    |
+        |         this only if native found nothing)              |
+        |           runs the 3-STAGE EXTRACTION CASCADE, see  2   |
+        |                                                         |
+        |-- (BlueprintBrain only) SemanticUnderstanding.understand()
+        |      normalizes/enriches perception into semantic       |
+        |      intent+entities+relations+confidence                |
+        |                                                         |
+        |  emits PERCEPTION_COMPLETED  --------------------------+
+        v
+    Brain._route_cognition()
+        |
+        |-- Brain.build_context()  [same cache key -> usually a
+        |      cache hit, so no second FAISS pass per turn]
+        |
+        |-- CognitiveRouter.decide()          [cognitive_router.py]
+        |      evidence-driven: memory matches, knowledge matches,
+        |      skill availability, goal presence, confidence
+        |      -> emits one CognitiveDecision: mode in
+        |         {goal, native, hybrid, llm, clarify}
+        |
+        |  emits COGNITION_ROUTED  -------------------------------+
+        v
+    Brain dispatches on decision.mode:
+        goal    -> GoalManager.add()/update_status() + Planner.plan()
+        native  -> SkillExecutor.execute(skill_name)
+        hybrid  -> SkillExecutor.execute() then LLM synthesizes the
+                   user-facing sentence from the native result
+                   (LLM never invents the action, only phrases it)
+        llm     -> HybridLLMBridge.generate_response() with bounded,
+                   retrieved-memory-injected context
+        |
+        v
+    Brain._record_action_response()      <-- SINGLE CHOKEPOINT
+        |
+        |  Every mode above passes through here before returning.
+        |  This is deliberately the ONE place background learning
+        |  gets triggered -- see  3.
+        |
+        |  emits ACTION_RESPONSE_COMPLETED
+        v
+    Brain._trace()  ->  last_turn_trace populated
+        |
+        |  emits BRAIN_CYCLE_COMPLETED  --------------------------+
+        v
+    Response string returned to caller (cli.py / web backend)
+        |
+        v
+    User sees the reply. Background learning (step 3) continues
+    on its own thread, already queued, does not block this return.
+
+----------------------------------------------------------------
+2. STRUCTURED EXTRACTION CASCADE  (core/contracts/extraction.py)
+----------------------------------------------------------------
+Function: run_extraction_cascade(schema_name, primary, refined,
+                                  safe_default)
+
+This is the fix for: a weak/offline model rambling instead of
+returning JSON used to be silently accepted as a zero-confidence
+"valid" result, with no retry and no floor.
+
+  STAGE 1 -- PRIMARY
+      One call with the normal system prompt + JSON-shape hint.
+      Result is validated against the registered contract
+      (core/contracts/schemas.py). Pass -> done, stage_used=primary.
+
+  STAGE 2 -- REFINED  (only runs if Stage 1 fails validation)
+      Retries once. The prompt now QUOTES BACK the validator's own
+      rejection reason ("Your previous output was REJECTED by the
+      schema validator: <reason>") and adds STRICT MODE instructions.
+      Pass -> done, stage_used=refined.
+
+  STAGE 3 -- SAFE FALLBACK  (only runs if Stage 2 also fails)
+      Zero LLM calls. Returns a deterministic, always-valid,
+      low-confidence payload (empty intent, confidence=0.0,
+      source="safe_fallback"). Downstream code always receives a
+      structurally valid object -- never raw text.
+
+  Currently wired into:
+      - core/orchestration/perception.py -> LLMPerceptionProvider
+      - core/orchestration/blueprint_brain.py -> semantic-understanding
+        LLM fallback path (same pattern, degrade-not-crash)
+
+  Every stage transition is recorded into the state bus (section 6)
+  as an "extraction" event: {schema, stage_used, fallback_active,
+  attempts:[{stage, ok, reason, timestamp}, ...]}.
+
+----------------------------------------------------------------
+3. BACKGROUND LEARNING ENGINE
+----------------------------------------------------------------
+Files: core/learning/learning_queue.py (AsyncLearningQueue),
+       core/orchestration/brain.py (_record_action_response,
+       _enqueue_learning, _run_learning_job)
+
+  Trigger point (single, canonical):
+      Brain._record_action_response() calls self._enqueue_learning()
+      for every mode except "error" (a perception/routing crash has
+      nothing structured worth persisting).
+
+  Job payload:
+      event_type = "USER_CHAT"
+      context = {
+          user_input,
+          perception,
+          semantic,      <- perception["semantic_understanding"] if
+                            present; knowledge_builder.py reads
+                            context["semantic"]["relations"] to turn
+                            "remember X" style chat into durable
+                            knowledge-graph facts, so this key must
+                            survive the hand-off
+          cognition,
+      }
+      action  = whatever the mode branch produced (skill name / goal /
+                decision dict)
+      outcome = {response, status, error}
+
+  Delivery:
+      AsyncLearningQueue is a single-worker FIFO thread, started by
+      Brain.start() and stopped (draining) by Brain.stop(). Response
+      to the user is synchronous; learning is asynchronous. If the
+      queue isn't alive (standalone/test use), _enqueue_learning()
+      falls back to running the job inline so nothing is silently
+      dropped -- same correctness, just no latency win in that case.
+
+  Worker pipeline (core/orchestration/brain.py process_experience):
+      Experience -> LearningCoordinator.learn() -> SelfEvaluator ->
+      KnowledgeBuilder -> (auto_accept ? persisted to semantic memory
+      : held for review)
+
+  IMPORTANT: BlueprintBrain (the class actually instantiated by
+  bootstrap.py) does NOT have its own separate learning call anymore.
+  It used to, and that duplicated every single turn through the full
+  pipeline (double DB writes, double FAISS embedding calls). It now
+  relies entirely on the base class's _record_action_response() hook
+  above. Verified: exactly 1 enqueue per turn.
+
+----------------------------------------------------------------
+4. CLI WORKFLOW PANEL  (cli.py)
+----------------------------------------------------------------
+Function: render_workflow_panel(brain, trace, total_duration)
+Shown automatically after every reply (not gated behind a flag):
+
+    JARVIS WORKFLOW -- this turn, 0.83s
+      1. PERCEPTION   source=native  intent=greeting  confidence=0.95
+      2. INDEXING     memory=3  knowledge=2  graph=0
+      3. ROUTING      route=llm  confidence=0.40  <reason>
+      4. EXECUTION    mode=llm  status=completed
+      5. LEARNING     queued -> pending=1 processed=12 failed=0
+
+  Data sources per line:
+      1. brain.last_turn_trace["perception"]
+      2. brain.last_context (recent_experiences / relevant_knowledge /
+         graph_relations counts -- set by Brain.build_context() on
+         every real cache-miss retrieval)
+      3. brain.last_turn_trace["cognitive_route"]
+      4. brain.last_turn_trace["brain_decision"] /["action_response"]
+      5. brain.status()["async_learning_queue"], read live at render
+         time (so it reflects the queue's real current counters, not
+         a stale copy)
+
+  /verbose toggles an ADDITIONAL full raw per-layer contract-payload
+  dump (deep_inspector.render_query_trace) on top of this panel, for
+  deep debugging. /trace_inspect shows it on demand without toggling
+  the default. Neither is required to see the workflow -- the panel
+  above is unconditional.
+
+----------------------------------------------------------------
+5. INTERNAL LOGGING  (core/runtime/log.py)
+----------------------------------------------------------------
+Function: log_event(tag, message, level)
+
+Replaces bare print() calls that used to fire from background
+threads (learning queue, event bus, semantic memory, LLM bridge,
+lifecycle, planner, goal manager) and interleave unpredictably with
+the ordered chat output in the same console.
+
+  Sinks:
+      1. logs/jarvis_runtime.log  (rotating file handler, 2MB x2,
+         logger.propagate=False so it NEVER reaches stdout/stderr)
+      2. state bus "logs" ring buffer (best-effort mirror, so
+         monitor.py / the /api/live_state endpoint can show recent
+         warnings/errors without opening a log file)
+
+----------------------------------------------------------------
+6. IPC STATE BUS  (core/runtime/state_bus.py)
+----------------------------------------------------------------
+Class: StateBus   |   Singleton accessor: get_state_bus()
+
+A single, dependency-free (json/os/threading/time/collections only),
+file-based channel that any OTHER process can read without sharing
+Python objects. Path resolution order:
+      1. $JARVIS_STATE_IPC if set
+      2. <tempdir>/jarvis_state.ipc
+      3. <project_root>/runtime/jarvis_state.ipc  (fallback if temp
+         dir isn't writable, e.g. some locked-down Android setups)
+
+  Wiring: core/organism/bootstrap.py -> create_jarvis() calls
+      get_state_bus().attach(jarvis=jarvis, brain=brain, event_bus=events)
+  immediately after the organism is assembled. This subscribes a
+  wildcard ("*") listener on the EXISTING EventBus -- no new events
+  had to be threaded through Brain by hand:
+
+      BRAIN_CYCLE_STARTED        -> stage = PERCEIVING
+      PERCEPTION_COMPLETED       -> stage = INDEXING
+      CONTEXT_RETRIEVAL_STARTED  -> stage = INDEXING
+      COGNITION_ROUTED           -> stage = EXECUTING
+      BRAIN_CYCLE_COMPLETED      -> stage = IDLE
+                                     (also re-reads brain.status()
+                                     ["async_learning_queue"] here)
+
+  Plus a low-frequency (default 2s) background poll thread for organ
+  health / heartbeat / llm_ready, same coarse telemetry the old
+  OrganismCLIMonitor collected -- now centralized so cli.py, the
+  legacy Terminal-B viewer, monitor.py, and the web backend all read
+  one consistent snapshot instead of three divergent ones.
+
+  Snapshot shape (JSON):
+      {
+        version, pid, updated_at, runtime: "ONLINE"|"OFFLINE",
+        stage: "IDLE"|"PERCEIVING"|"INDEXING"|"EXECUTING",
+        stage_detail, stage_since, fallback_active: bool,
+        pipeline_trace: [ {stage, previous_stage, detail,
+                            duration_in_previous, timestamp}, ... ],
+        extractions: [ {schema, stage_used, fallback_active,
+                         attempts:[...], timestamp}, ... ],
+        learning: {active, alive, pending, processed, failed, dropped},
+        logs: [ {tag, message, level, timestamp}, ... ],
+        organs: {name: {type, attached}, ...},
+        heartbeat: {running, beats, idle},
+        llm_ready: bool
+      }
+
+  On Brain.stop() -> stop_jarvis() calls get_state_bus().stop(),
+  which publishes one final snapshot with runtime="OFFLINE" instead
+  of deleting the file -- a watching monitor sees an explicit
+  shutdown state rather than the file just vanishing.
+
+----------------------------------------------------------------
+7. monitor.py  (project root)
+----------------------------------------------------------------
+Run in a SECOND terminal/Termux/tmux/SSH session while cli.py runs
+in the first. Zero third-party dependencies.
+
+  Design constraints (deliberate, matching why the two earlier
+  attempts failed):
+      - No `rich`, no `textual`. Only stdlib `curses`. textual was
+        heavy/unreliable to build on Termux; rich's Live rendering
+        across two terminals needed a GUI terminal emulator to
+        auto-spawn, which doesn't exist on Android.
+      - No terminal auto-spawn at all. You start it yourself in
+        whichever second session your platform actually gives you.
+        (The old cli_runtime_monitor.py OrganismCLIMonitor used to
+        hard-crash cli.py with a RuntimeError if it couldn't find
+        gnome-terminal/xterm/konsole -- guaranteed on Termux. It now
+        degrades gracefully with a one-line notice instead.)
+      - Falls back to a plain ANSI-clear polling loop (--plain flag,
+        or automatically if curses fails or stdout isn't a real tty).
+
+  build_lines(snapshot) is a pure function (snapshot -> list of
+  (text, style) tuples) with no curses calls in it, so the exact
+  same rendering logic drives both the curses UI and the plain-text
+  fallback, and is unit-testable without a real terminal.
+
+  Shows, in order: header (pid/runtime/last-updated), current STAGE
+  + fallback banner, workflow pipeline trace (last 8 transitions),
+  recent schema extractions (last 6, with per-attempt stage:ok/fail),
+  background learning queue, organism health (heartbeat/organs/llm),
+  recent internal log lines (last 5 warnings/errors).
+
+----------------------------------------------------------------
+8. WEB BACKEND EXPOSURE
+----------------------------------------------------------------
+File: backend/routes_state.py   |   Route: GET /api/live_state
+
+Returns the exact same StateBus snapshot as section 6, as JSON.
+Prefers the in-process singleton (same process as the organism, the
+normal case when cli.py starts the backend in a thread) and falls
+back to reading the on-disk IPC file otherwise -- so it also works
+if the backend is ever run as a separate process from JARVIS.
+
+Registered in backend/server.py alongside the existing routers
+(http, ws, frontend_v6). Port stays 8000 by default (matches every
+other hardcoded reference across cli.py/main.py); override with
+JARVIS_BACKEND_PORT if a different port is genuinely needed.
+
+----------------------------------------------------------------
+9. RESPONSE-TIME FIXES  (core/orchestration/llm_bridge.py)
+----------------------------------------------------------------
+  a) HybridLLMBridge._is_online() used to call the GLOBAL
+     socket.setdefaulttimeout(1.5) as part of its connectivity probe
+     -- a process-wide side effect that could silently clamp timeouts
+     on unrelated sockets (web server, websockets) created anywhere
+     else in the same process afterward. Fixed to sock.settimeout()
+     scoped to the one probe socket.
+
+  b) GroqEngine.generate() had no ceiling on TOTAL time spent
+     rotating through configured API keys -- worst case N keys x
+     ~10.5s each. Added MAX_TOTAL_SECONDS = 12.0 wall-clock budget
+     across the whole rotation, with each key's own read-timeout
+     shrunk to never outlive that deadline.
+
+  c) HybridLLMBridge._reserve_budget() used to silently clamp a
+     token request down to whatever budget remained instead of
+     rejecting it outright -- a caller asking for 512 tokens with
+     only 256 left just got 256 back with no signal. Now raises
+     CognitiveBudgetExceeded when the request doesn't fully fit,
+     which callers already handle (Brain's LLM route catches it and
+     returns a clear degraded message; the extraction cascade in
+     section 2 treats it as a stage failure and escalates).
+
+----------------------------------------------------------------
+10. FILE MAP (new / materially changed this upgrade)
+----------------------------------------------------------------
+  NEW
+    core/contracts/extraction.py         3-stage extraction cascade
+    core/runtime/state_bus.py            IPC state bus
+    core/runtime/log.py                  non-stdout internal logger
+    monitor.py                           zero-dep terminal monitor
+    backend/routes_state.py              GET /api/live_state
+
+  MATERIALLY CHANGED
+    core/orchestration/perception.py     LLMPerceptionProvider uses
+                                          the cascade (section 2)
+    core/orchestration/brain.py          _record_action_response is
+                                          now the single learning-
+                                          enqueue chokepoint (section
+                                          3); build_context sets
+                                          last_context + emits
+                                          CONTEXT_RETRIEVAL_* events;
+                                          bare print() -> log_event
+    core/orchestration/blueprint_brain.py duplicate learning call
+                                          removed (section 3)
+    core/orchestration/llm_bridge.py     response-time fixes
+                                          (section 9); print ->
+                                          log_event
+    core/organism/bootstrap.py           wires get_state_bus().attach()
+    core/organism/{event_bus,jarvis_core,
+      lifecycle}.py                      print -> log_event on
+                                          error paths
+    core/autonomy/{planner,
+      goal_manager}.py                   print -> log_event
+    core/learning/learning_queue.py      print -> log_event
+    core/memory/{semantic_memory,
+      memory_manager}.py                 print -> log_event
+    core/contracts/test_contracts.py     fixed a stale function-name
+                                          import (pre-existing bug)
+    cli.py                               render_workflow_panel is
+                                          the new default per-turn
+                                          view (section 4); /verbose
+                                          command added; graceful
+                                          degrade if legacy Terminal-B
+                                          monitor can't start
+    cli_runtime_monitor.py               OrganismCLIMonitor.start()
+                                          no longer raises on missing
+                                          GUI terminal
+    backend/server.py                    registers routes_state;
+                                          port now overridable via
+                                          JARVIS_BACKEND_PORT
+
+----------------------------------------------------------------
+11. KNOWN GAPS -- NOT DONE, STATED PLAINLY
+----------------------------------------------------------------
+  - 5 pre-existing test failures in tests/blueprint/ (2 failures + 3
+    errors: a stale generate_combined()/_MEMORY_SIGNAL_INSTRUCTIONS
+    API the bridge no longer has, and two router-mode-naming
+    assertions ("tool"/"known" vs the now-canonical "native")). All
+    confirmed to already fail identically on the original, untouched
+    codebase. Left alone -- out of scope for this pass, flagged here
+    rather than silently ignored.
+  - web_frontend/ (the React/Vite UI) was not audited. /api/live_state
+    exists and is ready to be fetched, but no frontend component was
+    added to consume it.
+  - Backend port: default is still 8000 everywhere; only made
+    override-able, not migrated to 8080.

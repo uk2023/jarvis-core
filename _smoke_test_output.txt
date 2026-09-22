@@ -1,0 +1,17 @@
+IN : mera Favourite pet dog hai.
+OUT: [('user', 'favourite_pet', 'dog')]
+
+IN : meri favorite hobby coding hai
+OUT: [('user', 'favourite_hobby', 'coding')]
+
+IN : meri favirite bollywood actor SRK hai.
+OUT: [('user', 'favourite_bollywood', 'actor SRK')]
+
+IN : meri faviurite hai. but javascript pe aur react html ye sb b ata
+OUT: []
+
+IN : meri favoutite junk food batao kya
+OUT: []
+
+IN : mera favourite color batao aur favorite hobby?
+OUT: []

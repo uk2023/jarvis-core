@@ -1,0 +1,67 @@
+CODING AGENT SE BAAT KAISE KAREIN -- UK ke liye
+================================================
+(Aapne poocha: "Tumne btaya bhi nahi ki coding agent se kese bat kare?"
+ -- yeh woh jawab hai.)
+
+TEEN TAREEKE HAIN. Teeno ek hi agent chalate hain, teen alag agent nahi.
+
+------------------------------------------------------------------
+1. NORMAL CHAT SE (sabse aasan)
+------------------------------------------------------------------
+Bas normal baat karo. JARVIS khud decide karega ki yeh coding-agent
+ka kaam hai:
+
+    "ek PDF reader project banao, tests ke saath, zip karke do"
+    "is project ko fix karo"
+    "backend mein login feature add karo"
+
+JARVIS `run_coding_agent` tool khud call karega.
+
+AGAR WOH RUK JAYE aur permission maange (file delete, git commit):
+    /approve_coding_step yes
+    /approve_coding_step no
+
+------------------------------------------------------------------
+2. CLI SE (seedha, bina LLM ke intent guess kiye)
+------------------------------------------------------------------
+    /coding_agent ek FastAPI todo backend banao tests ke saath
+    /approve_coding_step yes
+
+Purana /codebox abhi bhi hai -- woh EK script ke liye hai.
+/coding_agent poore PROJECT ke liye hai. Dono kaam karte hain.
+
+------------------------------------------------------------------
+3. TERMINAL REPL SE (Claude Code jaisa interface)
+------------------------------------------------------------------
+    python3 codebase.py
+    python3 codebase.py --repo /path/to/existing/project
+
+Andar ye commands hain:
+    <objective likho>       kaam shuru karo
+    /status                 abhi kya chal raha hai
+    /trace                  har tool call, diff, verification -- poora log
+    /tools                  agent ke paas kaun se tools hain
+    /approve  /deny         rukne par jawab do
+    /package zip            project ko zip/tar.gz karo
+    /subtask <objective>    ek aur chhota kaam usi project mein
+    /help  /exit
+
+------------------------------------------------------------------
+KYA APPROVE KARNA PADEGA, KYA NAHI
+------------------------------------------------------------------
+BINA POOCHE (automatic):
+    file padhna, search karna, file likhna, patch lagana,
+    tests chalana, sandbox mein code chalana, packaging
+
+POOCH KE (rukega):
+    file delete karna, git commit, force push, security config
+
+KABHI NAHI (DENY):
+    .env, API keys, passwords, private keys -- inhe chhuega hi nahi
+
+------------------------------------------------------------------
+AGAR "Poora nahi hua" AAYE
+------------------------------------------------------------------
+Ab woh batayega ki KYUN (pehle sirf "0 attempt" dikhta tha, jo
+galat tha -- woh counting bug tha, ab fix hai).
+/trace se poora log dekho.

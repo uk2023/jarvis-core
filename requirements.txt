@@ -1,0 +1,33 @@
+# JARVIS Organism -- Python dependencies.
+# This file did not exist before; built from a real scan of every
+# third-party import across core/, backend/, cli.py, and monitor.py.
+#
+# Install with: pip install -r requirements.txt --break-system-packages
+# (the --break-system-packages flag is needed on Termux/most modern
+# Debian-based systems that mark the system Python as externally
+# managed).
+
+# --- Web backend (backend/) ---
+fastapi
+uvicorn[standard]
+python-dotenv
+
+# --- Cognitive core (core/) ---
+numpy
+faiss-cpu
+onnxruntime
+networkx
+requests
+tokenizers
+
+# --- CLI / diagnostics UI ---
+rich
+
+# --- Local LLM (offline tier, optional -- see core/orchestration/llm_bridge.py) ---
+llama-cpp-python
+
+# --- Voice input (backend/routes_audio.py's /ws/audio endpoint) ---
+# NOT required for the rest of JARVIS to function -- only needed for
+# server-side speech-to-text. Also needs ffmpeg on PATH (a system
+# package, not a pip package -- `pkg install ffmpeg` in Termux).
+faster-whisper

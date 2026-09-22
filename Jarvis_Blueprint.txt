@@ -1,0 +1,784 @@
+JARVIS — CANONICAL ARCHITECTURE BLUEPRINT
+=========================================
+
+STATUS:
+LOCKED ARCHITECTURE
+This document is the single source of truth for JARVIS architecture.
+
+============================================================
+0. CORE PRINCIPLE
+============================================================
+
+JARVIS is a living cognitive system.
+
+It must NOT be designed as:
+
+Input → LLM → Output
+
+Instead:
+
+Input
+ ↓
+Perception
+ ↓
+Cognition
+ ↓
+Cognitive Router
+ ↓
+Native / Hybrid / LLM Fallback
+ ↓
+Brain Decision
+ ↓
+Action / Response
+ ↓
+Experience
+ ↓
+Self-Evaluation
+ ↓
+Learning / Knowledge
+ ↓
+Evolution
+
+Learning and evolution are controlled boundaries.
+No component may silently bypass another boundary.
+
+
+============================================================
+1. TOP-LEVEL JARVIS BRAIN
+============================================================
+
+USER INPUT
+    ↓
+PERCEPTION
+    ↓
+COGNITION
+    ↓
+COGNITIVE ROUTER
+    ↓
+┌──────────────────────────────────────────────┐
+│                                              │
+│   NATIVE COGNITION                           │
+│          OR                                  │
+│   HYBRID COGNITION                           │
+│          OR                                  │
+│   LLM FALLBACK                               │
+│                                              │
+└──────────────────────────────────────────────┘
+    ↓
+BRAIN DECISION
+    ↓
+ACTION / RESPONSE
+    ↓
+EXPERIENCE
+    ↓
+SELF-EVALUATION
+    ↓
+LEARNING / KNOWLEDGE
+    ↓
+EVOLUTION
+
+
+============================================================
+2. PERCEPTION
+============================================================
+
+USER INPUT
+    ↓
+Perception
+
+Responsibilities:
+
+    ├── Normalization
+    ├── Language Detection
+    ├── Intent Extraction
+    ├── Entity Extraction
+    └── Structured Perception Output
+
+Perception does NOT:
+
+    ├── execute actions
+    ├── learn skills
+    ├── modify knowledge directly
+    └── make final brain decisions
+
+
+============================================================
+3. COGNITION
+============================================================
+
+Perception Output
+    ↓
+Cognition
+
+Cognition provides the current internal context:
+
+    ├── Memory
+    ├── Knowledge
+    ├── Goals
+    ├── State
+    ├── Capabilities
+    └── Experience
+
+Cognition prepares evidence/context.
+
+It does NOT independently choose the execution path.
+
+That responsibility belongs to the Cognitive Router.
+
+
+============================================================
+4. COGNITIVE ROUTER
+============================================================
+
+Perception + Cognition
+          ↓
+   Cognitive Router
+
+Router decides:
+
+    ├── NATIVE
+    │
+    ├── HYBRID
+    │
+    └── LLM FALLBACK
+
+------------------------------------------------------------
+NATIVE
+------------------------------------------------------------
+
+Known structured intent
++ sufficient local capability
++ sufficient evidence
+
+        ↓
+Native Cognition
+        ↓
+Brain Decision
+
+
+------------------------------------------------------------
+HYBRID
+------------------------------------------------------------
+
+Native capability performs deterministic work
+        ↓
+Native Result
+        ↓
+LLM interprets/synthesizes when required
+        ↓
+Brain Decision
+
+
+------------------------------------------------------------
+LLM FALLBACK
+------------------------------------------------------------
+
+When native cognition does not have sufficient evidence
+or capability:
+
+        ↓
+LLM
+        ↓
+Brain Decision
+
+
+IMPORTANT:
+
+LLM is a fallback/reasoning component.
+
+LLM is NOT the owner of JARVIS architecture.
+
+
+============================================================
+5. BRAIN DECISION
+============================================================
+
+Cognitive Router result
+        ↓
+Brain
+
+Brain commits the selected cognitive result into a
+structured decision.
+
+Brain Decision contains the intended:
+
+    ├── action
+    ├── response
+    ├── route
+    ├── result/status
+    └── relevant execution context
+
+        ↓
+Action / Response
+
+
+============================================================
+6. ACTION / RESPONSE
+============================================================
+
+Brain Decision
+      ↓
+Action / Response
+
+Two possible outcomes:
+
+    ├── SUCCESS / COMPLETED
+    │
+    └── FAILURE
+
+Both become Experience.
+
+No execution result is silently discarded.
+
+
+============================================================
+7. EXPERIENCE
+============================================================
+
+Action / Response
+      ↓
+Experience
+
+Experience records what actually happened.
+
+Experience may contain:
+
+    ├── input/context
+    ├── selected route
+    ├── decision
+    ├── action
+    ├── result
+    ├── success/failure
+    ├── evidence
+    └── execution metadata
+
+Experience is NOT automatically knowledge.
+
+Experience is NOT automatically a skill.
+
+It must pass through Self-Evaluation.
+
+
+============================================================
+8. SELF-EVALUATION
+============================================================
+
+Experience
+    ↓
+SelfEvaluator
+
+SelfEvaluator evaluates the experience.
+
+Possible outcome:
+
+    ├── rejected / failed
+    │
+    ├── insufficient evidence
+    │
+    └── accepted learning signal
+
+IMPORTANT:
+
+SelfEvaluator is the boundary between:
+
+    "something happened"
+
+and
+
+    "JARVIS may learn something from it."
+
+
+============================================================
+9. LEARNING COORDINATOR
+============================================================
+
+Self-Evaluation
+      ↓
+LearningCoordinator
+
+LearningCoordinator is the controlled dispatcher
+for learning.
+
+It does NOT directly turn everything into knowledge.
+
+It separates learning into two paths:
+
+                    LearningCoordinator
+                           │
+              ┌────────────┴────────────┐
+              ↓                         ↓
+       Knowledge Path              Capability Path
+              ↓                         ↓
+      KnowledgeBuilder             SkillLearner
+
+
+============================================================
+10. KNOWLEDGE LEARNING PATH
+============================================================
+
+Experience
+    ↓
+SelfEvaluator
+    ↓
+LearningCoordinator
+    ↓
+KnowledgeBuilder
+    ↓
+Knowledge Candidate
+    ↓
+Acceptance / Validation
+    ↓
+Semantic Memory
+    ↓
+Knowledge
+
+
+IMPORTANT:
+
+Experience
+    ≠
+Knowledge
+
+Only accepted knowledge candidates enter
+long-term semantic knowledge.
+
+Failed experiences MUST NOT automatically become knowledge.
+
+KnowledgeBuilder owns construction of knowledge candidates.
+
+Acceptance controls persistence.
+
+
+============================================================
+11. CAPABILITY / SKILL LEARNING PATH
+============================================================
+
+Experience
+    ↓
+SelfEvaluator
+    ↓
+LearningCoordinator
+    ↓
+SkillLearner
+    ↓
+Repeated Verified Success Detection
+    ↓
+Skill Proposal
+    ↓
+Validation
+    ↓
+Explicit Approval
+    ↓
+Activation
+    ↓
+SkillRegistry
+    ↓
+SkillExecutor
+
+
+IMPORTANT:
+
+Experience
+    ≠
+Skill
+
+One successful experience cannot automatically create
+an executable skill.
+
+SkillLearner identifies repeated, verified capability.
+
+It creates a proposal.
+
+The proposal is NOT executable yet.
+
+
+============================================================
+12. SKILL PROPOSAL BOUNDARY
+============================================================
+
+SkillLearner
+    ↓
+Skill Proposal
+    ↓
+Validation
+    ↓
+Approval Gate
+
+                    ┌──────────────────────┐
+                    │   EXPLICIT APPROVAL  │
+                    └──────────┬───────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 ↓                           ↓
+             APPROVED                    NOT APPROVED
+                 ↓                           ↓
+             Activation                 NO ACTIVATION
+                 ↓
+           SkillRegistry
+                 ↓
+           SkillExecutor
+
+
+CRITICAL RULE:
+
+Skill Proposal MUST NOT auto-register.
+
+Skill Proposal MUST NOT auto-activate.
+
+Learning cannot silently create executable capability.
+
+Only explicit approval can cross the activation boundary.
+
+
+============================================================
+13. SKILL REGISTRY
+============================================================
+
+Approved + Activated Skill
+          ↓
+      SkillRegistry
+          ↓
+      Registered Skill
+          ↓
+      SkillExecutor
+
+Registry contains executable capabilities.
+
+Unapproved learned proposals MUST NOT appear
+as executable registered skills.
+
+
+============================================================
+14. SKILL EXECUTION FEEDS BACK INTO EXPERIENCE
+============================================================
+
+SkillRegistry
+    ↓
+SkillExecutor
+    ↓
+Action
+    ↓
+Result
+    ↓
+Experience
+    ↓
+SelfEvaluator
+
+Therefore learned capability participates in the
+same living cognitive cycle.
+
+There is no separate uncontrolled learning loop.
+
+
+============================================================
+15. EVOLUTION BOUNDARY
+============================================================
+
+Self-Evaluation
+      ↓
+Learning / Knowledge
+      ↓
+Evolution Boundary
+      ↓
+Controlled Evolution
+
+Evolution is NOT an automatic side effect of evaluation.
+
+SelfEvaluator may produce an evolution-related signal.
+
+But Evolution requires an explicit controlled transition.
+
+Therefore:
+
+SelfEvaluation
+      ≠
+Evolution
+
+Learning
+      ≠
+Evolution
+
+Evolution must cross its own controlled boundary.
+
+
+============================================================
+16. COMPLETE LIVING CYCLE
+============================================================
+
+                    ┌──────────────────────┐
+                    │      USER INPUT      │
+                    └──────────┬───────────┘
+                               ↓
+                         PERCEPTION
+                               ↓
+                          COGNITION
+                               ↓
+                    COGNITIVE ROUTER
+                               ↓
+             ┌─────────────────┼─────────────────┐
+             ↓                 ↓                 ↓
+          NATIVE            HYBRID          LLM FALLBACK
+             └─────────────────┼─────────────────┘
+                               ↓
+                        BRAIN DECISION
+                               ↓
+                       ACTION / RESPONSE
+                               ↓
+                          EXPERIENCE
+                               ↓
+                       SELF-EVALUATION
+                               ↓
+                    LEARNING COORDINATOR
+                               │
+                 ┌─────────────┴─────────────┐
+                 ↓                           ↓
+        KNOWLEDGE BUILDER              SKILL LEARNER
+                 ↓                           ↓
+        KNOWLEDGE CANDIDATE          REPEATED SUCCESS
+                 ↓                           ↓
+             ACCEPT                    SKILL PROPOSAL
+                 ↓                           ↓
+         SEMANTIC MEMORY              VALIDATION
+                                             ↓
+                                      EXPLICIT APPROVAL
+                                             ↓
+                                         ACTIVATION
+                                             ↓
+                                      SKILL REGISTRY
+                                             ↓
+                                      SKILL EXECUTOR
+                                             ↓
+                                          ACTION
+                                             ↓
+                                        EXPERIENCE
+
+                               ↓
+                       EVOLUTION BOUNDARY
+                               ↓
+                           EVOLUTION
+
+
+============================================================
+17. ARCHITECTURAL BOUNDARIES
+============================================================
+
+BOUNDARY 1
+Perception → Cognition
+
+Perception provides structured understanding.
+Cognition provides internal context.
+
+
+BOUNDARY 2
+Cognition → Cognitive Router
+
+Cognition provides evidence/context.
+Router chooses the cognitive path.
+
+
+BOUNDARY 3
+Router → Brain
+
+Router determines the route.
+Brain commits the decision.
+
+
+BOUNDARY 4
+Action → Experience
+
+Every meaningful execution outcome becomes experience.
+
+
+BOUNDARY 5
+Experience → SelfEvaluator
+
+Experience cannot directly become trusted learning.
+
+
+BOUNDARY 6
+SelfEvaluator → LearningCoordinator
+
+Only evaluated learning signals enter learning.
+
+
+BOUNDARY 7
+LearningCoordinator → KnowledgeBuilder
+
+Knowledge learning is isolated from capability learning.
+
+
+BOUNDARY 8
+LearningCoordinator → SkillLearner
+
+Capability learning is isolated from knowledge learning.
+
+
+BOUNDARY 9
+SkillLearner → Approval Gate
+
+A learned skill is only a proposal until explicitly approved.
+
+
+BOUNDARY 10
+Approval → Activation → Registry
+
+Only approved capability becomes executable.
+
+
+BOUNDARY 11
+Learning → Evolution
+
+Evolution requires an explicit controlled boundary.
+
+
+============================================================
+18. FORBIDDEN SHORTCUTS
+============================================================
+
+FORBIDDEN:
+
+Experience
+    ↓
+Knowledge
+
+FORBIDDEN:
+
+Experience
+    ↓
+SkillRegistry
+
+FORBIDDEN:
+
+SkillLearner
+    ↓
+Auto Activation
+
+FORBIDDEN:
+
+SelfEvaluator
+    ↓
+Auto Evolution
+
+FORBIDDEN:
+
+LLM
+    ↓
+Direct unrestricted execution
+
+FORBIDDEN:
+
+Perception
+    ↓
+Direct action
+
+FORBIDDEN:
+
+Router
+    ↓
+Bypass Brain Decision
+
+
+============================================================
+19. SINGLE SOURCE OF TRUTH
+============================================================
+
+The canonical architecture is:
+
+USER INPUT
+ ↓
+PERCEPTION
+ ↓
+COGNITION
+ ↓
+COGNITIVE ROUTER
+ ↓
+NATIVE / HYBRID / LLM FALLBACK
+ ↓
+BRAIN DECISION
+ ↓
+ACTION / RESPONSE
+ ↓
+EXPERIENCE
+ ↓
+SELF-EVALUATION
+ ↓
+LEARNING COORDINATOR
+ ↓
+ ├── KNOWLEDGE BUILDER
+ │      ↓
+ │   CANDIDATE
+ │      ↓
+ │   ACCEPT
+ │      ↓
+ │   SEMANTIC MEMORY
+ │
+ └── SKILL LEARNER
+        ↓
+     REPEATED VERIFIED SUCCESS
+        ↓
+     SKILL PROPOSAL
+        ↓
+     VALIDATION
+        ↓
+     EXPLICIT APPROVAL
+        ↓
+     ACTIVATION
+        ↓
+     SKILL REGISTRY
+        ↓
+     SKILL EXECUTOR
+        ↓
+     EXPERIENCE
+
+AND:
+
+SELF-EVALUATION / LEARNING
+        ↓
+EVOLUTION BOUNDARY
+        ↓
+EVOLUTION
+
+
+============================================================
+20. IMPLEMENTATION RULE
+============================================================
+
+This blueprint is LOCKED.
+
+Future implementation work must fit inside this skeleton.
+
+Individual modules may evolve.
+
+Internal algorithms may evolve.
+
+Implementations may be replaced.
+
+But the architectural boundaries and lifecycle must not be
+silently bypassed or rearranged.
+
+JARVIS is therefore built as a controlled living loop:
+
+PERCEIVE
+   ↓
+UNDERSTAND
+   ↓
+ROUTE
+   ↓
+THINK
+   ↓
+DECIDE
+   ↓
+ACT
+   ↓
+EXPERIENCE
+   ↓
+EVALUATE
+   ↓
+LEARN
+   ↓
+EVOLVE
+   ↓
+BECOME MORE CAPABLE
+   ↓
+NEXT CYCLE
+============================================================

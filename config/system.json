@@ -1,0 +1,12 @@
+{
+  "name": "JARVIS",
+  "offline": true,
+  "architecture": "organism-first",
+  "autonomous_learning": true,
+  "learning_pipeline_mode": "async_ordered_queue",
+  "retrieval": "db_refresh_every_new_prompt",
+  "autonomy": {
+    "idle_pulse_enabled": true,
+    "description": "Heartbeat idle beats drive IdleLoop (curiosity -> goal_manager -> planner -> scheduler), so the organism keeps evaluating goals and logging AUTONOMOUS_STEP episodes between user prompts, not just while chatting."
+  }
+}

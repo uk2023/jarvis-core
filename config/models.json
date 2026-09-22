@@ -1,0 +1,19 @@
+{
+  "_locked_note": "These two model choices are LOCKED (per explicit decision, not auto-selected). Changing them means editing this file directly -- the code always reads from here, it never guesses or falls back to a different filename.",
+  "slm": {
+    "subdir": "SLM",
+    "model_filename": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    "n_ctx": 2048,
+    "n_threads": 2,
+    "download_url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    "role": "Narrow classification/disambiguation only (blueprint SLM tier, LEVEL 4/5) -- never full response generation. See core/orchestration/slm_bridge.py. ~800MB, real-device benchmark ~32 tok/s."
+  },
+  "offline_llm": {
+    "subdir": "Offline_LLM",
+    "model_filename": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+    "n_ctx": 2048,
+    "n_threads": 2,
+    "download_url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+    "role": "Full offline conversational fallback when Groq (online) is unavailable. Replaces the old 3B model, which real-device benchmarks put at roughly half this model's tokens/sec on CPU-only ARM. ~1GB, real-device benchmark ~17 tok/s."
+  }
+}

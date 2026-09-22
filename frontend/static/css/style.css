@@ -1,0 +1,228 @@
+/* =========================================================================
+   JARVIS.console — stylesheet
+   Split out of the old single index.html so the file is manageable.
+   ========================================================================= */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: #07090e; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #07090e; }
+::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+/* -------------------------------------------------------------------------
+   BUG FIX (alignment): the header brand icon and every chat-message avatar
+   are supposed to sit on the exact same left edge. Both used Tailwind's
+   px-4 / sm:px-6 before, which *should* match — but to make it impossible
+   for them to ever drift apart again (different Tailwind build, a stray
+   utility override, etc.), both now read their horizontal inset from this
+   single variable via the .gutter-x helper class instead of two separate
+   Tailwind utilities. Header and #workspace-container both use .gutter-x.
+   ------------------------------------------------------------------------- */
+:root {
+    --gutter-x: 1rem;      /* 16px, matches old px-4 */
+}
+@media (min-width: 640px) {
+    :root { --gutter-x: 1.5rem; } /* 24px, matches old sm:px-6 */
+}
+.gutter-x {
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
+}
+
+/* Quantum Core Animations */
+.black-hole-container {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 2.25rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width .35s ease, height .35s ease, margin .35s ease, opacity .35s ease;
+}
+.event-horizon {
+    width: 55px;
+    height: 55px;
+    background: #000;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(0,240,255,0.7), 0 0 60px rgba(168,85,247,0.5), inset 0 0 12px rgba(0,240,255,0.9);
+    position: relative;
+    z-index: 3;
+    animation: coreBreath 4s infinite ease-in-out;
+}
+.accretion-disk-1 {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 240, 255, 0.4);
+    border-top-color: #00f0ff;
+    border-bottom-color: #a855f7;
+    animation: spinRing 6s linear infinite;
+    z-index: 2;
+    transition: inset .35s ease;
+}
+.accretion-disk-2 {
+    position: absolute;
+    inset: -17px;
+    border-radius: 50%;
+    border: 1px dashed rgba(168, 85, 247, 0.45);
+    animation: spinRingReverse 12s linear infinite;
+    z-index: 1;
+    transition: inset .35s ease;
+}
+@keyframes coreBreath {
+    0%, 100% { transform: scale(0.95); box-shadow: 0 0 25px rgba(0,240,255,0.6), 0 0 50px rgba(168,85,247,0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(0,240,255,0.9), 0 0 80px rgba(168,85,247,0.7); }
+}
+@keyframes spinRing {
+    0% { transform: rotate(0deg) scaleX(1); }
+    50% { transform: rotate(180deg) scaleX(1.1); }
+    100% { transform: rotate(360deg) scaleX(1); }
+}
+@keyframes spinRingReverse {
+    100% { transform: rotate(-360deg); }
+}
+
+.matrix-card-trace {
+    background: linear-gradient(145deg, rgba(14, 19, 31, 0.98) 0%, rgba(9, 12, 20, 0.98) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 1.25rem;
+}
+.matrix-card-ingestion {
+    background: linear-gradient(145deg, rgba(14, 19, 31, 0.98) 0%, rgba(9, 12, 20, 0.98) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 1.25rem;
+}
+.matrix-card-error {
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.08) 0%, rgba(14, 19, 31, 0.98) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 1.25rem;
+}
+textarea::-webkit-scrollbar { width: 3px; }
+
+/* -------------------------------------------------------------------------
+   BUG FIX (code paste / long text making the chat bubble "jump"): message
+   bubbles now force long unbroken tokens (long code lines, URLs, hashes) to
+   wrap instead of overflowing and dragging the whole row width around, and
+   any code-ish text inside a bubble scrolls horizontally *within itself*
+   rather than resizing the bubble every keystroke.
+   ------------------------------------------------------------------------- */
+.msg-bubble-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+.msg-bubble-text pre,
+.msg-bubble-text code {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* --- Smooth home <-> chat transition (no flicker) --- */
+#home-view, #chat-box {
+    transition: opacity .22s ease;
+}
+.view-hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    height: 0;
+    overflow: hidden;
+}
+.view-visible {
+    opacity: 1;
+}
+
+/* ---------------------------------------------------------------
+   WHATSAPP-STYLE INPUT BAR
+   ---------------------------------------------------------------
+   The floating input bar is position:absolute so it can float over
+   the scroll area without pushing page layout. As the textarea grows
+   to multiple lines, #workspace-container's padding-bottom is kept in
+   sync with the input bar's *live* rendered height via a ResizeObserver
+   (see syncWorkspacePadding() in app.js). This transition just makes
+   that padding change animate smoothly instead of jumping.
+--------------------------------------------------------------- */
+#workspace-container {
+    transition: padding-bottom .15s ease;
+}
+
+/* --- Mobile keyboard-aware collapse ---
+   When the keyboard opens: the quick-prompt grid and footer line fully
+   collapse away, and the core logo becomes the sole focal point --
+   centered and kept prominent, with the heading/subtitle shrinking
+   underneath it for contrast. Every piece here shares the same
+   transition timing/easing so the whole cluster animates in lockstep. */
+#quick-prompts-grid, #footer-status, .black-hole-container, #home-view h1, #home-subtitle {
+    transition: opacity .15s ease-out, max-height .15s ease-out, margin .15s ease-out,
+                transform .15s ease-out, width .15s ease-out, height .15s ease-out,
+                font-size .15s ease-out;
+}
+#quick-prompts-grid, #footer-status {
+    max-height: 200px;
+    overflow: hidden;
+}
+body.keyboard-active #quick-prompts-grid,
+body.keyboard-active #footer-status {
+    opacity: 0;
+    max-height: 0;
+    margin: 0 !important;
+    transform: translateY(6px);
+}
+body.keyboard-active .black-hole-container {
+    /* Stays close to full size (110px) -- prominent and centered,
+       not shrunk into a small icon. */
+    width: 104px;
+    height: 104px;
+    margin-bottom: 0.85rem;
+}
+body.keyboard-active .black-hole-container .event-horizon {
+    width: 52px;
+    height: 52px;
+}
+body.keyboard-active .black-hole-container .accretion-disk-1 { inset: -7px; }
+body.keyboard-active .black-hole-container .accretion-disk-2 { inset: -15px; }
+body.keyboard-active #home-view h1 {
+    font-size: 0.72rem;
+    margin-bottom: 0.3rem;
+}
+body.keyboard-active #home-subtitle {
+    font-size: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+/* crisp focus ring for accessibility (buttons only — the input's own
+   pill border + glow, set via focus-within below, is its focus state) */
+button:focus-visible {
+    outline: 2px solid #00f0ff;
+    outline-offset: 2px;
+}
+#userInput:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* NOTE: #floatingInputBar no longer gets a manual transform for the
+   keyboard (see app.js) — the page's own
+   `interactive-widget=resizes-content` viewport behaviour already
+   repositions this absolutely-positioned bar correctly when the layout
+   viewport shrinks. Keeping *both* the browser's automatic reflow AND a
+   manual translateY was the root cause of the double-shift / jumpy bubble
+   bug. A transition is still declared here in case a future code path
+   ever needs to nudge it, so any such change stays animated. */
+#floatingInputBar {
+    transition: transform .15s ease-out;
+}
+
+/* Session action sheet (rename / pin / delete) */
+#sessionActionSheet {
+    transform: translateY(100%);
+}
+#sessionActionSheet.sheet-open {
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

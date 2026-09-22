@@ -1,0 +1,176 @@
+/* JARVIS call screen -- the landing page's visual language, reused.
+   Same orb, same dark field, same restraint. Controls anchored at the
+   bottom where a phone's thumb actually reaches. */
+
+.jarvis-call-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(49, 46, 129, 0.32), rgba(2, 6, 23, 0.99) 62%);
+  backdrop-filter: blur(14px);
+  padding: 16px;
+}
+
+.jarvis-call-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.jarvis-call-header button {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 999px;
+  display: flex;
+}
+
+.jarvis-call-header button:hover { color: #e2e8f0; background: rgba(255, 255, 255, 0.07); }
+
+.jarvis-call-core {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* The orb. Idle it sits still; active it breathes. The pulse is tied to
+   state, not to a permanent animation, so a dead call looks dead. */
+.jarvis-call-orb {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+}
+
+.jarvis-call-orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--call-accent, #64748b);
+  opacity: 0.35;
+}
+
+.jarvis-call-orb.is-active .jarvis-call-orb-ring {
+  animation: jarvis-call-pulse 2.4s ease-in-out infinite;
+}
+
+.jarvis-call-orb-core {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--call-accent, #64748b);
+  opacity: 0.85;
+  box-shadow: 0 0 32px var(--call-accent, #64748b);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+@keyframes jarvis-call-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50%      { transform: scale(1.14); opacity: 0.12; }
+}
+
+/* Canvas, not DOM bars: the wave repaints from a ref so audio never
+   triggers a React render. The DOM version stuttered badly on mobile. */
+.jarvis-call-wave {
+  width: 100%;
+  max-width: 420px;
+  height: 76px;
+  display: block;
+}
+
+.jarvis-call-label { font-size: 14px; margin: 0; }
+.jarvis-call-label-row { display: inline-flex; align-items: center; gap: 7px; }
+
+.jarvis-spin { animation: jarvis-call-spin 1s linear infinite; }
+@keyframes jarvis-call-spin { to { transform: rotate(360deg); } }
+
+.jarvis-call-interim {
+  margin: 0;
+  max-width: 420px;
+  text-align: center;
+  font-size: 13px;
+  font-style: italic;
+  color: #94a3b8;
+  padding: 0 12px;
+}
+
+.jarvis-call-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 12px;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 12px;
+  padding: 7px 11px;
+}
+
+.jarvis-call-transcript {
+  max-height: 156px;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 6px;
+}
+
+.jarvis-call-transcript p {
+  margin: 0 0 7px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.jarvis-call-transcript .is-user { text-align: right; color: #cbd5e1; }
+.jarvis-call-transcript .is-jarvis { text-align: left; color: #a5b4fc; }
+
+.jarvis-call-controls {
+  display: flex;
+  justify-content: center;
+  padding: 18px 0 8px;
+}
+
+.jarvis-call-button {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.3s ease;
+}
+
+.jarvis-call-button:active { transform: scale(0.94); }
+.jarvis-call-button.is-active { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0.12); }
+
+@media (max-width: 640px) {
+  .jarvis-call-orb { width: 88px; height: 88px; }
+  .jarvis-call-orb-core { width: 36px; height: 36px; }
+  .jarvis-call-wave { height: 62px; }
+  .jarvis-call-transcript { max-height: 120px; }
+}
+
+/* Listening pulse on the state icon -- ties the icon to the same
+   activity the wave is showing, so state is readable at a glance
+   without a sentence. */
+.jarvis-pulse { animation: jarvis-call-fade 1.6s ease-in-out infinite; }
+@keyframes jarvis-call-fade {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}

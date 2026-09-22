@@ -1,0 +1,21 @@
+{
+  "routing": {
+    "minimum_confidence": 0.6
+  },
+  "llm": {
+    "_comment_budget_model": "Explicit 3-level budget model (UK's specification): LEVEL perception_and_understanding (perception's own classification retry cascade PLUS semantic understanding's separate fallback -- these are two distinct sub-tasks sharing one level), LEVEL response_generation (cognition through Brain's final response), LEVEL post_response_reasoning (async self-evaluation/evolution after the reply is already sent). CORRECTED (2026-09-07): the override for perception_and_understanding was set to 3, but the real worst case at that level is perception's own primary+retry (2) PLUS semantic understanding's own primary+retry (2) = 4 -- the old cap of 3 meant that whenever perception itself struggled (used both its calls) AND semantic understanding needed its own retry too, the level was exhausted one call early and a genuine fact statement's extraction died with 'LLM per-level call budget exceeded' -- this is exactly the bug UK hit with 'wo hamirpur, UP me rahti h' failing to store. Raised to 4 to match the documented worst case. Note: the native symbolic-parser regex gap that caused THAT specific sentence to need the LLM fallback at all has separately been fixed in semantic_understanding/engine.py (rah-/reh- spelling + 'h' as short for 'hai') -- this budget fix is the defense-in-depth safety net for the remaining cases that genuinely do need the LLM. Typical turn: 1 call per level = 3 total (unchanged). Worst case is now 4+2+2=8.",
+    "max_calls_per_turn": 8,
+    "max_calls_per_level": 2,
+    "max_calls_per_level_overrides": {
+      "perception_and_understanding": 4,
+      "safety_check": 1,
+      "extended_thinking": 75
+    },
+    "_comment_max_output_tokens_per_turn": "RAISED 2700 -> 16000 (2026-09-12, UK's explicit requirement that long replies be possible at all). 2700 was sized for short chat turns only: perception + semantic fallback routinely reserved ~2350 of it, leaving 342 for the answer while response_generation asks for 512 -- so the turn FAILED outright with 'output-token budget exceeded', visible dozens of times in UK's live trace. Long-form/deep-research replies need room measured in thousands of tokens, not hundreds. Preparatory calls still cannot eat the reply's share -- see HybridLLMBridge.RESPONSE_TOKEN_FLOOR. RAISED AGAIN 16000 -> 22000 (2026-09-18, UK's trace: a 7-step coding plan still exhausted the 14000-token prep pool by step 5-6, each [code] step's nested run_coding_task compounding up to ~6000 tokens on its own -- see TaskLoop._run_code_step's max_steps comment for the other half of this fix). 22000 gives a multi-step coding task genuine room without the reserve being pointlessly large for an ordinary one-call chat turn, since unused budget in a short turn costs nothing.",
+    "max_output_tokens_per_turn": 22000,
+    "semantic_fallback_tokens": 256,
+    "_comment_extended_thinking_budget": "EXTENDED THINKING GETS ITS OWN LEVEL (2026-09-16). Bug UK hit: every task_loop step and every thinking stage charged against 'response_generation', whose cap is 2 per turn. So from the THIRD step onward every single call failed with 'per-level call budget exceeded: response_generation already used 2/2' -- visible repeatedly in his trace, where the plan was produced correctly and then every write/code/verify step died without ever creating a file or running anything. The cap was right for ordinary chat (one answer needs one call, two with a retry) and completely wrong for a multi-step task that legitimately needs one call PER STEP. Separate level, sized to the real step count, so normal chat's budget is unchanged.",
+    "_comment_max_calls_extended_turn": "Ceiling for a turn that is running extended thinking / a task loop. Ordinary chat stays at max_calls_per_turn (9). Only the extended path may go higher, and only up to this.",
+    "max_calls_per_turn_extended": 80
+  }
+}

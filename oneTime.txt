@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+
+ROOT="$(pwd)"
+OUT="$ROOT/neuro_symbolic_audit.txt"
+
+{
+echo "============================================================"
+echo "JARVIS NEURO-SYMBOLIC / LLM / MEMORY / LEARNING AUDIT"
+echo "============================================================"
+echo "PROJECT: $ROOT"
+echo "DATE: $(date)"
+echo
+
+echo "================ PROJECT FILES ================"
+find core -type f -name "*.py" | sort
+echo
+
+echo "================ NEURO-SYMBOLIC ================"
+grep -RniE \
+"neuro.?symbolic|neurosymbolic|semantic_understanding|SemanticUnderstanding|SemanticUnderstandingEngine|symbolic_parser|embedding|similarity|vector|entity|relation|event_parser" \
+core --include="*.py" || true
+echo
+
+echo "================ LLM / FALLBACK ================"
+grep -RniE \
+"llama_cpp|llama|LLM|llm|fallback|confidence|threshold|inference|generate|completion|model" \
+core --include="*.py" || true
+echo
+
+echo "================ MEMORY SIGNAL / SPV ================"
+grep -RniE \
+"memory_signal|MemorySignal|memory.?signal|subject|predicate|object|fact_candidates|relations|triple|SPV" \
+core --include="*.py" || true
+echo
+
+echo "================ MEMORY PIPELINE ================"
+grep -RniE \
+"memory|Memory|retrieve|recall|remember|store|save|write|load" \
+core --include="*.py" || true
+echo
+
+echo "================ EXPERIENCE ================"
+grep -RniE \
+"experience|Experience|evaluation|Evaluation|feedback|reward|outcome" \
+core --include="*.py" || true
+echo
+
+echo "================ ASYNC LEARNING ================"
+grep -RniE \
+"learning_queue|LearningQueue|async|Async|await|learn|Learning|learning_started|learning_completed|evolution|Evolution" \
+core --include="*.py" || true
+echo
+
+echo "================ COGNITION / ROUTER ================"
+grep -RniE \
+"cognitive_router|CognitiveRouter|router|Router|cognition|Cognition|brain|Brain|decision|Decision" \
+core --include="*.py" || true
+echo
+
+echo "================ IMPORT GRAPH ================"
+grep -RniE \
+"^from |^import " \
+core --include="*.py" || true
+echo
+
+echo "================ ENTRY POINTS ================"
+grep -RniE \
+"def main|def process|def handle|def run|def respond|def chat|def understand|if __name__" \
+core --include="*.py" || true
+echo
+
+echo "================ SEMANTIC ENGINE API ================"
+python3 - <<'PY'
+try:
+    from core.cognition.semantic_understanding import (
+        SemanticUnderstanding,
+        SemanticUnderstandingEngine,
+    )
+
+    print("SemanticUnderstanding: IMPORT OK")
+    print("SemanticUnderstandingEngine: IMPORT OK")
+
+    engine = SemanticUnderstandingEngine()
+
+    print("Engine instance: OK")
+    print("understand():", hasattr(engine, "understand"))
+    print("parse():", hasattr(engine, "parse"))
+
+    tests = [
+        "mera naam Ujjwal hai",
+        "mujhe Python pasand hai",
+        "I am learning Python",
+        "I live in Varanasi",
+        "what is Python?",
+    ]
+
+    print()
+    print("--- SEMANTIC RUNTIME TESTS ---")
+
+    for text in tests:
+        try:
+            result = engine.understand(text)
+
+            print()
+            print("INPUT:", text)
+            print("INTENT:", result.get("intent"))
+            print("ENTITIES:", result.get("entities"))
+            print("FACTS:", result.get("fact_candidates"))
+            print("EVENTS:", result.get("events"))
+            print("RELATIONS:", result.get("relations"))
+            print("INFERENCES:", result.get("inferences"))
+
+        except Exception as e:
+            print("ERROR:", repr(e))
+
+except Exception as e:
+    print("SEMANTIC ENGINE IMPORT ERROR:", repr(e))
+PY
+
+echo
+echo "================ LLM MODULE DISCOVERY ================"
+python3 - <<'PY'
+import importlib.util
+
+modules = [
+    "llama_cpp",
+    "core",
+    "core.cognition",
+    "core.cognition.semantic_understanding",
+]
+
+for name in modules:
+    try:
+        spec = importlib.util.find_spec(name)
+        print(name, "=>", "AVAILABLE" if spec else "NOT FOUND")
+    except Exception as e:
+        print(name, "=> ERROR:", repr(e))
+PY
+
+echo
+echo "================ COMPILE CHECK ================"
+python3 -m compileall -q core
+if [ $? -eq 0 ]; then
+    echo "COMPILEALL: PASSED"
+else
+    echo "COMPILEALL: FAILED"
+fi
+
+echo
+echo "============================================================"
+echo "AUDIT COMPLETE"
+echo "============================================================"
+
+} > "$OUT" 2>&1
+
+echo
+echo "AUDIT FINISHED"
+echo "LOG FILE:"
+echo "$OUT"

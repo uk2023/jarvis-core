@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# JARVIS -- NORMAL MODE
+# ----------------------------------------------------------------
+# Runs cli.py directly. This is the one-command everyday launch:
+# interactive terminal, real organism, and (if you pick option 2 or
+# 3 at the menu) the FastAPI web backend too -- all in one process,
+# no separate Vite dev server, no source syncing.
+#
+# Use jarvis-dev instead when you're actively editing web_frontend/
+# and want instant hot-reload while you work on the UI.
+# ----------------------------------------------------------------
+
+set -e
+
+PROJECT="/root/Jarvis_Work"
+
+if [ ! -f "$PROJECT/cli.py" ]; then
+    echo "✗ cli.py not found at $PROJECT/cli.py -- check the PROJECT path in this script."
+    exit 1
+fi
+
+# Belt-and-suspenders: backend/config.py now derives BASE_DIR from its
+# own file location automatically, so this isn't strictly required
+# anymore -- but exporting it explicitly means the whole runtime is
+# guaranteed consistent even if config.py is ever reverted.
+export JARVIS_BASE_DIR="$PROJECT"
+
+cd "$PROJECT"
+
+echo "======================================"
+echo "         JARVIS  --  NORMAL MODE"
+echo "======================================"
+echo
+echo "Project : $PROJECT"
+echo "Backend : http://127.0.0.1:8000 (only if you pick option 2 or 3 below)"
+echo
+if [ ! -d "$PROJECT/frontend/dist_v6" ]; then
+    echo "⚠ frontend/dist_v6 not built yet -- the web UI will fall back to"
+    echo "  the legacy dashboard. To build the real UI:"
+    echo "      cd web_frontend && npm install && npm run build"
+    echo
+fi
+echo "At the menu: [1] pure CLI  [2] CLI + web backend  [3] CLI + web + hot-reload watcher"
+echo "Ctrl+C to stop."
+echo
+
+python3 cli.py

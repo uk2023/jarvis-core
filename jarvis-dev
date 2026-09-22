@@ -1,0 +1,350 @@
+#!/bin/bash
+#
+# JARVIS -- DEVELOPMENT MODE
+# ----------------------------------------------------------------
+# Real JARVIS runtime + FastAPI backend, PLUS a Vite dev server with
+# hot module reload for web_frontend/, so editing UI files with MT
+# Manager (or anything else) shows up instantly in the browser.
+#
+# WHY THE SEPARATE NodeEnv DIR: node_modules is large and slow to
+# install/resolve inside a proot-distro chroot on Android, so this
+# keeps ONE shared node_modules at /root/Jarvis_NodeEnv and just
+# syncs your actual source files (web_frontend/) into it, instead of
+# reinstalling node_modules every time. package.json is synced too --
+# if you add a new dependency, the auto-install step below picks it
+# up on the next run.
+#
+# FIX APPLIED THIS VERSION: the real reason this wasn't working is
+# backend/config.py had BASE_DIR hardcoded to the old Android path
+# (/storage/emulated/0/Jarvis_Organism). The moment the FastAPI
+# backend tried to open its SQLite DB at that path inside this Kali
+# chroot, it would throw "unable to open database file" and the
+# whole "[DEV] Starting FastAPI..." step would fail silently into a
+# traceback. config.py now derives BASE_DIR from its own file
+# location (same pattern cli.py and llm_bridge.py already used), so
+# it's correct wherever the project actually lives. This script also
+# exports JARVIS_BASE_DIR explicitly as a second safety net.
+# ----------------------------------------------------------------
+
+set -e
+
+PROJECT="/root/Jarvis_Work"
+SRC="$PROJECT/web_frontend"
+DST="/root/Jarvis_NodeEnv/web_frontend"
+NODE_ENV_DIR="/root/Jarvis_NodeEnv"
+NODE="$NODE_ENV_DIR/node_modules/.bin"
+
+export JARVIS_BASE_DIR="$PROJECT"
+
+echo "======================================"
+echo "       JARVIS DEVELOPMENT MODE"
+echo "======================================"
+
+if [ ! -d "$SRC" ]; then
+    echo "✗ web_frontend not found at $SRC -- check the PROJECT path in this script."
+    exit 1
+fi
+
+# --------------------------------------------------
+# 1. Initial frontend sync
+# --------------------------------------------------
+
+echo "[1/4] Syncing frontend source..."
+
+mkdir -p "$DST"
+cp -a "$SRC"/. "$DST"/
+
+echo "✓ Source synced"
+
+# --------------------------------------------------
+# 2. Ensure the shared node_modules actually has vite
+#    (and everything else package.json now needs)
+# --------------------------------------------------
+
+echo "[2/4] Checking Node environment..."
+
+NEED_INSTALL=0
+
+if [ ! -x "$NODE/vite" ]; then
+    echo "  vite not found in $NODE_ENV_DIR/node_modules"
+    NEED_INSTALL=1
+fi
+
+# If package.json changed since node_modules was last installed,
+# node_modules can be stale (missing a newer dependency like
+# @tailwindcss/vite). package-lock/hash isn't tracked here on
+# purpose to keep this simple -- if you know deps changed, just
+# delete /root/Jarvis_NodeEnv/node_modules once and this will
+# reinstall cleanly on the next run.
+if [ "$NEED_INSTALL" = "1" ]; then
+    echo "  Installing Node dependencies into $NODE_ENV_DIR (first run, this takes a while)..."
+    mkdir -p "$NODE_ENV_DIR"
+    cp -f "$DST/package.json" "$NODE_ENV_DIR/package.json"
+    ( cd "$NODE_ENV_DIR" && npm install )
+    echo "✓ Node environment ready"
+else
+    echo "✓ Node environment already set up"
+fi
+
+# --------------------------------------------------
+# 3. Start REAL JARVIS runtime + FastAPI
+# --------------------------------------------------
+
+echo "[3/4] Starting JARVIS Organism..."
+
+cd "$PROJECT"
+
+python3 - <<'PY' &
+import sys
+import time
+import traceback
+import os
+
+PROJECT = "/root/Jarvis_Work"
+
+if PROJECT not in sys.path:
+    sys.path.insert(0, PROJECT)
+
+os.environ.setdefault("JARVIS_BASE_DIR", PROJECT)
+
+jarvis = None
+
+try:
+    import cli
+
+    print("[DEV] Initializing JARVIS Organism...", flush=True)
+
+    jarvis = cli.start_jarvis(
+        heartbeat_interval=2.0,
+        idle_threshold=10.0,
+    )
+
+    cli._global_jarvis_instance = jarvis
+
+    print("[DEV] Organism initialized.", flush=True)
+
+    # ------------------------------------------------
+    # Connect LLM exactly like cli.py
+    # ------------------------------------------------
+
+    brain = jarvis.get_organ("brain")
+
+    if brain:
+        print("[DEV] Connecting LLM...", flush=True)
+
+        try:
+            brain.llm = cli.LlamaCppBridge(
+                model_filename="qwen2.5-3b-instruct-q4_k_m.gguf",
+                n_threads=4,
+                n_ctx=4096
+            )
+
+            print("[DEV] Loading offline model into RAM (this can take a minute)...", flush=True)
+
+            if brain.llm.verify_offline_ready():
+                print("[DEV] Neural Bridge Online -- offline model loaded and verified.", flush=True)
+            else:
+                print(f"[DEV] Neural Bridge NOT ready -- model failed to load: {brain.llm.last_error}", flush=True)
+                print("[DEV] Common causes: llama-cpp-python not installed, or the .gguf", flush=True)
+                print("[DEV] file isn't at models/qwen2.5-3b-instruct-q4_k_m.gguf.", flush=True)
+
+        except Exception:
+            print("[DEV] Neural Bridge failed (model missing? check models/ dir):", flush=True)
+            traceback.print_exc()
+
+    # ------------------------------------------------
+    # Heartbeat
+    # ------------------------------------------------
+
+    cli.start_silent_heartbeat_sync(jarvis)
+
+    # ------------------------------------------------
+    # Python live module watcher
+    # ------------------------------------------------
+
+    cli.start_live_module_watcher(jarvis)
+
+    # ------------------------------------------------
+    # FastAPI attached to SAME organism
+    # ------------------------------------------------
+
+    print("[DEV] Starting FastAPI with SAME JARVIS instance...", flush=True)
+
+    cli.start_web_server_thread(jarvis)
+
+    print("[DEV] JARVIS DEV BACKEND READY", flush=True)
+
+    while True:
+        time.sleep(1)
+
+except KeyboardInterrupt:
+    pass
+
+except Exception:
+    print("[DEV] FATAL error during startup:", flush=True)
+    traceback.print_exc()
+
+finally:
+    if jarvis is not None:
+        try:
+            cli.stop_jarvis(jarvis)
+        except Exception:
+            traceback.print_exc()
+
+    print("[DEV] JARVIS runtime stopped.", flush=True)
+
+PY
+
+RUNTIME_PID=$!
+
+echo "✓ JARVIS Runtime PID: $RUNTIME_PID"
+
+# Give the backend a moment to actually bind the port / fail loudly
+# before we move on, so a startup crash is visible immediately
+# instead of scrolling past under the Vite banner.
+sleep 3
+
+if ! kill -0 "$RUNTIME_PID" 2>/dev/null; then
+    echo
+    echo "✗ JARVIS runtime process died during startup -- see the traceback above."
+    echo "  Common cause: models/qwen2.5-3b-instruct-q4_k_m.gguf missing."
+    exit 1
+fi
+
+# --------------------------------------------------
+# Frontend watcher
+# --------------------------------------------------
+
+echo "✓ Starting frontend watcher..."
+
+python3 - "$SRC" "$DST" <<'PY' &
+import os
+import sys
+import time
+import shutil
+
+SRC = sys.argv[1]
+DST = sys.argv[2]
+
+EXCLUDED = {"node_modules", "dist"}
+
+
+def snapshot(root):
+    result = {}
+    for base, dirs, files in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in EXCLUDED]
+        for name in files:
+            path = os.path.join(base, name)
+            try:
+                st = os.stat(path)
+                rel = os.path.relpath(path, root)
+                result[rel] = (st.st_mtime_ns, st.st_size)
+            except FileNotFoundError:
+                pass
+    return result
+
+
+def sync_tree():
+    current = set()
+    for base, dirs, files in os.walk(SRC):
+        dirs[:] = [d for d in dirs if d not in EXCLUDED]
+        rel = os.path.relpath(base, SRC)
+        target = DST if rel == "." else os.path.join(DST, rel)
+        os.makedirs(target, exist_ok=True)
+        for name in files:
+            src = os.path.join(base, name)
+            dst = os.path.join(target, name)
+            rel_file = os.path.relpath(src, SRC)
+            current.add(rel_file)
+            try:
+                shutil.copy2(src, dst)
+            except FileNotFoundError:
+                pass
+
+    for base, dirs, files in os.walk(DST, topdown=False):
+        dirs[:] = [d for d in dirs if d not in EXCLUDED]
+        for name in files:
+            path = os.path.join(base, name)
+            rel = os.path.relpath(path, DST)
+            if rel not in current:
+                try:
+                    os.remove(path)
+                except FileNotFoundError:
+                    pass
+
+
+old = snapshot(SRC)
+print("✓ Frontend watcher active", flush=True)
+
+while True:
+    time.sleep(0.5)
+    new = snapshot(SRC)
+    if new != old:
+        print("→ Frontend change detected", flush=True)
+        sync_tree()
+        print("✓ Synced → Vite HMR", flush=True)
+        old = new
+
+PY
+
+WATCHER_PID=$!
+
+echo "✓ Frontend watcher started"
+
+# --------------------------------------------------
+# Cleanup
+# --------------------------------------------------
+
+cleanup() {
+    echo
+    echo "Stopping JARVIS development services..."
+
+    kill "$RUNTIME_PID" 2>/dev/null || true
+    kill "$WATCHER_PID" 2>/dev/null || true
+    [ -n "$VITE_PID" ] && kill "$VITE_PID" 2>/dev/null || true
+
+    wait "$RUNTIME_PID" 2>/dev/null || true
+    wait "$WATCHER_PID" 2>/dev/null || true
+    [ -n "$VITE_PID" ] && wait "$VITE_PID" 2>/dev/null || true
+
+    echo "✓ Development mode stopped"
+}
+
+trap cleanup EXIT INT TERM
+
+# --------------------------------------------------
+# Vite
+# --------------------------------------------------
+
+echo
+echo "[4/4] Starting Vite HMR..."
+
+cd "$DST"
+
+export PATH="$NODE:$PATH"
+
+if [ ! -x "$NODE/vite" ]; then
+    echo "✗ vite still not found at $NODE/vite after install -- check the npm install output above."
+    exit 1
+fi
+
+echo
+echo "======================================"
+echo " JARVIS DEV READY"
+echo "======================================"
+echo
+echo "Backend : http://127.0.0.1:8000"
+echo "Frontend: http://127.0.0.1:5173"
+echo
+echo "Edit with MT Manager:"
+echo "  $SRC"
+echo
+echo "Save → automatic HMR"
+echo
+echo "Ctrl+C → stop everything"
+echo
+
+vite --host 127.0.0.1 &
+VITE_PID=$!
+
+wait "$VITE_PID"

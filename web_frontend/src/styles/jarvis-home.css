@@ -1,0 +1,128 @@
+/* JARVIS HOME — locked cinematic landing surface, day/night friendly */
+.jarvis-home{position:relative;width:100%;height:100%;min-height:0;overflow:hidden;isolation:isolate;background:var(--jarvis-bg);color:var(--jarvis-text);overscroll-behavior:none;touch-action:pan-x;}
+.jarvis-home *{box-sizing:border-box}
+.jarvis-home-main{position:relative;z-index:2;width:100%;height:100%;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+.jarvis-home-content{width:min(100%,820px);height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transform:translateY(-1vh)}
+.jarvis-space-field{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 50% 43%,rgba(72,112,210,.12),transparent 47%)}
+.jarvis-space-field:before{content:"";position:absolute;inset:-55%;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(85,125,220,.08) 55deg,transparent 110deg,rgba(170,90,255,.055) 185deg,transparent 245deg,rgba(65,170,255,.06) 310deg,transparent 360deg);animation:jarvis-space-rotate 36s linear infinite}
+.jarvis-space-field:after{content:"";position:absolute;inset:0;opacity:.3;background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.5px),radial-gradient(circle,rgba(120,160,230,.65) 0 .8px,transparent 1.3px);background-size:137px 137px,83px 83px;background-position:10px 20px,42px 67px;animation:jarvis-star-drift 22s linear infinite}
+.jarvis-home-light .jarvis-space-field:after{opacity:.18}
+.jarvis-star{position:absolute;width:2px;height:2px;border-radius:50%;background:currentColor;color:var(--jarvis-accent);opacity:.45;box-shadow:0 0 10px currentColor;animation:jarvis-twinkle 2.8s ease-in-out infinite}.jarvis-star.s1{left:10%;top:20%}.jarvis-star.s2{right:12%;top:28%;animation-delay:.8s}.jarvis-star.s3{left:18%;bottom:17%;animation-delay:1.6s}.jarvis-star.s4{right:23%;bottom:22%;animation-delay:2.2s}
+.jarvis-nebula{position:absolute;width:38vw;height:24vw;border-radius:50%;filter:blur(60px);opacity:.1;background:var(--jarvis-accent);animation:jarvis-nebula-float 13s ease-in-out infinite alternate}.jarvis-nebula.n1{left:-15%;top:8%}.jarvis-nebula.n2{right:-15%;bottom:5%;animation-delay:-6s}
+.jarvis-home-light .jarvis-nebula{opacity:.07}
+
+.jarvis-hero{display:flex;flex-direction:column;align-items:center;position:relative;flex:0 1 auto}
+.jarvis-black-hole{position:relative;width:178px;height:178px;margin-bottom:0;display:flex;align-items:center;justify-content:center;perspective:900px;filter:drop-shadow(0 0 34px rgba(55,100,220,.28));animation:jarvis-core-float 6s ease-in-out infinite}
+.jarvis-black-hole:before{content:"";position:absolute;width:166px;height:166px;border-radius:50%;border:1px solid rgba(90,130,225,.22);box-shadow:inset 0 0 35px rgba(60,110,240,.1),0 0 42px rgba(60,110,240,.1);animation:jarvis-horizon-pulse 4s ease-in-out infinite}
+.jarvis-black-hole:after{content:"";position:absolute;width:145px;height:145px;border-radius:50%;border:1px dashed rgba(110,150,235,.22);transform:rotateX(67deg);animation:jarvis-orbit-c 12s linear infinite}
+.jarvis-core-glow{position:absolute;width:116px;height:116px;border-radius:50%;background:radial-gradient(circle,#000 0 29%,#030408 42%,rgba(8,12,24,.96) 54%,rgba(75,120,255,.75) 63%,rgba(75,120,255,.2) 72%,transparent 79%);box-shadow:inset 0 0 36px #000,0 0 30px rgba(75,120,255,.36),0 0 80px rgba(75,120,255,.15);animation:jarvis-hole-pulse 3.2s ease-in-out infinite}
+.jarvis-core-void{position:absolute;width:69px;height:69px;border-radius:50%;background:radial-gradient(circle,#000 0 48%,#020308 72%,#000);box-shadow:inset 0 0 28px #000,0 0 30px #000,0 0 8px rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;z-index:4}
+.jarvis-core-void span{position:absolute;width:4px;height:4px;border-radius:50%;background:#dbe8ff;box-shadow:0 0 12px #fff;animation:jarvis-singularity 2.6s linear infinite}.jarvis-core-void span:nth-child(1){animation-delay:0}.jarvis-core-void span:nth-child(2){animation-delay:-.86s}.jarvis-core-void span:nth-child(3){animation-delay:-1.72s}
+.jarvis-accretion{position:absolute;width:170px;height:61px;border-radius:50%;border:9px solid rgba(100,150,255,.34);filter:blur(3px);transform:rotate(-18deg) rotateX(67deg);box-shadow:0 0 18px rgba(100,150,255,.24),inset 0 0 15px rgba(255,255,255,.16);animation:jarvis-accretion-spin 4.2s linear infinite}
+.jarvis-orbit{position:absolute;left:50%;top:50%;border:1px solid rgba(100,145,235,.45);border-radius:50%;transform:translate(-50%,-50%) rotateX(65deg);box-shadow:0 0 14px rgba(90,140,255,.14)}.orbit-a{width:158px;height:59px;animation:jarvis-orbit-a 5s linear infinite}.orbit-b{width:181px;height:74px;transform:translate(-50%,-50%) rotateX(65deg) rotate(58deg);animation:jarvis-orbit-b 7s linear infinite}.orbit-c{width:151px;height:47px;transform:translate(-50%,-50%) rotateX(65deg) rotate(-55deg);animation:jarvis-orbit-c 6.3s linear infinite}
+.jarvis-home-light .jarvis-black-hole{filter:drop-shadow(0 0 28px rgba(50,90,190,.2))}
+
+.jarvis-identity{margin:0 0 12px}.jarvis-eyebrow{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:4px;font-size:8px;font-weight:900;letter-spacing:.22em;color:var(--jarvis-text-muted)}.jarvis-identity h1{margin:0;font-size:clamp(34px,6.8vw,56px);line-height:.95;font-weight:950;letter-spacing:.13em;text-shadow:0 0 30px rgba(90,140,255,.16),0 7px 22px rgba(0,0,0,.2)}.jarvis-identity p{margin:7px 0 0;font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--jarvis-text-muted)}
+.jarvis-command-zone{width:100%;flex:0 0 auto;position:relative;z-index:5}.jarvis-composer{width:100%;border:1px solid var(--jarvis-border);border-radius:20px;padding:9px;background:color-mix(in srgb,var(--jarvis-surface) 94%,transparent);box-shadow:0 18px 55px rgba(0,0,0,.16),0 0 45px rgba(70,110,220,.06);transition:border-color .22s,box-shadow .28s,transform .28s;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.jarvis-composer:focus-within{border-color:var(--jarvis-accent);box-shadow:0 22px 70px rgba(0,0,0,.22),0 0 34px rgba(80,130,255,.12);transform:translateY(-1px)}
+.jarvis-input-wrap{position:relative}.jarvis-input-spark{position:absolute;left:4px;top:8px;color:var(--jarvis-accent);opacity:.85;filter:drop-shadow(0 0 6px rgba(100,150,255,.45))}.jarvis-prompt-input{display:block;width:100%;min-height:48px;max-height:120px;resize:none;overflow:hidden;border:0;outline:0;background:transparent;font-size:15px;line-height:24px;padding:3px 10px 3px 27px;color:var(--jarvis-text)}.jarvis-prompt-input::placeholder{color:var(--jarvis-text-muted);opacity:.72}.jarvis-composer-footer{display:flex;align-items:center;justify-content:space-between;min-height:32px;padding:6px 1px 0;margin-top:3px;border-top:1px solid var(--jarvis-border)}.jarvis-native-badge{display:flex;align-items:center;gap:5px;font-size:7px;font-weight:900;letter-spacing:.12em;color:var(--jarvis-text-muted)}.jarvis-command-actions{display:flex;align-items:center;gap:6px}.jarvis-composer-icon,.jarvis-send-button{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:0;transition:transform .18s,background-color .18s,box-shadow .18s}.jarvis-composer-icon{background:var(--jarvis-surface-raised);color:var(--jarvis-text-muted)}.jarvis-send-button{background:var(--jarvis-accent);color:#fff;box-shadow:0 5px 18px rgba(65,110,230,.25)}.jarvis-composer-icon:hover,.jarvis-send-button:hover:not(:disabled){transform:translateY(-1px) scale(1.04)}.jarvis-composer-icon.is-listening{background:var(--jarvis-danger);color:#fff;animation:jarvis-listen-pulse 1.2s ease-in-out infinite}.jarvis-send-button:disabled{opacity:.38;background:var(--jarvis-border);color:var(--jarvis-text-muted);box-shadow:none}
+
+.jarvis-quick-rail{width:100%;display:flex;gap:10px;margin-top:9px;overflow:hidden}.jarvis-quick-card{min-width:0;flex:1 1 0;height:48px;display:flex;align-items:center;justify-content:center;gap:7px;padding:6px 9px;border:1px solid var(--jarvis-border);border-radius:13px;background:color-mix(in srgb,var(--jarvis-surface) 88%,transparent);color:var(--jarvis-text);text-align:left;box-shadow:0 7px 24px rgba(0,0,0,.1);transition:transform .22s,border-color .22s,box-shadow .22s,background .22s;position:relative;overflow:hidden;animation:jarvis-card-float 4.8s ease-in-out infinite}.jarvis-quick-card:nth-child(2){animation-delay:-1.6s}.jarvis-quick-card:nth-child(3){animation-delay:-3.2s}.jarvis-quick-card:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent,rgba(130,170,255,.12),transparent);transform:translateX(-120%);animation:jarvis-card-scan 4.6s ease-in-out infinite}.jarvis-quick-card:nth-child(2):after{animation-delay:1.2s}.jarvis-quick-card:nth-child(3):after{animation-delay:2.4s}.jarvis-quick-card:hover{transform:translateY(-3px) scale(1.015);border-color:var(--jarvis-accent);box-shadow:0 13px 30px rgba(0,0,0,.15),0 0 18px rgba(80,130,255,.09)}.jarvis-quick-icon{width:29px;height:29px;flex:0 0 29px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--jarvis-accent);background:rgba(85,130,235,.1);box-shadow:inset 0 0 12px rgba(100,150,255,.08)}.jarvis-quick-copy{display:flex;flex-direction:column;gap:1px;min-width:0}.jarvis-quick-copy small{font-size:6px;letter-spacing:.16em;font-weight:900;color:var(--jarvis-text-muted)}.jarvis-quick-copy strong{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Gemini-like living cognition surface replaces the old Live Log. */
+.jarvis-intelligence-panel{position:relative;width:100%;height:68px;margin-top:9px;border:1px solid color-mix(in srgb,var(--jarvis-accent) 18%,var(--jarvis-border));border-radius:16px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(78,125,245,.13),transparent 62%),color-mix(in srgb,var(--jarvis-surface) 72%,transparent);box-shadow:inset 0 0 40px rgba(80,125,240,.035),0 10px 30px rgba(0,0,0,.08);opacity:.95}.jarvis-intelligence-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(120,160,240,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,240,.07) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(90deg,transparent,black 18%,black 82%,transparent);animation:jarvis-grid-drift 7s linear infinite}.jarvis-intelligence-wave{position:absolute;left:50%;top:50%;width:120%;height:90px;border:1px solid rgba(105,150,255,.16);border-radius:50%;transform:translate(-50%,-50%);animation:jarvis-wave 5.5s ease-in-out infinite}.wave-a{width:42%;height:30px;border-color:rgba(120,170,255,.25)}.wave-b{width:72%;height:50px;animation-delay:-1.8s}.wave-c{width:105%;height:70px;animation-delay:-3.6s}.jarvis-intelligence-orb{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--jarvis-accent);box-shadow:0 0 14px 3px rgba(90,145,255,.32);animation:jarvis-orb-travel 5s linear infinite}.orb-a{left:18%;top:55%}.orb-b{left:53%;top:28%;animation-delay:-1.7s}.orb-c{left:78%;top:65%;animation-delay:-3.3s}.jarvis-intelligence-caption{position:absolute;left:12px;bottom:8px;display:flex;align-items:center;gap:5px;font-size:6px;font-weight:900;letter-spacing:.18em;color:var(--jarvis-text-muted)}.jarvis-intelligence-caption i{width:5px;height:5px;border-radius:50%;background:var(--jarvis-accent);box-shadow:0 0 9px var(--jarvis-accent);animation:jarvis-live-pulse 1.4s ease-in-out infinite}.jarvis-intelligence-sweep{position:absolute;top:0;bottom:0;width:18%;background:linear-gradient(90deg,transparent,rgba(130,175,255,.11),transparent);filter:blur(5px);animation:jarvis-sweep 4.5s ease-in-out infinite}
+
+.jarvis-home-actions{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:7px;color:var(--jarvis-text-muted);font-size:7px}.jarvis-home-actions button{display:flex;align-items:center;gap:5px;padding:5px 8px;border:0;background:transparent;color:var(--jarvis-text-muted);font-size:8px}.jarvis-home-actions span{display:flex;align-items:center;gap:4px;letter-spacing:.1em;font-weight:800}
+.jarvis-home.keyboard-open .jarvis-home-main{align-items:flex-end;padding-bottom:8px}.jarvis-home.keyboard-open .jarvis-home-content{justify-content:flex-end;transform:none}.jarvis-home.keyboard-open .jarvis-hero{transform:scale(.62);transform-origin:center bottom;margin-bottom:-36px}.jarvis-home.keyboard-open .jarvis-identity{margin-bottom:5px}.jarvis-home.keyboard-open .jarvis-identity p,.jarvis-home.keyboard-open .jarvis-eyebrow{display:none}.jarvis-home.keyboard-open .jarvis-identity h1{font-size:25px}.jarvis-home.keyboard-open .jarvis-quick-rail,.jarvis-home.keyboard-open .jarvis-intelligence-panel,.jarvis-home.keyboard-open .jarvis-home-actions{display:none}.jarvis-home.keyboard-open .jarvis-command-zone{width:100%;margin-bottom:max(0px,env(safe-area-inset-bottom))}.jarvis-home.keyboard-open .jarvis-composer{transform:none;box-shadow:0 12px 42px rgba(0,0,0,.2)}
+@media(max-height:700px){.jarvis-black-hole{width:145px;height:145px}.jarvis-black-hole:before{width:136px;height:136px}.jarvis-black-hole:after{width:120px;height:120px}.jarvis-core-glow{width:96px;height:96px}.jarvis-core-void{width:58px;height:58px}.jarvis-accretion{width:140px}.orbit-a{width:135px}.orbit-b{width:155px}.orbit-c{width:132px}.jarvis-identity{margin-bottom:8px}.jarvis-intelligence-panel{height:54px}}
+@media(max-width:520px){.jarvis-home-main{padding-left:10px;padding-right:10px}.jarvis-quick-card{height:44px;padding:5px 6px;gap:5px}.jarvis-quick-icon{width:27px;height:27px;flex-basis:27px}.jarvis-quick-copy strong{font-size:8px}.jarvis-quick-copy small{font-size:5px}.jarvis-intelligence-panel{height:60px}.jarvis-home-content{transform:translateY(-.5vh)}}
+@media(prefers-reduced-motion:reduce){.jarvis-home *,.jarvis-home *:before,.jarvis-home *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+@keyframes jarvis-space-rotate{to{transform:rotate(360deg)}}
+@keyframes jarvis-star-drift{to{transform:translate3d(30px,-22px,0)}}
+@keyframes jarvis-twinkle{0%,100%{opacity:.12;transform:scale(.75)}50%{opacity:.75;transform:scale(1.7)}}
+@keyframes jarvis-nebula-float{to{transform:translate(9vw,-5vw) scale(1.18)}}
+@keyframes jarvis-core-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes jarvis-horizon-pulse{0%,100%{opacity:.5;transform:scale(.98)}50%{opacity:1;transform:scale(1.03)}}
+@keyframes jarvis-hole-pulse{0%,100%{transform:scale(.97);opacity:.92}50%{transform:scale(1.04);opacity:1}}
+@keyframes jarvis-singularity{0%{transform:rotate(0deg) translateX(25px) scale(.7)}50%{transform:rotate(180deg) translateX(10px) scale(1.2)}100%{transform:rotate(360deg) translateX(25px) scale(.7)}}
+@keyframes jarvis-accretion-spin{to{transform:rotate(342deg) rotateX(67deg)}}
+@keyframes jarvis-orbit-a{to{transform:translate(-50%,-50%) rotateX(65deg) rotate(360deg)}}
+@keyframes jarvis-orbit-b{to{transform:translate(-50%,-50%) rotateX(65deg) rotate(418deg)}}
+@keyframes jarvis-orbit-c{to{transform:translate(-50%,-50%) rotateX(65deg) rotate(305deg)}}
+@keyframes jarvis-card-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes jarvis-card-scan{0%,55%,100%{transform:translateX(-120%)}72%{transform:translateX(120%)}}
+@keyframes jarvis-grid-drift{to{transform:translate(22px,22px)}}
+@keyframes jarvis-wave{0%,100%{transform:translate(-50%,-50%) scale(.9);opacity:.15}50%{transform:translate(-50%,-50%) scale(1.08);opacity:.55}}
+@keyframes jarvis-orb-travel{0%{transform:translate(0,0);opacity:.1}25%{transform:translate(25vw,-12px);opacity:1}50%{transform:translate(48vw,8px);opacity:.7}75%{transform:translate(24vw,18px);opacity:1}100%{transform:translate(0,0);opacity:.1}}
+@keyframes jarvis-sweep{0%,100%{left:-20%}50%{left:105%}}
+@keyframes jarvis-live-pulse{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.35)}}
+@keyframes jarvis-listen-pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,80,80,.2)}50%{box-shadow:0 0 0 7px rgba(220,80,80,0)}}
+
+/* Status line under the composer: mic errors and upload results.
+   Previously the landing page had no way to report either, so a failed
+   mic or upload simply looked like nothing happened. */
+.jarvis-composer-note {
+  margin: 8px auto 0;
+  max-width: 640px;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--jarvis-text-muted, #94a3b8);
+}
+
+/* The landing composer, reused inside the chat view. The landing page
+   centres and floats it; in chat it sits in the normal document flow at
+   the bottom of the thread, so only positioning is overridden -- the
+   look itself comes from the shared .jarvis-composer rules above. */
+.jarvis-composer-inchat {
+  position: relative;
+  inset: auto;
+  transform: none;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* PENDING ATTACHMENT CHIPS (2026-09-21) -- shows the real file(s)
+   attached to the next message, with their own remove control.
+   Deliberately plain: this is a status readout, not a decoration. */
+.jarvis-pending-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 4px 6px;
+}
+
+.jarvis-attachment-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 220px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--jarvis-chip-bg, rgba(148, 163, 184, 0.16));
+  border: 1px solid var(--jarvis-chip-border, rgba(148, 163, 184, 0.28));
+  font-size: 12px;
+  color: var(--jarvis-text-muted, #94a3b8);
+}
+
+.jarvis-attachment-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jarvis-attachment-chip-remove {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 0 0 2px;
+  opacity: 0.75;
+}
+
+.jarvis-attachment-chip-remove:hover {
+  opacity: 1;
+}

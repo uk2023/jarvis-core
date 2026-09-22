@@ -1,0 +1,405 @@
+JARVIS -- MASTER GOAL REPORT
+Generated 2026-09-13 by Claude, for UK.
+
+This is the honest state of the system: what exists, what has been
+tested, and what has not been done. Where something is unverified, it
+says so rather than being listed alongside the verified work.
+
+
+================================================================
+1. THE ORIGINAL GOAL
+================================================================
+
+A personal cognitive organism that is LLM-assisted but not LLM-
+dependent: it perceives, routes, thinks, acts, remembers, evaluates and
+evolves. It should act as a production-level coding partner, adapt to
+the people who talk to it, and -- critically -- never claim to have done
+something it has not done.
+
+That last requirement has driven nearly every design decision in this
+report. Most of the bugs found across these sessions were not crashes.
+They were the system confidently reporting success it had not achieved.
+
+
+================================================================
+2. WHAT IS BUILT AND VERIFIED
+================================================================
+
+2.1 IDENTITY AND ACCESS  (core/identity/)
+  Five roles: OWNER > CO_OWNER > ADMIN > USER > GUEST.
+  - PBKDF2-HMAC-SHA256, 200k iterations, per-user salt.
+  - Owner row cannot be demoted or deleted, by anyone, including itself.
+  - Only a VERIFIED owner can grant roles. Co-owner deliberately cannot
+    -- so no one can lock UK out of his own system.
+  - Login returns an identical error for unknown user and wrong password
+    (no account enumeration).
+  VERIFIED: signup defaults to user; co-owner/admin/self-claimed-owner
+  all refused role grants; owner row survived deletion attempts.
+
+  REMOVED during this work (these were real holes, not theory):
+  - App.tsx wrote the literal string 'operator-active' to localStorage
+    and unlocked the UI on it. This was the actual cause of "koi bhi
+    password se admin login ho jata hai".
+  - client.ts granted admin on ANY password when the backend was down.
+  - ProfileSettingsModal.tsx had a hardcoded backdoor: 'operator-pass-4242'.
+  - AuthModal.tsx had fake biometric/Face-ID/OTP UI with a hardcoded
+    code of 8492.
+
+2.2 PER-USER MEMORY  (core/identity/user_memory.py)
+  Every read and write is keyed on username at the SQL level. There is
+  no function in that module capable of returning another user's rows.
+  Adaptation (how they write, how brief, recurring topics) is learned;
+  personality inference is not attempted.
+  - Admin role grants NO read access to user memory. Operating the
+    system is not permission to read the people using it.
+  - export_for_user() lets any person see everything held on them.
+  VERIFIED: Heramb's and Rohit's facts stayed separate; UK's data did
+  not appear in Heramb's prompt block; a user could delete their own
+  memory but not another's.
+
+2.3 PERSONA  (core/identity/persona.py)
+  The films' JARVIS: dry, economical, addresses UK as "sir", volunteers
+  the inconvenient number, and contradicts him when he is wrong.
+  The persona explicitly REINFORCES honesty rather than decorating over
+  it -- the closing instruction is that if being in character would mean
+  sounding certain about something uncertain, the style is dropped.
+  VERIFIED: an unverified caller claiming owner is treated as a guest,
+  so the persona cannot be used to social-engineer authority.
+
+2.4 SANDBOXES  (core/skills/sandbox_policy.py, codebox.py)
+  data/sandboxes/owner/<session>/   UK and co-owner
+  data/sandboxes/admin/<session>/   admins
+  data/sandboxes/user/<username>/   one per account, stable across sessions
+  data/evolution/                   JARVIS's own -- never shared with a user
+  VERIFIED: four distinct directories; two users each wrote mine.py and
+  saw only their own.
+
+  SYSTEM-LEVEL TASKS: owner and co-owner only. Admin is explicitly
+  excluded. VERIFIED across the full role matrix, including that an
+  unverified owner is refused.
+
+2.5 PACKAGE INSTALLS  (the .env question)
+  Auto-installing whatever a model names is arbitrary code execution:
+  pip runs the package's own setup.py at install time, so a hallucinated
+  or typo-squatted name executes code before any import happens.
+  An ALLOWLIST in .env removes that property while keeping convenience:
+      JARVIS_ALLOW_INSTALL=true
+      JARVIS_ALLOWED_PACKAGES=numpy,pandas,requests,matplotlib
+  Inside the list, installs are automatic and need no approval. Outside
+  it, the package is reported with the exact line to paste to allow it.
+  VERIFIED: a name of "--upgrade http://x" was rejected as not being a
+  package name at all.
+
+2.6 UPLOADS AND ATTACHMENTS  (core/skills/upload_guard.py)
+  This is the piece that did not exist at all before -- the attach
+  button was in the UI with nothing behind it.
+  - ZIP-SLIP: an entry named ../../core/orchestration/brain.py is
+    refused. VERIFIED: the attack was blocked and brain.py was untouched.
+  - SYMLINK/HARDLINK escape in tar: refused. VERIFIED.
+  - ZIP BOMB: declared sizes summed before extraction. VERIFIED at 120MB.
+  - BLOCKED TYPES: .exe/.so/.apk/.jar and similar never accepted. VERIFIED.
+  - Extracted files are written 0600, never executable.
+  - Source scan flags shell execution, eval/exec, network, credential
+    paths, persistence, large base64 blobs.
+  The scan is HONEST about being a warning, not a verdict: nobody can
+  reliably decide whether arbitrary code is malicious by reading it. The
+  real protection is that uploads land in an isolated sandbox and are
+  never imported by the running organism.
+
+2.7 SELF-EVOLUTION  (core/evolution/self_evolution.py)
+  JARVIS can author features for itself, validate them, and log them.
+  It cannot install them.
+  - PROTECTED_PATHS: core, backend, cli.py, monitor.py, config -- paths
+    are RESOLVED, not string-compared, so ../ and symlinks both fail.
+    This includes self_evolution.py itself: JARVIS cannot edit its own
+    restrictions.
+  - Auto-propose threshold 0.85. Dangerous patterns force human approval
+    REGARDLESS of confidence, because confidence is not evidence of
+    safety.
+  - decide_self_proposal is deliberately NOT an LLM tool. JARVIS cannot
+    approve its own proposals.
+  - Approval moves a file to approved/ only. Live adoption stays a
+    manual step, so no single click changes running behaviour.
+  VERIFIED: os.system at confidence 0.99 still required approval; every
+  protected path refused; an infinite loop was caught by timeout.
+
+2.8 VERSIONING  (core/evolution/versioning.py)
+  Real git, on a branch JARVIS manages: uk2023.
+  - Never commits to main/master, never merges, never rewrites history,
+    never `git add -A` (only its own sandbox/evolution paths, so UK's
+    work in progress is never swept up).
+  - build_architecture_map() measured the real tree: 127 Python files,
+    31,534 lines, 14 packages -> data/evolution/ARCHITECTURE.md.
+  - Falls back to content-hash tracking, and SAYS SO, when git is absent.
+  VERIFIED: change detection returned True then False correctly.
+  NOT VERIFIED: actual git commits. The build environment had no git
+  installed, so only the hash-only fallback path was exercised. On your
+  Termux device, where git exists, the commit path will run for the
+  first time -- watch it.
+
+2.9 ROUTING AND SEARCH
+  Brain now decides which memory system OWNS a turn before the router
+  votes (core/orchestration/information_need.py), by structure alone --
+  no LLM call, no added latency.
+  should_confirm_search is now WIRED into the response path (it was
+  previously written and tested but never called).
+  VERIFIED: nifty -> search; photosynthesis -> no search; "mere dost ka
+  naam" -> no search; "Rust ya Go" -> confirm first.
+
+2.10 EXTENDED THINKING  (core/cognition/thinking.py)
+  Three modes: off / on / auto. AUTO is the "JARVIS khud kar sake" part
+  -- it inspects the turn structurally and decides, without making an
+  LLM call to decide whether to make LLM calls.
+  The thinking is REAL: understand -> explore -> critique -> answer,
+  each an actual model call feeding the next.
+  VERIFIED: "hi" and "/pending_rules" -> no thinking, 1 call total;
+  a multi-part design question -> 3 thinking stages + answer, 4 calls;
+  a world_live question -> no thinking, because a lookup beats
+  deliberation there.
+  Available in CLI (/think off|auto|on), backend (POST /api/think/stream
+  as SSE), and the frontend toggle.
+
+2.12 VOICE CALL  (core/voice/call_session.py, backend/routes_voice_call.py)
+  A real call, not push-to-talk: energy-based VAD over 20ms PCM frames
+  detects turn boundaries, and BARGE-IN stops JARVIS the moment the user
+  starts speaking. Barge-in is what makes it feel like a call rather
+  than a walkie-talkie, and it is why the state machine exists.
+  States: listening -> thinking -> speaking -> listening.
+  STT via Whisper if present; TTS via termux-tts-speak; browser
+  SpeechRecognition/speechSynthesis as fallback. capabilities() reports
+  what the device ACTUALLY has, and the UI warns BEFORE the user speaks
+  rather than after they have talked into nothing.
+  VERIFIED: VAD events on synthetic audio; barge-in interrupt; state
+  transitions; honest capability reporting on a box with no audio stack.
+  See 3.4 for what remains untested.
+
+
+2.13 JARVIS'S VOICE  (core/voice/jarvis_voice.py, web_frontend/src/voice/jarvisVoice.ts)
+  ONE voice, defined once. Before this there were three: the chat bubble
+  built its own utterance (rate 1.05 / pitch 0.95), the call path used
+  another, Termux TTS a third. Tuning meant editing all three and they
+  drifted apart anyway.
+  Everything that speaks now reads the same profile, and the profile
+  lives in config/voice.json -- editable without touching code or
+  rebuilding, which is what "baad mein fine tune ho sake" needs.
+  Marvel-JARVIS in Hindi is mostly restraint: lower pitch (0.72), just
+  under natural rate (0.95), hi-IN voice preferred, real pauses at
+  sentence boundaries. Text is chunked so barge-in stops speech quickly
+  instead of waiting out one long utterance. Code blocks, markdown and
+  URLs are stripped before speaking.
+  VERIFIED: profile loads and persists across a save; markdown/code/URL
+  stripping; chunking at 240 chars; browser and device specs come from
+  the same file.
+
+  ON FILLERS -- an honest limitation. UK asked for "real organism type
+  awaaz, fillers etc." Prosodic pauses are implemented. Injected "umm"
+  and "hmm" are NOT, deliberately: this layer runs AFTER the model has
+  decided what to say, so any filler it adds is hesitation JARVIS never
+  had. That is the same category as the fake telemetry and canned hedge
+  lines already removed from this project. If JARVIS should sound like
+  it is thinking, the thinking should be real (thinking.py) and the
+  pauses should fall where reasoning actually paused.
+
+2.14 MIC -- FOUR REAL BUGS FOUND AND FIXED
+  The mic did not work anywhere, for four separate reasons:
+  (a) /ws/audio DID NOT EXIST on the backend. The frontend had been
+      opening it since it was written; the connection always failed.
+      The endpoint now exists in routes_voice_call.py.
+  (b) getBackendUrl() returns '' on same-origin deployments, so the URL
+      became the relative '/ws/audio' -- which the WebSocket constructor
+      rejects outright. Every same-origin deployment (the normal case)
+      failed here. Now resolved against window.location.
+  (c) The browser fallback never set isRecording, so the component and
+      the streamer disagreed about state and stopStreaming() became a
+      no-op -- the button appeared stuck on.
+  (d) MediaRecorder.onstop never told the server to flush, so buffered
+      audio was discarded on stop.
+  THE LANDING PAGE MIC WAS PURE THEATRE: toggleMic() set an 1800ms timer
+  and typed the hardcoded string 'JARVIS, check system status'. It never
+  requested microphone access. Replaced with real capture and
+  recognition.
+  The landing page file picker was also fake -- it appended the filename
+  to the prompt text and the file never left the browser. It now goes
+  through /api/upload with the archive and scan protections from 2.6.
+
+2.15 VOICE ENGINE SCREEN  (VoiceEngineScreen.tsx)
+  Opened from the live VOICE icon in the chat header. Waveform is driven
+  by REAL amplitude -- mic level while listening, synthesis boundary
+  events while JARVIS speaks -- and goes flat when nothing is happening.
+  A timer-driven wave would look identical to a working one while
+  telling you nothing.
+  Every voice turn goes through the same handleSend() as a typed message,
+  so it is persisted, traced and remembered identically and appears in
+  the chat session as text.
+
+2.16 CHAT COMPOSER
+  The chat input now reuses the landing page's .jarvis-composer classes
+  from jarvis-home.css rather than a Tailwind look-alike, so the two
+  surfaces share one stylesheet and cannot drift.
+
+2.11 STEP-TURN GOALS  (core/orchestration/step_goals.py)
+  Owner/co-owner ONLY, and OPT-IN -- exactly as you asked: normal chat
+  stays one turn unless you say you want steps.
+  Covers coding, writing, design and system steps.
+  System steps are re-checked AT EXECUTION, not just at entry, so a plan
+  that drifts into system work cannot ride in on the first step's
+  approval.
+  VERIFIED: user/admin/unverified-owner all refused; co_owner and owner
+  allowed; a system step was held for confirmation while a writing step
+  executed.
+
+
+
+================================================================
+2B. WHY MIC AND VOICE DID NOT WORK -- ROOT CAUSES
+================================================================
+
+The mic turned on (green indicator) but no text appeared, and JARVIS's
+voice was never heard. Those are two separate faults with two separate
+causes, and my previous round made the first one WORSE.
+
+MIC: TEXT NEVER APPEARED
+  Last round I added the missing /ws/audio endpoint. That fixed the
+  connection and broke the behaviour. Previously the socket failed
+  instantly, which dropped the client into browser SpeechRecognition --
+  and that path gives live interim text as you speak. Once the socket
+  CONNECTED, the fallback stopped triggering, and the server only
+  answers after recording stops. So the mic light came on, you spoke,
+  and nothing appeared the entire time. Adding the endpoint removed the
+  accidental thing that was working.
+  FIX: ask /api/voice/capabilities FIRST. The server streams audio only
+  when it genuinely has an STT engine; otherwise the browser recogniser
+  runs immediately and interim text lands in the box as you speak.
+  Also fixed: continuous=false ended the recogniser at the first natural
+  pause, cutting sentences in half; and stopStreaming() had no handle on
+  the recogniser, so it kept running after stop and the mic indicator
+  stayed lit.
+
+VOICE: NOTHING WAS EVER HEARD
+  speak() did `await loadProfile()` and `await getVoices()` before
+  calling speechSynthesis.speak(). Chrome and Safari -- especially on
+  mobile -- silently drop an utterance that is not spoken in the same
+  task as a real user gesture. Both awaits pushed the actual speak()
+  into a later microtask, so every utterance was discarded. No error is
+  thrown, which is why this looked like "TTS kaam hi nahi kar raha".
+  FIX: prewarmVoice() loads the profile and voice list at app start, so
+  speak() awaits nothing; unlockVoice() speaks one silent utterance on
+  the first pointerdown/keydown to unlock the engine for the session;
+  speechSynthesis.resume() guards against Chrome's idle pause.
+
+LIVE CALL: SAME STREAMING-INTO-A-VOID PROBLEM
+  The call screen streamed PCM to /ws/call, which needs server STT that
+  does not exist here. Now it checks capabilities and runs continuous
+  browser recognition, sending text frames the server already handles --
+  the same path a typed message takes. Replies are spoken through the
+  shared voice, and speaking over JARVIS cancels playback (barge-in).
+
+COMPOSER
+  The chat composer has been DELETED and replaced with the landing
+  page's composer -- same JSX structure, same jarvis-home.css classes.
+  Not a look-alike sitting beside it; the old Tailwind card is gone.
+  VERIFIED: zero occurrences of the old markup remain, and both screens
+  reference the same six classes.
+
+================================================================
+3. WHAT IS NOT DONE
+================================================================
+
+3.1 FRONTEND STILL NOT COMPILED. This is the big one.
+    Six components are new or heavily edited this round
+    (VoiceEngineScreen, VoiceCallScreen, CodeBoxScreen,
+    ExtendedThinking, jarvisVoice.ts, plus edits to UserChatView,
+    HomeScreen, App.tsx, audioStream.ts). This environment has no
+    node_modules, so tsc cannot run -- it fails on
+    "Cannot find module 'react'" for every pre-existing file too.
+    NONE OF THE TYPESCRIPT IS TYPE-CHECKED. Run `npm run build` FIRST
+    and expect to fix small things, especially the HomeScreen edits,
+    which were applied to a single very long minified-style JSX line.
+
+3.2 THE VOICE HAS STILL NEVER BEEN HEARD BY ANYONE, INCLUDING ME.
+    The gesture-unlock bug above is a real, identified cause with a real
+    fix, but this environment has no browser and no audio device, so I
+    could not confirm sound actually comes out. If it still does not
+    speak, check the browser console for speechSynthesis errors and
+    whether getVoices() returns a hi-IN voice at all -- on some Android
+    builds it returns an empty list until a language pack is installed.
+
+3.2a VOICE TUNING NEVER DONE.
+    No audio hardware, no Termux API, no browser here. Pitch 0.72 and
+    rate 0.95 are reasoned starting points, not tuned values. Expect to
+    adjust them in config/voice.json -- which is exactly why that file
+    exists and needs no rebuild.
+
+3.3 SPEAKER IDENTIFICATION -- NOT IMPLEMENTED, NOT FAKED.
+    identify_speaker() always returns "unknown", implemented=False.
+    Needs a speaker-embedding model plus enrolment per person. It must
+    not be made to guess: per-user memory is keyed on identity, so a
+    wrong guess hands one person's private facts to another. Until then
+    JARVIS knows who is speaking from the session login, which is
+    reliable.
+
+3.4 CAMERA PRESENCE / FACE RECOGNITION -- NOT STARTED.
+    capabilities() reports camera_presence: false. No stub returns a
+    plausible face count.
+
+3.5 SERVER-SIDE STT IS UNTESTED. /ws/audio exists and handles the
+    protocol, but transcription needs Whisper, which is not installed
+    here. Without it the endpoint honestly tells the client to use
+    browser recognition instead of returning empty text that looks like
+    silence.
+
+3.6 Legacy routes are only partly identified. /api/chat resolves the
+    speaker from the Authorization header now; other routes and some
+    client.ts fetches still do not send or check Bearer tokens.
+
+3.7 HTTPS-only cookies: still open. Tokens live in sessionStorage.
+
+3.8 Latency never profiled on real Termux hardware.
+
+3.9 The git commit path has still never executed -- no git in this
+    environment. The first real commit to uk2023 happens on your device.
+
+
+================================================================
+3A. COMPLETED SINCE THE PREVIOUS REPORT
+================================================================
+  - CodeBox and Call added to App.tsx navigation and routing.
+  - Extended thinking toggle mounted in the chat composer, persisted in
+    sessionStorage so it matches the CLI's /think setting.
+  - monitor.py now renders SELF-EVOLUTION, SANDBOXES and VERSION panels.
+    VERIFIED against empty data: they show honest empty states, not
+    fabricated placeholder rows.
+  - Login rate limiting: 8 attempts per IP per 5 minutes, checked BEFORE
+    any password work, cleared on success. VERIFIED.
+  - WebSocket per-connection auth on /ws/call: token verified before the
+    socket is accepted, identity held for the whole connection and never
+    re-read from client frames. VERIFIED that empty and garbage tokens
+    are refused.
+  - /api/chat now threads speaker identity from the header.
+
+================================================================
+4. THE PATTERN WORTH REMEMBERING
+================================================================
+
+Across every session, the dominant bug was never a crash. It was
+"built but never wired": a module that existed, was correct, and was
+called by nothing.
+
+  - ExperienceEngine never wrote to episodic memory, so the idle loop
+    had nothing to consolidate -- while the learning queue showed 1118
+    processed items and looked perfectly healthy.
+  - The grounding checker could not recognise browser_search results,
+    so every genuinely search-backed answer was scored unbacked and
+    overwritten by a hedge. One bug, three separate complaints.
+  - should_confirm_search was written, tested, and never called.
+  - The attach button existed in the UI with no backend at all.
+  - /ws/audio was called by the frontend for months and never existed
+    on the server.
+  - The landing page mic was a 1800ms timer typing a hardcoded string.
+
+The second pattern: DEPLOYMENT IS NOT ACTIVATION. Several times a fix
+appeared not to work because the process was never restarted and was
+still running the old code from memory. A trace showed
+max_output_tokens: 2700 long after it had been raised to 16000.
+
+RESTART THE PROCESS AFTER DEPLOYING THIS.
