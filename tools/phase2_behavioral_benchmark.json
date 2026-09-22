@@ -1,0 +1,35 @@
+{
+  "benchmark": "JARVIS-NEURAL Phase 2 Behavioral Control Set",
+  "version": "1.0",
+  "purpose": "Fixed interaction set for controlled A/B comparison before and after the neural POC.",
+  "rules": [
+    "Use the same test IDs, wording, order where applicable, and success criteria for A and B.",
+    "Do not change the benchmark after baseline A is locked; amendments require a new version.",
+    "Record raw traces before calculating aggregates.",
+    "Do not infer quality from latency alone.",
+    "Do not treat the existing 23/23 regression suite as overall conversational accuracy."
+  ],
+  "tests": [
+    {"id":"B01","category":"single_turn","prompt":"What is 2 + 2?","success":"Correct answer returned without error."},
+    {"id":"B02","category":"context_carryover","turns":["My project is called Jarvis Neural.","What is the name of my project?"],"success":"Second response correctly carries the named project context."},
+    {"id":"B03","category":"correction_carryover","turns":["Use the phrase control baseline for this experiment.","Correction: call it baseline A from now on.","What should you call it now?"],"success":"Final response follows the latest correction."},
+    {"id":"B04","category":"interruption_recovery","turns":["Start explaining the architecture.","Stop. Give me only the three main layers.","Continue from there."],"success":"Interruption changes scope and subsequent response remains coherent."},
+    {"id":"B05","category":"memory_retrieval","prompt":"Retrieve a previously stored project fact using the normal Jarvis memory path.","success":"Expected stored fact is retrieved, or an explicit no-memory result is returned; no fabricated fact."},
+    {"id":"B06","category":"action_success","prompt":"Execute one safe, deterministic registered action with a verifiable result.","success":"Action completes and verification confirms the expected result."},
+    {"id":"B07","category":"action_failure_recovery","prompt":"Attempt a deliberately invalid/nonexistent safe action.","success":"Failure is reported accurately and no invented success/path is emitted."},
+    {"id":"B08","category":"state_stability","turns":["Remember that the current task is baseline measurement.","Perform an unrelated short response.","What is the current task?"],"success":"Task state remains stable across the intervening turn."},
+    {"id":"B09","category":"llm_fallback","prompt":"Run a test that exercises the normal LLM fallback path under controlled provider conditions.","success":"Fallback behavior is observable and produces a valid response or explicit failure."},
+    {"id":"B10","category":"multistep","prompt":"Perform a small three-step planning/task workflow and report completion plus verification.","success":"All requested steps are represented and final state is verified."}
+  ],
+  "metrics": [
+    "response_latency_seconds",
+    "context_carryover_pass",
+    "interruption_recovery_pass",
+    "action_success_pass",
+    "state_stability_pass",
+    "llm_calls",
+    "prompt_tokens",
+    "completion_tokens",
+    "total_tokens"
+  ]
+}
