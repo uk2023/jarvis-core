@@ -1,0 +1,59 @@
+JARVIS-NEURAL — PHASE 2 METRICS BASELINE
+=========================================
+Branch: jarvis-neural
+
+PURPOSE
+-------
+Phase 2 establishes a repeatable measurement layer before any fruit-fly /
+connectome-inspired neural experiment is introduced.
+
+IMPLEMENTED
+-----------
+1. Added tools/phase2_metrics.py.
+2. Production cognition code is not modified by the harness.
+3. Existing deterministic E2E scenario suite can be measured as a functional
+   regression score (PASS / total scenarios) plus suite wall-clock time.
+4. Optional JSONL trace aggregation measures, when the runtime trace exposes
+   compatible timestamps/events:
+   - latency samples (mean/median/min/max)
+   - LLM call count
+   - prompt/completion/total tokens
+   - event counts
+5. Reports can be emitted as JSON for repeatable baseline snapshots.
+
+COMMAND
+-------
+python3 tools/phase2_metrics.py
+
+For live runtime data:
+python3 tools/phase2_metrics.py --trace <runtime-trace.jsonl> --json-out phase2_baseline.json
+
+METRIC DEFINITIONS
+------------------
+Functional accuracy = deterministic scenario checks passed / total checks.
+This is a regression metric, not a claim about general intelligence or factual
+accuracy.
+
+Response latency = elapsed time between compatible start/end timestamps in a
+runtime trace. If the trace does not expose a valid pair, the metric remains
+unknown rather than being estimated.
+
+LLM calls/tokens = values explicitly present in the runtime trace. The harness
+does not infer tokens from prompt length.
+
+Context carryover, interruption handling, action success/failure and state
+stability require scenario-specific evidence. They must not be marked PASS
+merely because a component exists. The existing E2E suite provides some
+functional checks; live Android/PRoot behavior must be measured on-device.
+
+CURRENT STATUS
+--------------
+CODE/HARNESS: COMPLETE
+OFFLINE REGRESSION: runnable
+LIVE ANDROID/PRoot BASELINE: PENDING ON-DEVICE RUN
+
+IMPORTANT
+---------
+No fruit-fly connectome code, simulator, or neural controller has been added.
+No production Jarvis behavior is changed by this Phase-2 harness.
+The baseline must be recorded before Phase 3 neural experimentation.
