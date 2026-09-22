@@ -1,0 +1,548 @@
+JARVIS-NEURAL — PHASE 1 AUDIT REPORT
+====================================
+
+Repository: uk2023/jarvis-core
+Branch: jarvis-neural
+Baseline commit audited: 352fcd91270918371a06253be1b06406da114b83
+Baseline commit message: Initialize Jarvis Neural experiment baseline
+Audit date: 2026-09-22
+Audit type: Phase 1 — Safe Baseline + Architecture/Code Wiring Audit
+
+STATUS
+------
+PHASE 1 STATIC AUDIT: COMPLETE
+RUNTIME EXECUTION: NOT CLAIMED
+
+The branch was verified directly through GitHub. The recursive repository
+inventory was inspected, and the architecture-critical source paths were
+deep-inspected. The audit deliberately did NOT add the fruit-fly neural
+circuit, simulator, neural state layer, or production integration.
+
+Important verification boundary: the available GitHub connection can read
+repository files and metadata but cannot execute the repository's Python,
+Node, ONNX, FAISS, SQLite, Termux, or Android runtime. Therefore this report
+separates static/code findings from runtime claims. Existing test scripts are
+identified below, but their current result is not claimed as freshly executed
+on this baseline.
+
+1. PHASE-1 OBJECTIVES CHECK
+---------------------------
+[PASS] jarvis-neural branch exists.
+[PASS] Baseline commit is present.
+[PASS] Existing architecture was preserved during this audit.
+[PASS] No neural experiment code was added during Phase 1.
+[PASS] Canonical blueprint was located and compared with runtime wiring.
+[PASS] Contracts were located and checked against the live BlueprintBrain path.
+[PASS] Memory, learning, self-evaluation, skills, evolution, identity,
+      runtime/event infrastructure, provider/LLM routing, tool registry,
+      coding-agent path, backend and frontend entrypoints were inspected.
+[PASS] Major duplicate/backup/noise patterns visible in the repository tree
+      were identified as cleanup candidates rather than silently merged.
+[PASS] Known missing/stale reference: requirements.txt documents
+      backend/routes_audio.py, while the inspected backend server imports
+      routes_voice_call.py and no routes_audio.py was found in the repository
+      tree. This is recorded as a reference inconsistency, not silently
+      assumed to be equivalent.
+
+2. CANONICAL ARCHITECTURE
+-------------------------
+Jarvis_Blueprint.txt defines the locked lifecycle:
+
+USER INPUT
+ -> PERCEPTION
+ -> COGNITION
+ -> COGNITIVE ROUTER
+ -> NATIVE / HYBRID / LLM FALLBACK
+ -> BRAIN DECISION
+ -> ACTION / RESPONSE
+ -> EXPERIENCE
+ -> SELF-EVALUATION
+ -> LEARNING COORDINATOR
+ -> KNOWLEDGE / SKILL PATHS
+ -> CONTROLLED EVOLUTION
+ -> NEXT CYCLE
+
+The blueprint explicitly forbids direct shortcuts such as:
+Experience -> Knowledge, Experience -> SkillRegistry,
+SkillLearner -> auto activation, SelfEvaluator -> auto evolution,
+LLM -> unrestricted execution, Perception -> direct action,
+and Router -> bypassing Brain Decision.
+
+The actual BlueprintBrain wiring substantially follows this skeleton.
+Contracts are applied at the major live boundaries rather than existing
+only as documentation.
+
+3. LIVE RUNTIME WIRING AUDIT
+----------------------------
+
+3.1 Bootstrap / organism assembly
+---------------------------------
+core/organism/bootstrap.py constructs and wires:
+- InternalState
+- EventBus
+- Heartbeat
+- MemoryManager
+- ExperienceEngine
+- SelfEvaluator
+- KnowledgeBuilder
+- MemoryConsolidator
+- SkillLearner
+- SkillRegistry
+- LearningCoordinator
+- ControlledEvolutionEngine
+- RuntimeEvolutionAdapter
+- GoalManager
+- Curiosity
+- Scheduler
+- HybridLLMBridge
+- Planner
+- SkillExecutor
+- CognitiveRouter
+- PerceptionEngine / NativePerceptionProvider
+- SemanticUnderstanding
+- BlueprintBrain
+- IdleLoop
+- RuntimeMonitor
+
+This is a real integration path, not merely separate unused classes.
+
+3.2 Perception
+--------------
+core/orchestration/perception.py contains:
+- PerceptionResult
+- PerceptionProvider protocol
+- NativePerceptionProvider
+- LLMPerceptionProvider
+- PerceptionEngine
+
+Native perception handles a small deterministic set first, then the LLM
+provider is the fallback. The LLM provider has a primary/refined/safe-default
+extraction cascade and a shared per-turn call-budget guard.
+
+FINDING P1-01 — ERROR VISIBILITY GAP — MEDIUM
+PerceptionEngine catches every exception from a provider and simply tries the
+next provider. If every provider fails, it returns a generic "none" result.
+This protects availability but can hide the exact provider failure from the
+semantic/router layers unless another trace captured it. For Phase 2 metrics,
+provider failure reason must be retained as structured telemetry.
+
+3.3 Translation / semantic understanding
+-----------------------------------------
+BlueprintBrain performs typo normalization, translator normalization, then
+SemanticUnderstanding. The semantic engine is deterministic-first and can
+produce facts, entities, events, relations, references and provenance.
+The semantic learning boundary keeps candidates separate from trusted memory.
+
+FINDING P1-02 — HEURISTIC COMPLEXITY / GENERALIZATION RISK — MEDIUM
+The semantic engine contains a large set of regex/curated lexical rules.
+This is intentional native-first infrastructure, not a neural circuit, but
+it remains a maintenance and coverage boundary. The repository's own smoke
+artifact shows successful favourite_* cases alongside inputs that still
+produce no extraction. This should be measured rather than expanded through
+unbounded one-off regex patches.
+
+3.4 Cognition / context
+-----------------------
+BlueprintBrain builds cognition input from:
+- semantic result
+- episodic/retrieved memory
+- knowledge
+- active goal
+- internal state
+- available skills
+- recent experience
+
+The memory context path now uses hybrid semantic retrieval and graph relations
+rather than only lexical retrieval.
+
+3.5 Cognitive Router
+--------------------
+core/orchestration/cognitive_router.py provides a structured CognitiveDecision
+and canonical modes:
+- goal
+- native
+- hybrid
+- llm
+- clarify
+
+Brain-supplied routing directives can take authority when present. Otherwise
+Cognition evidence is used. The router is contract-validated before entering
+Brain.
+
+3.6 Brain
+---------
+core/orchestration/brain.py is the central orchestration organ. It explicitly
+states that it is not the LLM, memory DB, learning engine, evaluator,
+knowledge builder, evolution engine, or unrestricted executor.
+
+The base Brain also contains bounded recent-turn state, reasoning traces,
+tool-call traces, layer validation history, safety history, dependency
+metrics, fallback detection, category learning, and bounded episode flattening.
+
+A major historical recursive-episode growth path has been explicitly flattened
+before persistence; this is an important Android/Termux safety measure.
+
+3.7 BlueprintBrain
+------------------
+core/orchestration/blueprint_brain.py is the actual runtime Brain subclass.
+It:
+- starts validation traces
+- manages conversation continuity
+- restores cross-session recent history
+- manages project context / backup tracking
+- loads long-term goals
+- configures semantic fallback
+- performs perception and semantic validation
+- builds cognition
+- routes cognition
+- validates Brain output
+- feeds experience into learning
+- records self-evaluation
+- proposes controlled evolution
+- records memory telemetry
+
+The contract trace is retained in last_runtime_contract_trace.
+
+4. CONTRACT INFRASTRUCTURE
+--------------------------
+core/contracts/schemas.py defines explicit contracts for:
+- perception input/output
+- semantic understanding input/output
+- cognition input/output
+- cognitive router input/output
+- brain input/output
+- experience input/output
+- learning input/output
+- memory input/output
+- self-evaluation input/output
+- evolution input/output
+- response input/output
+
+core/contracts/validator.py performs required-field/type validation and
+records PASS/FAIL validation events per turn.
+
+FINDING P1-03 — CONTRACT GRANULARITY — LOW/MEDIUM
+The contracts validate field presence and coarse types, but many important
+semantic invariants remain application logic rather than schema-level rules.
+For example, route semantics, provenance quality, action/result consistency,
+and approval state are not fully represented as machine-checkable schemas.
+This is not a break in the current pipeline, but it limits what "contract
+verified" proves.
+
+5. RESPONSE / LLM BOUNDARY
+---------------------------
+The repository contains a Response Data Contract and response-brief layer.
+Brain prepares structured context and the LLM is positioned as a phrasing /
+fallback organ rather than the owner of JARVIS identity or architecture.
+Grounding checks and tool-backed exceptions are present.
+
+The tool registry also distinguishes read-only, mutating and write tools and
+limits expensive coding/worker operations to one execution per turn.
+
+6. MEMORY AUDIT
+---------------
+MemoryManager coordinates:
+- EpisodicMemory
+- SemanticMemory
+- SQLiteStore
+
+SemanticMemory additionally owns:
+- SQLite knowledge persistence
+- FAISS vector retrieval
+- NetworkX graph
+- ONNX embedding
+- provenance/source_type
+- namespace
+- contradiction history
+
+MemoryManager's build_context now uses same-run episodic memory, hybrid
+semantic retrieval and graph relations.
+
+The semantic memory DB connection is persistent per instance and close()
+exists to checkpoint/close it.
+
+FINDING P1-04 — MEMORY NAMESPACE / CONTRADICTION MATURITY — MEDIUM
+Namespace and contradiction history exist, but the current model is still
+relatively simple: namespace defaults to PERSONAL and the current-truth
+resolution is documented as most-recent-wins while older values remain in
+history. This is not yet a fully evidence-weighted contradiction engine.
+Phase 2 metrics should measure whether this produces stable recall rather
+than assuming it does.
+
+FINDING P1-05 — EMBEDDING RUNTIME HEAVINESS — HIGH FOR ANDROID
+SemanticMemory loads FAISS + NumPy + ONNX Runtime + tokenizer/model state.
+The code contains explicit low-memory/thread safeguards, which is good, but
+this remains a major runtime resource boundary on Android/PRoot. It must be
+measured before any neural simulation is layered on top.
+
+7. EXPERIENCE / SELF-EVALUATION / LEARNING
+------------------------------------------
+LearningCoordinator correctly separates evaluation, knowledge building,
+knowledge acceptance, skill observation/proposals, and consolidation.
+SkillLearner requires repeated successful observations before proposing a skill.
+SkillRegistry requires explicit approval before learned skill registration.
+
+FINDING P1-06 — SELF-EVALUATION DEFAULT SUCCESS — HIGH
+core/learning/self_evaluator.py's _determine_success() returns True when an
+experience contains no explicit success flag and no recognized status.
+That means an incompletely described outcome can be scored as successful.
+This can contaminate success-rate metrics and learning signals. This should
+be fixed before Phase 2 baseline measurement.
+
+FINDING P1-07 — SKILL STATISTIC SEMANTICS — LOW
+LearningCoordinator.skill_proposal_count is assigned len(proposals) on each
+learning cycle rather than behaving like the other cumulative counters.
+The public status field can therefore be interpreted inconsistently.
+
+8. SKILL EXECUTION / ACTION BOUNDARY
+------------------------------------
+SkillRegistry blocks learned registration unless a proposal is explicitly
+approved. SkillLearner has proposed -> approved -> registered state handling.
+
+FINDING P1-08 — EXECUTOR IS VERY THIN — MEDIUM
+core/skills/skill_executor.py simply looks up a callable and invokes it.
+It does not itself validate action arguments, execution result structure,
+staleness, post-action state, retry policy, or verification. Some higher-level
+coding/tool paths have their own gates, but the generic SkillExecutor is not
+a production-grade action verification boundary by itself.
+
+9. EVOLUTION
+------------
+ControlledEvolutionEngine requires an APPROVED proposal and an allowlisted
+runtime adapter before applying changes. Runtime rollback is explicitly
+restricted to the organism_runtime target and requires an adapter rollback
+handler.
+
+BlueprintBrain creates evolution proposals from evaluation/learning signals
+but records them as proposals with applied=False.
+
+This matches the locked "proposal -> validate -> approve -> apply" design.
+
+10. IDENTITY / SELF MODEL
+-------------------------
+JarvisIdentity has:
+- durable birth timestamp
+- session uptime
+- cumulative runtime
+- persisted adaptations
+- invariant identity
+- live capability discovery
+- live goals
+- history
+
+Identity is structurally separate from the LLM and reads live Brain capability
+state.
+
+FINDING P1-09 — CAPABILITY DISCOVERY IS ATTRIBUTE-BASED — LOW/MEDIUM
+Some capabilities are inferred from Brain attributes/method availability.
+This is robust against a missing method but can still report a capability when
+an attribute exists but its deeper dependency is degraded. A capability
+health/state model would be stronger than presence-only discovery.
+
+11. ORGANISM / EVENT / HEARTBEAT
+--------------------------------
+EventBus provides bounded event history, subscriber registration, wildcard
+subscription, safe emission and internal-state event recording.
+Heartbeat is infrastructure-only and detects idle enter/exit without owning
+cognition.
+
+StateBus exposes pipeline stage, extraction cascade, background learning,
+logs, organs, heartbeat, provider quota, cognitive metrics, evolution,
+pending rules/patterns, memory consolidation and other telemetry.
+
+FINDING P1-10 — STATE STAGE GRANULARITY — MEDIUM
+StateBus's synchronous stage list is only IDLE/PERCEIVING/INDEXING/EXECUTING.
+The deeper lifecycle is available through other traces, but the central stage
+indicator does not directly represent Cognition, Routing, Brain Decision,
+Experience, Evaluation, Learning, or Evolution as distinct stages. This is a
+measurement/observability limitation relevant to Phase 2.
+
+12. LLM PROVIDER / QUOTA AUDIT
+------------------------------
+The branch contains substantial Groq-specific work:
+- per-key rotation
+- 2-second same-key reuse floor
+- RPM sliding-window tracking
+- RPD/TPM/TPD telemetry
+- live provider headers
+- retry-after handling
+- capacity-aware key selection
+- bounded rate-limit retry passes
+- persistent token ledger
+
+The GroqEngine also records real prompt/completion/total token usage from the
+actual response usage block and writes a 3-day persistent token ledger by key
+and purpose.
+
+FINDING P1-11 — DUPLICATED QUOTA STATE / AUTHORITY — MEDIUM
+There are two quota/telemetry layers:
+1. llm_provider_engine.ProviderQuotaManager
+2. llm_bridge.GroqEngine's _key_telemetry/token telemetry
+The GroqEngine path is the more complete path for live TPM/RPM/RPD/TPD
+selection. The existence of two parallel quota abstractions creates a risk
+that monitor surfaces or future callers read the less-complete authority.
+Phase 2 should define one explicit source-of-truth contract for live provider
+capacity and make every consumer read it.
+
+FINDING P1-12 — ESTIMATED REQUEST TOKENS ARE STILL AN ESTIMATE — LOW/MEDIUM
+Key selection estimates input tokens from message characters/4. Actual
+response usage is recorded after the call. This is reasonable as a pre-call
+selection approximation, but it must never be displayed as actual usage.
+The code's telemetry comments correctly distinguish these concepts; Phase 2
+metrics must preserve that distinction.
+
+FINDING P1-13 — GROQ-ONLY INTENT IS NOT FULLY ENFORCED AT CLASS LEVEL — MEDIUM
+llm_bridge.py still contains Gemini state and multiple model identifiers in
+GroqEngine/bridge-era compatibility code, even though the current provider
+routing path is Groq-focused. If the locked product requirement is strictly
+"Groq only", the unused Gemini/other-provider compatibility surface should be
+removed or hard-disabled in a later cleanup rather than left as latent routes.
+
+13. TOOL CALLING / ACTION GATING
+-------------------------------
+core/orchestration/tool_registry.py distinguishes:
+- READ_ONLY_TOOLS
+- MUTATING_TOOLS
+- WRITE_TOOLS
+- once-per-turn expensive tools
+
+It has real tool schemas, argument validation/gating, web search, file upload
+reading, self-diagnostics, coding agent and capability worker entrypoints.
+The model proposes tool calls; native dispatch gates execution.
+
+This is a strong architectural boundary for the neural experiment: the
+future neural layer should not directly execute arbitrary tools. It should
+produce a bounded decision/signal that still enters the existing router/Brain
+and action gate.
+
+14. REPO-SCALE CODING AGENT
+---------------------------
+The coding agent has a structured loop:
+UNDERSTAND -> DISCOVER -> PLAN -> APPROVE -> EXECUTE -> OBSERVE -> VERIFY
+-> FIX/REPLAN -> DONE.
+
+Its tool registry has risk classifications, before/after hooks, a write lock,
+bounded worker concurrency, and approval gating.
+
+FINDING P1-14 — VERIFY DEPENDS ON PROJECT TEST/COMPILE AVAILABILITY — MEDIUM
+The coding agent's verification stage delegates to workspace.run_tests().
+Projects with weak/no tests fall back to compile-check behavior. This is
+reasonable, but Phase 2 should not use coding-agent "verified" as equivalent
+to application-level correctness without a project-specific acceptance test.
+
+15. BACKEND / FRONTEND SURFACE
+------------------------------
+backend/server.py assembles HTTP, WebSocket, frontend, cognitive, auth,
+codebox and voice-call routes. main.py is a compatibility entrypoint.
+web_frontend/package.json provides React/Vite build and TypeScript lint scripts.
+
+FINDING P1-15 — REQUIREMENTS REFERENCE INCONSISTENCY — MEDIUM
+requirements.txt says faster-whisper is for backend/routes_audio.py's
+/ws/audio endpoint, but server.py imports routes_voice_call.py instead.
+No routes_audio.py was found in the inspected repository tree. This should be
+resolved so dependency documentation and runtime route ownership agree.
+
+16. DUPLICATE / BACKUP / ARTIFACT AUDIT
+---------------------------------------
+The repository tree contains backup/legacy copies and generated/runtime
+artifacts in addition to the canonical source paths, including files with
+.bak-style naming and runtime/frontend build artifacts.
+
+Important examples inspected in the tree include backup variants of core
+files and quota-fix/provider files. The .gitignore excludes future *.bak,
+*.db, *.index, logs, ONNX/GGUF model files and Python cache files, but files
+already tracked remain tracked unless explicitly removed.
+
+FINDING P1-16 — BASELINE REPOSITORY HYGIENE — MEDIUM
+The neural baseline should eventually distinguish:
+A) canonical source,
+B) tests/fixtures,
+C) intentionally committed documentation,
+D) generated build/runtime artifacts,
+E) historical backups.
+No files were deleted during Phase 1 because this is a SAFE BASELINE audit.
+Cleanup belongs in an explicitly approved follow-up commit.
+
+17. TEST / VERIFICATION INFRASTRUCTURE
+--------------------------------------
+verify_blueprint.py runs Python unittest discovery and reports a blueprint
+status based on the return code.
+The repository also contains a full runtime contract test that checks the
+actual BlueprintBrain path through perception -> semantic understanding ->
+cognition -> router -> brain -> experience -> learning -> self-evaluation
+-> memory.
+
+However, this audit environment did not execute the repository. Therefore:
+- existing test code: VERIFIED AS PRESENT/INSPECTED
+- current runtime test result on this exact commit: NOT FRESHLY EXECUTED
+- Android/Termux resource behavior: NOT FRESHLY EXECUTED
+- FAISS/ONNX load behavior: NOT FRESHLY EXECUTED
+- frontend npm build/lint: NOT FRESHLY EXECUTED
+
+This distinction is intentional and prevents a false PASS claim.
+
+18. NEURAL INSERTION-POINT DECISION
+-----------------------------------
+Do NOT insert the future fruit-fly circuit into:
+- raw LLM provider code
+- direct tool execution
+- SkillRegistry
+- persistence layer
+- frontend
+
+The safest Phase-2 experimental boundary is upstream of final routing/Brain
+commit, where a bounded neural state/circuit can consume structured signals
+from Perception/Cognition and emit a constrained signal/score for routing or
+state selection.
+
+The existing CognitiveRouter -> Brain boundary is therefore the first
+candidate insertion surface, with the neural circuit remaining advisory and
+fully bypassable until measurements prove value.
+
+19. PHASE-1 BLOCKERS BEFORE NEURAL EXPERIMENT
+---------------------------------------------
+Priority order:
+
+BLOCKER A — Fix/define success semantics for SelfEvaluator.
+Unknown outcomes must not silently become successful learning evidence.
+
+BLOCKER B — Define one authoritative live provider-quota contract.
+Especially TPM/RPM/RPD/TPD and per-key selection telemetry.
+
+BLOCKER C — Add structured provider/perception failure telemetry.
+Silent exception swallowing makes baseline metrics incomplete.
+
+BLOCKER D — Resolve stale/missing route documentation.
+requirements.txt and backend voice-route ownership must agree.
+
+BLOCKER E — Establish Phase-2 baseline test cases and metrics before adding
+any neural circuit.
+
+20. PHASE-1 CONCLUSION
+----------------------
+The Jarvis baseline is architecturally substantial and already contains a
+real perception -> semantic -> cognition -> routing -> Brain -> experience ->
+learning/evaluation -> evolution organism loop, with persistent memory,
+contracts, identity, event/heartbeat infrastructure, tool gating and provider
+telemetry.
+
+It is NOT yet appropriate to claim that a fruit-fly/connectome-inspired neural
+layer will improve it. The correct next step is controlled measurement.
+
+Phase 1 therefore closes with:
+- baseline preserved,
+- architecture mapped,
+- critical wiring inspected,
+- concrete blockers recorded,
+- neural insertion boundary identified,
+- no neural behavior added.
+
+NEXT PHASE
+----------
+Phase 2 = METRICS + FRUIT-FLY NEURAL POC.
+First establish the baseline measurements. Then run a small connectome
+subgraph in isolation, connect it to one bounded Jarvis workflow, and compare
+A) current Jarvis vs B) Jarvis + neural circuit on the same test cases.
+
+NO IMPROVEMENT IS ASSUMED.
+The experiment must produce the evidence.
