@@ -21,12 +21,43 @@ IMPLEMENTED
    - event counts
 5. Reports can be emitted as JSON for repeatable baseline snapshots.
 
-COMMAND
--------
-python3 tools/phase2_metrics.py
+ACTUAL BASELINE RUN — 2026-09-22
+--------------------------------
+Command:
+  python3 tools/phase2_metrics.py
 
-For live runtime data:
-python3 tools/phase2_metrics.py --trace <runtime-trace.jsonl> --json-out phase2_baseline.json
+Environment:
+  Python 3.14.6
+  Linux / Android PRoot runtime
+
+Offline deterministic regression:
+  Passed: 23
+  Failed: 0
+  Total: 23
+  Functional regression pass rate: 100.0%
+  Suite elapsed time: 8.7219 seconds
+  Timeout: false
+  Return code: 0
+
+INTERPRETATION
+--------------
+The 100.0% value is the pass rate of the existing deterministic regression
+scenarios. It is NOT a claim that JARVIS has 100% general accuracy, factual
+accuracy, or task success.
+
+LIVE METRICS
+------------
+The current run did not include a JSONL runtime trace, so these remain
+unmeasured rather than being guessed:
+- real response latency
+- context carryover across live turns
+- interruption/recovery
+- live action success/failure
+- state stability
+- real LLM call/token totals
+
+The harness already supports importing compatible JSONL runtime traces:
+  python3 tools/phase2_metrics.py --trace <runtime-trace.jsonl> --json-out phase2_baseline.json
 
 METRIC DEFINITIONS
 ------------------
@@ -43,17 +74,22 @@ does not infer tokens from prompt length.
 
 Context carryover, interruption handling, action success/failure and state
 stability require scenario-specific evidence. They must not be marked PASS
-merely because a component exists. The existing E2E suite provides some
-functional checks; live Android/PRoot behavior must be measured on-device.
+merely because a component exists. Live Android/PRoot behavior must be measured
+on-device.
 
-CURRENT STATUS
+PHASE 2 STATUS
 --------------
 CODE/HARNESS: COMPLETE
-OFFLINE REGRESSION: runnable
-LIVE ANDROID/PRoot BASELINE: PENDING ON-DEVICE RUN
+OFFLINE REGRESSION BASELINE: COMPLETE — 23/23 (100.0%)
+LIVE ANDROID/PRoot BASELINE: PENDING ON-DEVICE TRACE
+
+NEXT GATE
+---------
+Before Phase 3, capture a representative live runtime trace from the current
+JARVIS and feed it to the harness. Do not add neural code before that baseline
+is recorded.
 
 IMPORTANT
 ---------
 No fruit-fly connectome code, simulator, or neural controller has been added.
 No production Jarvis behavior is changed by this Phase-2 harness.
-The baseline must be recorded before Phase 3 neural experimentation.
