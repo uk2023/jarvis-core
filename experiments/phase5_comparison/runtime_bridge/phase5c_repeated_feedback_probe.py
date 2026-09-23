@@ -1,7 +1,13 @@
+import argparse
+import gc
 import hashlib
 import json
+import multiprocessing
+import os
+import resource
 import statistics
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -14,7 +20,6 @@ sys.path.insert(0, str(PHASE4))
 
 from neural_state_adapter import NeuralStateAdapter
 from core.organism.bootstrap import start_jarvis, stop_jarvis
-
 
 TRIALS = 5
 CASES = [
@@ -86,11 +91,12 @@ def response_signature(text):
 
 
 def run_variant(case, neural_enabled, trial, variant):
-    core = start_jarvis(heartbeat_interval=60.0, idle_threshold=600.0)
-    neural = NeuralStateAdapter() if neural_enabled else None
-    controller = BoundedNeuralFeedbackController() if neural_enabled else None
+    core = None
     turns = []
     try:
+        core = start_jarvis(heartbeat_interval=60.0, idle_threshold=600.0)
+        neural = NeuralStateAdapter() if neural_enabled else None
+        controller = BoundedNeuralFeedbackController() if neural_enabled else None
         brain = core.organs["brain"]
         original_mode = getattr(brain, "thinking_mode", "off")
         for index, prompt in enumerate(case["turns"]):
@@ -127,9 +133,56 @@ def run_variant(case, neural_enabled, trial, variant):
                 "brain_thinking_decision": getattr(brain, "last_thinking_decision", None),
             })
         brain.thinking_mode = original_mode
+        return {
+            "ok": True,
+            "turns": turns,
+            "max_rss_kb": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
+            "trial": trial,
+            "variant": variant,
+        }
+    except BaseException as exc:
+        return {
+            "ok": False,
+            "turns": turns,
+            "error": f"{type(exc).__name__}: {exc}",
+            "max_rss_kb": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
+            "trial": trial,
+            "variant": variant,
+        }
     finally:
-        stop_jarvis(core)
-    return turns
+        if core is not None:
+            try:
+                stop_jarvis(core)
+            except Exception:
+                pass
+        gc.collect()
+
+
+def _isolated_worker(case, neural_enabled, trial, variant, result_path):
+    result = run_variant(case, neural_enabled, trial, variant)
+    Path(result_path).write_text(json.dumps(result), encoding="utf-8")
+
+
+def run_variant_isolated(case, neural_enabled, trial, variant):
+    """Run one A/B variant in a separate process so Jarvis/ONNX memory is OS-reclaimed."""
+    with tempfile.TemporaryDirectory(prefix="phase5c_") as tmp:
+        result_path = Path(tmp) / "variant.json"
+        ctx = multiprocessing.get_context("spawn")
+        proc = ctx.Process(
+            target=_isolated_worker,
+            args=(case, neural_enabled, trial, variant, str(result_path)),
+        )
+        proc.start()
+        proc.join()
+        if not result_path.exists():
+            raise RuntimeError(
+                f"isolated {variant} worker exited without a result (exitcode={proc.exitcode})"
+            )
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        if proc.exitcode not in (0, None) and result.get("ok"):
+            result["ok"] = False
+            result["error"] = f"worker exited with code {proc.exitcode}"
+        return result
 
 
 def aggregate(turns):
@@ -149,51 +202,35 @@ def aggregate(turns):
     }
 
 
-def main():
-    all_results = []
-    for case in CASES:
-        case_trials = []
-        for trial in range(1, TRIALS + 1):
-            # Alternate order to reduce systematic A-first/B-first bias.
-            if trial % 2:
-                a = run_variant(case, False, trial, "A")
-                b = run_variant(case, True, trial, "B")
-            else:
-                b = run_variant(case, True, trial, "B")
-                a = run_variant(case, False, trial, "A")
-            expected = case.get("expected")
-            a_context = expected.lower() in a[-1]["response"].lower() if expected else None
-            b_context = expected.lower() in b[-1]["response"].lower() if expected else None
-            aagg, bagg = aggregate(a), aggregate(b)
-            case_trials.append({
-                "trial": trial,
-                "A": a,
-                "B": b,
-                "A_aggregate": aagg,
-                "B_aggregate": bagg,
-                "context_carryover": {"expected": expected, "A_pass": a_context, "B_pass": b_context},
-                "mean_latency_delta_B_minus_A_ms": bagg["mean_latency_ms"] - aagg["mean_latency_ms"],
-            })
-            print(f"[{case['id']}] trial {trial}: A={aagg['mean_latency_ms']:.2f} ms B={bagg['mean_latency_ms']:.2f} ms delta={bagg['mean_latency_ms']-aagg['mean_latency_ms']:+.2f} ms")
-            if expected:
-                print(f"  context A/B: {a_context} / {b_context}")
+def atomic_write(payload):
+    """Write a valid checkpoint after every completed trial."""
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_name = tempfile.mkstemp(prefix="phase5c_checkpoint_", suffix=".json", dir=OUT.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, OUT)
+    finally:
+        if os.path.exists(tmp_name):
+            os.unlink(tmp_name)
 
-        deltas = [x["mean_latency_delta_B_minus_A_ms"] for x in case_trials]
-        all_results.append({
-            "id": case["id"],
-            "name": case["name"],
-            "trials": case_trials,
-            "repeatability": {
-                "delta_mean_ms": statistics.mean(deltas),
-                "delta_median_ms": statistics.median(deltas),
-                "delta_stdev_ms": statistics.stdev(deltas) if len(deltas) > 1 else 0.0,
-                "improved_trials": sum(d < 0 for d in deltas),
-                "slower_trials": sum(d > 0 for d in deltas),
-                "tie_trials": sum(d == 0 for d in deltas),
-            },
-        })
 
-    payload = {
+def load_checkpoint():
+    if not OUT.exists():
+        return None
+    try:
+        payload = json.loads(OUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if payload.get("experiment") != "phase5c_repeated_real_runtime_ab":
+        return None
+    return payload
+
+
+def empty_payload():
+    return {
         "experiment": "phase5c_repeated_real_runtime_ab",
         "trials_per_case": TRIALS,
         "cases": [x["name"] for x in CASES],
@@ -204,12 +241,97 @@ def main():
         "brain_authority_preserved": True,
         "neural_action_execution": False,
         "order_control": "alternating A/B order by trial",
-        "results": all_results,
+        "execution_safety": {
+            "variant_process_isolation": True,
+            "checkpoint_after_each_trial": True,
+            "atomic_checkpoint_write": True,
+            "resume_supported": True,
+            "child_max_rss_recorded": True,
+        },
+        "status": "in_progress",
+        "results": [],
         "interpretation": "Phase 5C is a repeatability measurement. It does not declare neural benefit or statistical significance; the recorded real-runtime output is the source of truth for the next decision.",
     }
-    OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Safe/resumable Phase 5C real-runtime A/B probe")
+    parser.add_argument("--reset", action="store_true", help="discard the existing Phase 5C checkpoint")
+    args = parser.parse_args()
+
+    if args.reset and OUT.exists():
+        OUT.unlink()
+
+    payload = load_checkpoint() if not args.reset else None
+    resumed = payload is not None
+    if payload is None:
+        payload = empty_payload()
+
+    completed = {(item["id"], trial["trial"]) for item in payload.get("results", []) for trial in item.get("trials", [])}
+
+    for case in CASES:
+        case_entry = next((x for x in payload["results"] if x.get("id") == case["id"]), None)
+        if case_entry is None:
+            case_entry = {"id": case["id"], "name": case["name"], "trials": [], "repeatability": {}}
+            payload["results"].append(case_entry)
+
+        for trial in range(1, TRIALS + 1):
+            if (case["id"], trial) in completed:
+                print(f"[{case['id']}] trial {trial}: already checkpointed; skipping")
+                continue
+
+            if trial % 2:
+                a_result = run_variant_isolated(case, False, trial, "A")
+                b_result = run_variant_isolated(case, True, trial, "B")
+            else:
+                b_result = run_variant_isolated(case, True, trial, "B")
+                a_result = run_variant_isolated(case, False, trial, "A")
+
+            a = a_result.get("turns", [])
+            b = b_result.get("turns", [])
+            expected = case.get("expected")
+            a_context = expected.lower() in a[-1]["response"].lower() if expected and a else None
+            b_context = expected.lower() in b[-1]["response"].lower() if expected and b else None
+            aagg, bagg = aggregate(a), aggregate(b)
+            case_entry["trials"].append({
+                "trial": trial,
+                "A": a,
+                "B": b,
+                "A_worker": {"ok": a_result.get("ok"), "error": a_result.get("error"), "max_rss_kb": a_result.get("max_rss_kb")},
+                "B_worker": {"ok": b_result.get("ok"), "error": b_result.get("error"), "max_rss_kb": b_result.get("max_rss_kb")},
+                "A_aggregate": aagg,
+                "B_aggregate": bagg,
+                "context_carryover": {"expected": expected, "A_pass": a_context, "B_pass": b_context},
+                "mean_latency_delta_B_minus_A_ms": bagg["mean_latency_ms"] - aagg["mean_latency_ms"],
+            })
+            case_entry["trials"].sort(key=lambda x: x["trial"])
+            deltas = [x["mean_latency_delta_B_minus_A_ms"] for x in case_entry["trials"]]
+            case_entry["repeatability"] = {
+                "delta_mean_ms": statistics.mean(deltas),
+                "delta_median_ms": statistics.median(deltas),
+                "delta_stdev_ms": statistics.stdev(deltas) if len(deltas) > 1 else 0.0,
+                "improved_trials": sum(d < 0 for d in deltas),
+                "slower_trials": sum(d > 0 for d in deltas),
+                "tie_trials": sum(d == 0 for d in deltas),
+            }
+            payload["status"] = "in_progress"
+            payload["checkpointed_after"] = {"case": case["id"], "trial": trial}
+            payload["resumed_from_checkpoint"] = resumed
+            atomic_write(payload)
+            print(f"[{case['id']}] trial {trial}: A={aagg['mean_latency_ms']:.2f} ms B={bagg['mean_latency_ms']:.2f} ms delta={bagg['mean_latency_ms']-aagg['mean_latency_ms']:+.2f} ms")
+            if expected:
+                print(f"  context A/B: {a_context} / {b_context}")
+            print(f"  worker RSS KB A/B: {a_result.get('max_rss_kb')} / {b_result.get('max_rss_kb')}")
+            completed.add((case["id"], trial))
+            gc.collect()
+
+    payload["status"] = "complete"
+    payload["completed_trials"] = sum(len(x.get("trials", [])) for x in payload["results"])
+    payload["resumed_from_checkpoint"] = resumed
+    atomic_write(payload)
     print("RESULT:", OUT)
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     main()
