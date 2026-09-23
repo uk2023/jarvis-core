@@ -21,8 +21,13 @@ sys.path.insert(0, str(PHASE4))
 
 from neural_state_adapter import NeuralStateAdapter
 from core.organism.bootstrap import start_jarvis, stop_jarvis
+from core.orchestration.groq_provider_latency import install_groq_latency_capture
 from core.orchestration.token_management import get_token_manager
 from deep_inspector import _real_turn_metrics
+
+# Install before any spawned worker creates a GroqEngine. The adapter only
+# copies timing fields that Groq actually returned; it never estimates them.
+install_groq_latency_capture()
 
 TRIALS = 3
 CASES = [
@@ -67,11 +72,7 @@ def usage_delta(before: Dict[str, Any], after: Dict[str, Any]) -> Dict[str, int]
 
 
 def provider_latency_ms(brain: Any) -> float:
-    """Return summed real provider response latency published by Groq telemetry.
-
-    This is deliberately separate from total turn latency. If no provider
-    response published a latency value, return 0 rather than estimating it.
-    """
+    """Return summed Groq server-side `usage.total_time`, never client time."""
     try:
         llm = getattr(brain, "llm", None)
         snapshot = llm.telemetry_snapshot() if llm is not None and hasattr(llm, "telemetry_snapshot") else {}
@@ -81,13 +82,31 @@ def provider_latency_ms(brain: Any) -> float:
             if not isinstance(key, dict):
                 continue
             last = key.get("last_request") or {}
-            value = last.get("latency_seconds")
+            value = last.get("provider_total_time_seconds")
             if isinstance(value, (int, float)):
                 total += float(value) * 1000.0
                 found = True
         return round(total, 3) if found else 0.0
     except Exception:
         return 0.0
+
+
+def provider_timing_snapshot(brain: Any) -> List[Dict[str, Any]]:
+    """Expose the exact provider timing fields captured for each last key call."""
+    try:
+        llm = getattr(brain, "llm", None)
+        snapshot = llm.telemetry_snapshot() if llm is not None and hasattr(llm, "telemetry_snapshot") else {}
+        result = []
+        for key in (snapshot or {}).get("keys", []) or []:
+            if not isinstance(key, dict):
+                continue
+            last = key.get("last_request") or {}
+            fields = {k: last[k] for k in last if k.startswith("provider_") or k == "network_overhead_seconds"}
+            if fields:
+                result.append({"key_index": key.get("key_index"), **fields})
+        return result
+    except Exception:
+        return []
 
 
 def trace_behavior(brain: Any, trace: Dict[str, Any], response: str) -> Dict[str, Any]:
@@ -110,6 +129,7 @@ def trace_behavior(brain: Any, trace: Dict[str, Any], response: str) -> Dict[str
         "turn_timings": timings,
         "llm_timing_fields": llm_timing_fields,
         "provider_response_latency_ms": provider_latency_ms(brain),
+        "provider_timing": provider_timing_snapshot(brain),
         "real_metrics": metrics,
     }
 
