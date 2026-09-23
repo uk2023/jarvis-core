@@ -3913,6 +3913,15 @@ class Brain(CompanionToolsMixin):
                     "stayed_within_brief": decision.get("stayed_within_brief"),
                     "flagged_unsupported": decision.get("flagged_unsupported"),
                     "llm_budget": budget,
+                    # Persist the authoritative per-turn timing produced
+                    # by _trace(). Deep Inspector aggregates this field
+                    # from the durable trace log; without it, latency
+                    # incorrectly reports 0.0 even though live traces
+                    # contain timings.
+                    "timings": (
+                        (self.last_turn_trace or {}).get("timings")
+                        or {"total": 0.0}
+                    ),
                 })
             except Exception as exc:
                 log_event("brain", f"trace log write failed: {exc}", level="warning")
