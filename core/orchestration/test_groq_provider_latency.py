@@ -1,6 +1,11 @@
 """Regression tests for real Groq server-side latency capture."""
 
-from core.orchestration.groq_provider_latency import extract_provider_timing
+from types import SimpleNamespace
+
+from core.orchestration.groq_provider_latency import (
+    _enable_inference_metrics,
+    extract_provider_timing,
+)
 
 
 def test_extracts_chat_completion_usage_timing():
@@ -34,3 +39,9 @@ def test_metadata_is_supported_and_missing_values_are_not_invented():
 def test_invalid_provider_timing_is_ignored():
     assert extract_provider_timing({"usage": {"total_time": "unknown"}}) == {}
     assert extract_provider_timing({}) == {}
+
+
+def test_inference_metrics_header_is_enabled_on_persistent_session():
+    session = SimpleNamespace(headers={"Authorization": "Bearer test"})
+    _enable_inference_metrics(session)
+    assert session.headers["Groq-Beta"] == "inference-metrics"
