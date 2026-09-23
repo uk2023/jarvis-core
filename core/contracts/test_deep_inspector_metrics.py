@@ -46,8 +46,8 @@ def test_real_turn_metrics_use_persistent_real_usage(monkeypatch):
     metrics = deep_inspector._real_turn_metrics(brain, {})
 
     assert metrics["total_turns"] == 3
-    assert metrics["completed_turns"] == 2
-    assert metrics["failed_turns"] == 1
+    assert metrics["completed_turns_sample"] == 2
+    assert metrics["failed_turns_sample"] == 1
     assert metrics["total_latency_seconds"] == 4.5
     assert metrics["llm_calls_with_real_usage"] == 2
     assert metrics["actual_total_tokens"] == 200
