@@ -48,7 +48,8 @@ def _fake_brain():
 def test_trace_uses_live_contract_records():
     brain = _fake_brain()
     trace = _runtime_contract_trace(brain, {"source": "cli"}, "Namaste")
-    assert len(trace["contracts"]) == 20
+    assert len(trace["contracts"]) == len(brain.last_contracts) == 19
+    assert set(trace["contracts"]) == set(brain.last_contracts)
     assert trace["semantic_provenance"]["source"] == "native"
     assert trace["route_consistency"]["status"] == "PASS"
 
