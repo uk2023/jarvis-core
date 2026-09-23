@@ -3,6 +3,12 @@
 
 Renders one real Brain turn and the validator events actually observed during
 that turn. It never performs retrieval or cognition itself.
+
+REAL METRICS RULE:
+    Turn counts/latency come from the persistent turn trace log.
+    Token counts/call counts come from the persistent real-usage token ledger.
+    Provider TPM comes from the provider telemetry headers when published.
+    Brain's old estimate fields are deliberately NOT used as a source of truth.
 """
 import os
 import sys
@@ -19,6 +25,8 @@ if BASE_DIR not in sys.path:
 
 from core.organism.bootstrap import start_jarvis, stop_jarvis
 from core.orchestration.llm_bridge import LlamaCppBridge
+from core.orchestration.token_management import get_token_manager
+from core.runtime.trace_log import get_trace_log
 
 console = Console()
 
@@ -62,6 +70,99 @@ def _boundary(tree: Tree, brain: Any, output_name: str, input_name: str, label: 
     if in_payload:
         node.add(f"input: {_short(in_payload)}")
     return node
+
+
+def _real_turn_metrics(brain: Any, trace: dict) -> dict:
+    """Return ONLY metrics backed by durable real runtime evidence.
+
+    The persistent TraceLog is authoritative for turn count, turn latency and
+    outcome. The TokenManager is authoritative for successful LLM calls and
+    token usage because it records the provider response body's usage block.
+    Provider TPM is taken from live provider telemetry (real response
+    headers); no local token estimate is substituted for it.
+    """
+    trace_log = get_trace_log()
+    token_manager = get_token_manager()
+
+    try:
+        retained_turns = list(trace_log.read_recent(limit=50))
+    except Exception:
+        retained_turns = []
+    try:
+        turn_count = int(trace_log.count())
+    except Exception:
+        turn_count = len(retained_turns)
+
+    total_latency = 0.0
+    completed = 0
+    failed = 0
+    route_counts = {}
+    for item in retained_turns:
+        if not isinstance(item, dict):
+            continue
+        timing = _d(item.get("timings"))
+        value = timing.get("total")
+        if isinstance(value, (int, float)):
+            total_latency += float(value)
+        status = str(item.get("status") or "").lower()
+        if status in {"completed", "planned"}:
+            completed += 1
+        elif status in {"failed", "error", "degraded"}:
+            failed += 1
+        mode = str(item.get("mode") or "unknown")
+        route_counts[mode] = route_counts.get(mode, 0) + 1
+
+    try:
+        token_summary = _d(token_manager.summary())
+    except Exception:
+        token_summary = {}
+    overall = _d(token_summary.get("overall"))
+    actual_tokens = int(overall.get("total_tokens", 0) or 0)
+    real_llm_calls = int(overall.get("calls", 0) or 0)
+
+    provider_tpm = []
+    tpm_source = "not_published"
+    llm = getattr(brain, "llm", None)
+    try:
+        snapshot = llm.telemetry_snapshot() if llm is not None and hasattr(llm, "telemetry_snapshot") else {}
+        for key in _items(_d(snapshot).get("keys")):
+            if not isinstance(key, dict):
+                continue
+            if key.get("tpm_limit") is not None or key.get("tpm_remaining") is not None:
+                provider_tpm.append({
+                    "key_index": key.get("key_index"),
+                    "tpm_limit": key.get("tpm_limit"),
+                    "tpm_remaining": key.get("tpm_remaining"),
+                    "tpm_reset_at": key.get("tpm_reset_at"),
+                    "status": key.get("status"),
+                })
+        if provider_tpm:
+            tpm_source = "provider_headers"
+    except Exception:
+        provider_tpm = []
+
+    if actual_tokens > 0:
+        token_source = "provider_response_usage"
+    else:
+        token_source = "no_provider_usage"
+
+    return {
+        "total_turns": turn_count,
+        "retained_turns_sample": len(retained_turns),
+        "completed_turns_sample": completed,
+        "failed_turns_sample": failed,
+        "total_latency_seconds": round(total_latency, 6),
+        "llm_calls_with_real_usage": real_llm_calls,
+        "actual_prompt_tokens": int(overall.get("prompt_tokens", 0) or 0),
+        "actual_completion_tokens": int(overall.get("completion_tokens", 0) or 0),
+        "actual_total_tokens": actual_tokens,
+        "token_source": token_source,
+        "route_counts_sample": route_counts,
+        "provider_tpm": provider_tpm,
+        "tpm_source": tpm_source,
+        "token_ledger_records": int(token_summary.get("record_count", 0) or 0),
+        "trace_source": "persistent_trace_log",
+    }
 
 
 def _runtime_contract_trace(brain: Any, trace: dict, response: Any) -> dict:
@@ -178,10 +279,21 @@ def render_query_trace(brain, trace=None, *, source="cli", query=None, response=
 
     metrics = tree.add("[bold white]REAL TURN METRICS[/bold white]")
     for key, value in _d(trace.get("timings")).items():
-        metrics.add(f"{key}: {value}")
-    metrics.add(f"total_turns: {getattr(brain, 'total_turns', 'unknown')}")
-    metrics.add(f"total_latency_seconds: {getattr(brain, 'total_latency_seconds', 'unknown')}")
-    metrics.add(f"total_tokens_estimate: {getattr(brain, 'total_tokens_estimate', 'unknown')}")
+        metrics.add(f"last_turn_{key}: {value}")
+    real_metrics = _real_turn_metrics(brain, trace)
+    for key in (
+        "total_turns", "completed_turns_sample", "failed_turns_sample",
+        "total_latency_seconds", "llm_calls_with_real_usage",
+        "actual_prompt_tokens", "actual_completion_tokens", "actual_total_tokens",
+        "token_source", "trace_source", "tpm_source", "token_ledger_records",
+    ):
+        metrics.add(f"{key}: {real_metrics[key]}")
+    metrics.add(f"route_counts_sample: {real_metrics['route_counts_sample']}")
+    if real_metrics["provider_tpm"]:
+        for key in real_metrics["provider_tpm"]:
+            metrics.add(f"provider_tpm_key_{key.get('key_index')}: {key}")
+    else:
+        metrics.add("provider_tpm: NOT PUBLISHED")
 
     console.print(Panel(tree, title="[bold white]DEEP INSPECTION[/bold white]", border_style="cyan"))
 
