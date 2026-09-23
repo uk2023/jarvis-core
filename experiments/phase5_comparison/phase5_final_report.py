@@ -7,6 +7,7 @@ BASE = ROOT / "experiments"
 V3 = BASE / "phase3_connectome" / "benchmarks" / "closed_loop_v7_result.json"
 REC = BASE / "phase3_connectome" / "benchmarks" / "disturbance_recovery_result.json"
 AB = BASE / "phase5_comparison" / "ab_comparison_result.json"
+REAL = BASE / "phase5_comparison" / "runtime_bridge" / "real_runtime_probe_result.json"
 
 OUT = BASE / "phase5_comparison" / "PHASE5_FINAL_REPORT.txt"
 
@@ -21,7 +22,6 @@ def main():
     ab = load(AB)
 
     lines = []
-
     lines.append("PHASE 5 — JARVIS A/B COMPARISON FINAL REPORT")
     lines.append("=" * 55)
     lines.append("")
@@ -29,86 +29,72 @@ def main():
     lines.append("B = Current Jarvis + experimental neural layer")
     lines.append("")
     lines.append("IMPORTANT:")
-    lines.append(
-        "The neural experiment is not treated as a replacement "
-        "for the existing Jarvis brain."
-    )
+    lines.append("The neural experiment is not treated as a replacement for the existing Jarvis brain.")
     lines.append("")
 
     lines.append("PHASE 3 VALIDATION")
     lines.append("-" * 30)
-    lines.append(f"Connectome nodes: 32")
-    lines.append(f"Connectome edges: 364")
-    lines.append(
-        f"Closed-loop settling window: "
-        f"{v3['metrics']['last_50_inside_deadband']}"
-    )
-    lines.append(
-        f"Tail mean activity: "
-        f"{v3['metrics']['tail_mean_activity']:.9f}"
-    )
-    lines.append(
-        f"Tail target error: "
-        f"{v3['metrics']['tail_target_error']:.9f}"
-    )
-    lines.append(
-        f"Disturbance recovery steps: "
-        f"{rec['metrics']['recovery_steps']}"
-    )
+    lines.append("Connectome nodes: 32")
+    lines.append("Connectome edges: 364")
+    lines.append(f"Closed-loop settling window: {v3['metrics']['last_50_inside_deadband']}")
+    lines.append(f"Tail mean activity: {v3['metrics']['tail_mean_activity']:.9f}")
+    lines.append(f"Tail target error: {v3['metrics']['tail_target_error']:.9f}")
+    lines.append(f"Disturbance recovery steps: {rec['metrics']['recovery_steps']}")
     lines.append("")
 
-    lines.append("PHASE 5 A/B COMPUTATIONAL MEASUREMENT")
+    lines.append("PHASE 5 COMPUTATIONAL MEASUREMENT")
     lines.append("-" * 40)
-
     for item in ab["results"]:
         a = item["A_current_jarvis"]
         b = item["B_jarvis_plus_neural"]
-
         lines.append(
-            f"{item['name']}: "
-            f"A={a['mean_ms']:.6f} ms, "
+            f"{item['name']}: A={a['mean_ms']:.6f} ms, "
             f"B={b['mean_ms']:.6f} ms, "
             f"neural overhead={item['neural_overhead_ms']:+.6f} ms"
         )
-
     lines.append("")
+
+    if REAL.exists():
+        real = load(REAL)
+        lines.append("PHASE 5 REAL JARVIS RUNTIME A/B SHADOW MEASUREMENT")
+        lines.append("-" * 55)
+        lines.append("Neural role: shadow_only")
+        lines.append("Behavioral feedback enabled: False")
+        lines.append("")
+        for item in real.get("results", []):
+            a = item.get("A_current_jarvis", [])
+            b = item.get("B_jarvis_plus_neural_shadow", [])
+            lines.append(f"{item['id']} {item['name']}: A turns={len(a)}, B turns={len(b)}")
+            for index, (at, bt) in enumerate(zip(a, b), start=1):
+                lines.append(
+                    f"  turn {index}: A={at.get('latency_ms', 0):.3f} ms, "
+                    f"B={bt.get('latency_ms', 0):.3f} ms, "
+                    f"A_nonempty={at.get('response_nonempty')}, "
+                    f"B_nonempty={bt.get('response_nonempty')}"
+                )
+            cc = item.get("context_carryover", {})
+            if cc.get("expected"):
+                lines.append(f"  context: A={cc.get('A_pass')} B={cc.get('B_pass')}")
+        lines.append("")
+    else:
+        lines.append("REAL RUNTIME MEASUREMENT: NOT YET RUN")
+        lines.append("Run experiments/phase5_comparison/runtime_bridge/real_runtime_probe.py")
+        lines.append("")
+
     lines.append("OBSERVATIONS")
     lines.append("-" * 30)
-    lines.append(
-        "1. The Phase 3 neural controller reaches a stable bounded "
-        "operating regime."
-    )
-    lines.append(
-        "2. Disturbance/recovery testing shows measurable recovery "
-        "behavior."
-    )
-    lines.append(
-        "3. Phase 4 neural adapter is deterministic and bounded."
-    )
-    lines.append(
-        "4. Phase 5 currently demonstrates neural computational "
-        "overhead, not an end-to-end Jarvis performance improvement."
-    )
-    lines.append(
-        "5. No claim of improved response quality, context carryover, "
-        "interruption handling, or action success is made because those "
-        "real Jarvis measurements have not yet been connected."
-    )
+    lines.append("1. Phase 3 neural controller has a bounded operating regime and measurable recovery behavior.")
+    lines.append("2. The computational Phase 5 benchmark measures neural overhead only.")
+    lines.append("3. The real-runtime bridge is shadow-only: it does not alter Brain decisions or execute actions.")
+    lines.append("4. No end-to-end neural improvement is claimed until a controlled feedback experiment changes a bounded workflow and the same real tests are repeated.")
     lines.append("")
 
     lines.append("DECISION GATE")
     lines.append("-" * 30)
-    lines.append(
-        "The neural layer remains an experimental POC. "
-        "It should not replace or override the existing Jarvis brain."
-    )
-    lines.append(
-        "Further scaling requires real Jarvis workflow measurements "
-        "showing a measurable benefit."
-    )
+    lines.append("Keep the neural layer experimental and non-authoritative until real A/B evidence demonstrates a measurable benefit.")
+    lines.append("Only after the shadow baseline is verified should a bounded neural feedback variant be enabled.")
 
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
     print("\n".join(lines))
     print("Result:", OUT)
 
