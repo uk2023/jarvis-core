@@ -1,0 +1,234 @@
+PHASE 3 — FRUIT-FLY CONNECTOME EXPERIMENT
+==========================================
+
+STATUS: COMPLETE
+Model type: Experimental computational model
+Purpose: Validate a small connectome-derived neural subgraph as a
+computational propagation + feedback substrate before Jarvis integration.
+
+CONNECTOME
+----------
+Nodes: 32
+Edges: 364
+
+The full 166K+ neuron connectome was NOT copied into the simulator.
+A small selected subgraph was used for controlled experimentation.
+
+PHASE 3.1 — INITIAL DYNAMICS DIAGNOSTIC
+----------------------------------------
+The initial unnormalized dynamics showed severe numerical growth.
+
+Observed mean activity:
+
+step 0  = 0.03125
+step 1  = 4.59375
+step 2  = 181.188
+step 3  = 6389.75
+...
+step 11 = 1.46006e16
+
+Conclusion:
+The original propagation operator was unstable for the selected
+subgraph and could not be used directly for controlled feedback.
+
+PHASE 3.2 — NORMALIZED OPERATOR
+--------------------------------
+Outgoing edge weights were normalized per source node.
+
+The normalized operator produced bounded propagation.
+
+Representative total activity:
+
+step 0  = 1.0000
+step 1  = 1.0000
+step 2  = 0.9864
+step 5  = 0.8996
+step 10 = 0.7842
+step 19 = 0.6173
+
+All 32 nodes became active after propagation.
+
+Simulator tests:
+test_core.py
+test_dynamics.py
+test_normalized_operator.py
+
+Result:
+9 passed
+
+PHASE 3.3 — ACTUATOR SWEEP
+---------------------------
+The actuator operating region was experimentally measured.
+
+Representative steady-state behavior:
+
+input 0.012 -> tail mean ~0.01626
+input 0.014 -> tail mean ~0.01847
+input 0.015 -> tail mean ~0.02013
+input 0.016 -> tail mean ~0.02068
+input 0.018 -> tail mean ~0.02289
+
+This established an operating region around the target activity
+of 0.020.
+
+PHASE 3.4 — FEEDBACK ITERATIONS
+--------------------------------
+Multiple feedback-controller variants were tested.
+
+V1/V2:
+The original controller did not regulate the system effectively.
+
+V3:
+Bounded proportional seed feedback was introduced, but the system
+settled far above the target.
+
+V4:
+Controller configuration resulted in no useful actuator correction.
+
+V5:
+Longer-horizon proportional control demonstrated convergence toward
+the target region.
+
+V6:
+Deadband and bounded actuator behavior were introduced.
+
+V7:
+The controller was extended to 500 steps with a 50-step settling
+window.
+
+V7 result:
+
+Target activity:
+0.020000
+
+Final activity:
+0.019750655070347695
+
+Final target error:
+0.0002493449296523051
+
+Tail mean activity:
+0.01975085829924882
+
+Tail target error:
+0.00024914170075118064
+
+Tail range:
+5.124334857588286e-07
+
+Tail mean absolute error:
+0.00024914170075118015
+
+Tail variance:
+4.102751604807439e-06
+
+Deadband fraction:
+0.684
+
+Last 50 steps inside deadband:
+TRUE
+
+Final active nodes:
+32 / 32
+
+Maximum seed input:
+0.017777907357183945
+
+Minimum seed input:
+0.012
+
+Maximum input delta:
+0.00025
+
+PHASE 3.5 — DISTURBANCE / RECOVERY
+-----------------------------------
+A disturbance/recovery benchmark was executed after V7.
+
+Baseline activity:
+0.01917433359840202
+
+Post-disturbance activity:
+0.019174333217598708
+
+Disturbance delta:
+-3.808033124941268e-10
+
+Recovery step:
+255
+
+Recovery time:
+5 steps
+
+Final activity:
+0.019174327612141433
+
+Final target error:
+0.0008256723878585677
+
+Tail mean activity:
+0.019174330503751044
+
+Tail mean absolute error:
+0.0008256694962489575
+
+Tail range:
+1.0007663017730373e-08
+
+Tail variance:
+7.809672936958186e-18
+
+Final active nodes:
+32 / 32
+
+NOTE:
+The particular disturbance used in this benchmark produced an
+extremely small measured activity delta. Therefore this result
+demonstrates recovery behavior under the tested perturbation, but
+should NOT be interpreted as proof of robustness against large
+disturbances.
+
+PHASE 3 FINAL ASSESSMENT
+------------------------
+Phase 3 objectives 9–13 are complete.
+
+9. Public fruit-fly connectome dataset study/use:
+   COMPLETE
+
+10. Avoid copying the full 166K+ neuron network:
+   COMPLETE
+
+11. Identify/use a relevant small subgraph:
+   COMPLETE
+
+12. Run the subgraph in a computational neural simulator:
+   COMPLETE
+
+13. Observe neural state, propagation and feedback:
+   COMPLETE
+
+FINAL PHASE 3 CONCLUSION
+------------------------
+A 32-node / 364-edge connectome-derived computational subgraph
+was successfully loaded, normalized, simulated and coupled to a
+bounded feedback/actuator mechanism.
+
+The original operator was unstable.
+Normalization produced bounded propagation.
+Actuator sweeps identified a useful operating region.
+Feedback experiments demonstrated convergence toward the chosen
+0.020 activity target.
+V7 achieved a stable 50-step settling window.
+A disturbance/recovery experiment completed successfully.
+
+The neural circuit remains EXPERIMENTAL.
+
+It is NOT replacing Jarvis's existing LLM/brain.
+
+NEXT PHASE
+----------
+PHASE 4 — JARVIS POC
+
+Goal:
+Connect the experimental neural circuit to ONE limited Jarvis
+workflow as a perception/state/feedback layer while preserving
+the existing Jarvis brain and LLM path.

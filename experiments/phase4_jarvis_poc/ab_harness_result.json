@@ -1,0 +1,88 @@
+{
+  "experiment": "phase4_jarvis_ab_harness",
+  "model": "experimental_computational_model",
+  "brain_authority": "existing_jarvis_brain",
+  "neural_role": "experimental_state_feedback_only",
+  "autonomous_action": false,
+  "cases": [
+    {
+      "name": "idle",
+      "signal": 0.0
+    },
+    {
+      "name": "simple_query",
+      "signal": 0.2
+    },
+    {
+      "name": "complex_query",
+      "signal": 0.5
+    },
+    {
+      "name": "high_load",
+      "signal": 1.0
+    }
+  ],
+  "A_current_jarvis": [
+    {
+      "case": "idle",
+      "workflow_signal": 0.0,
+      "neural_activity": null,
+      "neural_active_nodes": null
+    },
+    {
+      "case": "simple_query",
+      "workflow_signal": 0.2,
+      "neural_activity": null,
+      "neural_active_nodes": null
+    },
+    {
+      "case": "complex_query",
+      "workflow_signal": 0.5,
+      "neural_activity": null,
+      "neural_active_nodes": null
+    },
+    {
+      "case": "high_load",
+      "workflow_signal": 1.0,
+      "neural_activity": null,
+      "neural_active_nodes": null
+    }
+  ],
+  "B_jarvis_plus_neural_layer": [
+    {
+      "case": "idle",
+      "workflow_signal": 0.0,
+      "neural_activity": 0.0,
+      "neural_max_activity": 0.0,
+      "neural_active_nodes": 0
+    },
+    {
+      "case": "simple_query",
+      "workflow_signal": 0.2,
+      "neural_activity": 0.00625,
+      "neural_max_activity": 0.023129251700680274,
+      "neural_active_nodes": 31
+    },
+    {
+      "case": "complex_query",
+      "workflow_signal": 0.5,
+      "neural_activity": 0.015625,
+      "neural_max_activity": 0.05782312925170068,
+      "neural_active_nodes": 31
+    },
+    {
+      "case": "high_load",
+      "workflow_signal": 1.0,
+      "neural_activity": 0.03125,
+      "neural_max_activity": 0.11564625850340136,
+      "neural_active_nodes": 31
+    }
+  ],
+  "neural_summary": {
+    "mean_activity": 0.01328125,
+    "activity_variance": 0.0001385498046875,
+    "min_activity": 0.0,
+    "max_activity": 0.03125
+  },
+  "comparison_status": "baseline_and_neural_paths_recorded"
+}

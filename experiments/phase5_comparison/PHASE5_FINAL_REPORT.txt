@@ -1,0 +1,37 @@
+PHASE 5 — JARVIS A/B COMPARISON FINAL REPORT
+=======================================================
+
+A = Current Jarvis
+B = Current Jarvis + experimental neural layer
+
+IMPORTANT:
+The neural experiment is not treated as a replacement for the existing Jarvis brain.
+
+PHASE 3 VALIDATION
+------------------------------
+Connectome nodes: 32
+Connectome edges: 364
+Closed-loop settling window: True
+Tail mean activity: 0.019750858
+Tail target error: 0.000249142
+Disturbance recovery steps: 5
+
+PHASE 5 A/B COMPUTATIONAL MEASUREMENT
+----------------------------------------
+simple_query: A=0.002002 ms, B=0.093303 ms, neural overhead=+0.091301 ms
+complex_query: A=0.000652 ms, B=0.083871 ms, neural overhead=+0.083219 ms
+high_load: A=0.000667 ms, B=0.074711 ms, neural overhead=+0.074044 ms
+idle_recovery: A=0.002802 ms, B=0.059248 ms, neural overhead=+0.056446 ms
+
+OBSERVATIONS
+------------------------------
+1. The Phase 3 neural controller reaches a stable bounded operating regime.
+2. Disturbance/recovery testing shows measurable recovery behavior.
+3. Phase 4 neural adapter is deterministic and bounded.
+4. Phase 5 currently demonstrates neural computational overhead, not an end-to-end Jarvis performance improvement.
+5. No claim of improved response quality, context carryover, interruption handling, or action success is made because those real Jarvis measurements have not yet been connected.
+
+DECISION GATE
+------------------------------
+The neural layer remains an experimental POC. It should not replace or override the existing Jarvis brain.
+Further scaling requires real Jarvis workflow measurements showing a measurable benefit.

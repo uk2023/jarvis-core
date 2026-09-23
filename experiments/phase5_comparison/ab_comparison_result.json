@@ -1,0 +1,94 @@
+{
+  "experiment": "phase5_current_vs_neural_ab",
+  "model": "experimental_computational_model",
+  "A": "current_jarvis",
+  "B": "current_jarvis_plus_experimental_neural_layer",
+  "repeats": 50,
+  "results": [
+    {
+      "id": "T01",
+      "name": "simple_query",
+      "workflow_signal": 0.2,
+      "repeats": 50,
+      "A_current_jarvis": {
+        "mean_ms": 0.0020021206000819802,
+        "min_ms": 0.00036500568967312574,
+        "max_ms": 0.06572899292223155,
+        "variance": 8.293458794405655e-05
+      },
+      "B_jarvis_plus_neural": {
+        "mean_ms": 0.09330309781944379,
+        "min_ms": 0.05703199713025242,
+        "max_ms": 0.42348999704699963,
+        "variance": 0.0034591376333196824,
+        "mean_neural_activity": 0.00625,
+        "neural_activity_variance": 0.0
+      },
+      "neural_overhead_ms": 0.09130097721936181
+    },
+    {
+      "id": "T02",
+      "name": "complex_query",
+      "workflow_signal": 0.5,
+      "repeats": 50,
+      "A_current_jarvis": {
+        "mean_ms": 0.0006521205068565905,
+        "min_ms": 0.0003129971446469426,
+        "max_ms": 0.0017189886420965195,
+        "variance": 6.553768756370007e-08
+      },
+      "B_jarvis_plus_neural": {
+        "mean_ms": 0.08387073990888894,
+        "min_ms": 0.05354099266696721,
+        "max_ms": 0.2936449891421944,
+        "variance": 0.0017217326007803505,
+        "mean_neural_activity": 0.015625,
+        "neural_activity_variance": 0.0
+      },
+      "neural_overhead_ms": 0.08321861940203235
+    },
+    {
+      "id": "T03",
+      "name": "high_load",
+      "workflow_signal": 1.0,
+      "repeats": 50,
+      "A_current_jarvis": {
+        "mean_ms": 0.0006665804539807141,
+        "min_ms": 0.00041601015254855156,
+        "max_ms": 0.0016139965737238526,
+        "variance": 6.52223491958284e-08
+      },
+      "B_jarvis_plus_neural": {
+        "mean_ms": 0.0747105004847981,
+        "min_ms": 0.05447900912258774,
+        "max_ms": 0.14598999405279756,
+        "variance": 0.0002350114605806389,
+        "mean_neural_activity": 0.03125,
+        "neural_activity_variance": 0.0
+      },
+      "neural_overhead_ms": 0.07404392003081739
+    },
+    {
+      "id": "T04",
+      "name": "idle_recovery",
+      "workflow_signal": 0.0,
+      "repeats": 50,
+      "A_current_jarvis": {
+        "mean_ms": 0.002802039380185306,
+        "min_ms": 0.00036400160752236843,
+        "max_ms": 0.10666600428521633,
+        "variance": 0.00022023401795014946
+      },
+      "B_jarvis_plus_neural": {
+        "mean_ms": 0.05924797966144979,
+        "min_ms": 0.03229099093005061,
+        "max_ms": 0.103541009593755,
+        "variance": 0.00020951324967543512,
+        "mean_neural_activity": 0.0,
+        "neural_activity_variance": 0.0
+      },
+      "neural_overhead_ms": 0.056445940281264484
+    }
+  ],
+  "interpretation": "This benchmark measures computational overhead and neural-state behavior only. It does not claim end-to-end Jarvis improvement."
+}

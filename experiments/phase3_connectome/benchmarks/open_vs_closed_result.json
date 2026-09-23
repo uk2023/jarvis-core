@@ -1,0 +1,165 @@
+{
+  "experiment": "phase3_open_vs_closed_loop",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 12,
+  "open_loop": {
+    "metrics": {
+      "initial_activity": 7.8125e-09,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "mean_activity": 0.5818217722905477,
+      "activity_variance": 0.23259149574754162,
+      "activity_range": 0.9999999921875,
+      "final_active_nodes": 32
+    },
+    "history": [
+      {
+        "step": 0,
+        "mean_activity": 7.8125e-09,
+        "active_nodes": 0
+      },
+      {
+        "step": 1,
+        "mean_activity": 1.1542968749999999e-06,
+        "active_nodes": 0
+      },
+      {
+        "step": 2,
+        "mean_activity": 4.616259765625e-05,
+        "active_nodes": 0
+      },
+      {
+        "step": 3,
+        "mean_activity": 0.0016320594482421874,
+        "active_nodes": 0
+      },
+      {
+        "step": 4,
+        "mean_activity": 0.05828316177368164,
+        "active_nodes": 31
+      },
+      {
+        "step": 5,
+        "mean_activity": 0.9218987215576172,
+        "active_nodes": 32
+      },
+      {
+        "step": 6,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 7,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 8,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 9,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 10,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 11,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      }
+    ]
+  },
+  "closed_loop": {
+    "metrics": {
+      "initial_activity": 7.8125e-09,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "mean_activity": 0.5818611456713374,
+      "activity_variance": 0.23260582906939023,
+      "activity_range": 0.9999999921875,
+      "final_active_nodes": 32
+    },
+    "history": [
+      {
+        "step": 0,
+        "mean_activity": 7.8125e-09,
+        "active_nodes": 0,
+        "correction": 0.049999998046875
+      },
+      {
+        "step": 1,
+        "mean_activity": 1.1546874999847412e-06,
+        "active_nodes": 0,
+        "correction": 0.04999971132812501
+      },
+      {
+        "step": 2,
+        "mean_activity": 4.6220703120490265e-05,
+        "active_nodes": 0,
+        "correction": 0.04998844482421988
+      },
+      {
+        "step": 3,
+        "mean_activity": 0.0016344256830801008,
+        "active_nodes": 0,
+        "correction": 0.04959139357922998
+      },
+      {
+        "step": 4,
+        "mean_activity": 0.058367130948401506,
+        "active_nodes": 31,
+        "correction": 0.035408217262899624
+      },
+      {
+        "step": 5,
+        "mean_activity": 0.9222848082214465,
+        "active_nodes": 32,
+        "correction": -0.18057120205536165
+      },
+      {
+        "step": 6,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      },
+      {
+        "step": 7,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      },
+      {
+        "step": 8,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      },
+      {
+        "step": 9,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      },
+      {
+        "step": 10,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      },
+      {
+        "step": 11,
+        "mean_activity": 1.0,
+        "active_nodes": 32,
+        "correction": -0.2
+      }
+    ]
+  }
+}

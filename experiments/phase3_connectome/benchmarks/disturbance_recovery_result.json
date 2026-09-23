@@ -1,0 +1,5027 @@
+{
+  "experiment": "phase3_connectome_disturbance_recovery",
+  "model": "experimental_computational_model",
+  "controller": "bounded_seed_actuator_v7_operating_region",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 500,
+  "target_activity": 0.02,
+  "disturbance_step": 250,
+  "disturbance": 0.05,
+  "metrics": {
+    "baseline_activity": 0.01917433359840202,
+    "post_disturbance_activity": 0.019174333217598708,
+    "disturbance_delta": -3.808033124941268e-10,
+    "recovery_step": 255,
+    "recovery_steps": 5,
+    "final_activity": 0.019174327612141433,
+    "final_target_error": 0.0008256723878585677,
+    "tail_mean_activity": 0.019174330503751044,
+    "tail_mean_abs_error": 0.0008256694962489575,
+    "tail_range": 1.0007663017730373e-08,
+    "tail_variance": 7.809672936958186e-18,
+    "final_active_nodes": 32
+  },
+  "history": [
+    {
+      "step": 0,
+      "mean_activity": 0.03125,
+      "total_activity": 1.0,
+      "max_activity": 1.0,
+      "active_nodes": 1,
+      "error": -0.01125,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 1,
+      "mean_activity": 0.031625,
+      "total_activity": 1.012,
+      "max_activity": 0.11564625850340136,
+      "active_nodes": 32,
+      "error": -0.011625,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 2,
+      "mean_activity": 0.03157482993197279,
+      "total_activity": 1.0103945578231293,
+      "max_activity": 0.08729600951385211,
+      "active_nodes": 32,
+      "error": -0.011574829931972789,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 3,
+      "mean_activity": 0.030840197944427845,
+      "total_activity": 0.986886334221691,
+      "max_activity": 0.11111372345591114,
+      "active_nodes": 32,
+      "error": -0.010840197944427844,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 4,
+      "mean_activity": 0.030280266455276966,
+      "total_activity": 0.9689685265688629,
+      "max_activity": 0.08665749369821266,
+      "active_nodes": 32,
+      "error": -0.010280266455276965,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 5,
+      "mean_activity": 0.029935546582386317,
+      "total_activity": 0.9579374906363621,
+      "max_activity": 0.09008338635793815,
+      "active_nodes": 32,
+      "error": -0.009935546582386316,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 6,
+      "mean_activity": 0.029451354465253814,
+      "total_activity": 0.942443342888122,
+      "max_activity": 0.08699644083829022,
+      "active_nodes": 32,
+      "error": -0.009451354465253813,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 7,
+      "mean_activity": 0.02905221706734101,
+      "total_activity": 0.9296709461549123,
+      "max_activity": 0.08848687527497631,
+      "active_nodes": 32,
+      "error": -0.009052217067341009,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 8,
+      "mean_activity": 0.028659899755257668,
+      "total_activity": 0.9171167921682454,
+      "max_activity": 0.0863081783139463,
+      "active_nodes": 32,
+      "error": -0.008659899755257668,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 9,
+      "mean_activity": 0.02828840497065213,
+      "total_activity": 0.9052289590608682,
+      "max_activity": 0.08619534485505602,
+      "active_nodes": 32,
+      "error": -0.00828840497065213,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 10,
+      "mean_activity": 0.027925940964936353,
+      "total_activity": 0.8936301108779633,
+      "max_activity": 0.08460324067968142,
+      "active_nodes": 32,
+      "error": -0.007925940964936352,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 11,
+      "mean_activity": 0.027576017046342615,
+      "total_activity": 0.8824325454829637,
+      "max_activity": 0.08390163584790353,
+      "active_nodes": 32,
+      "error": -0.007576017046342615,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 12,
+      "mean_activity": 0.02723557614016675,
+      "total_activity": 0.871538436485336,
+      "max_activity": 0.082637207196922,
+      "active_nodes": 32,
+      "error": -0.00723557614016675,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 13,
+      "mean_activity": 0.026904612808572245,
+      "total_activity": 0.8609476098743118,
+      "max_activity": 0.08175017750300403,
+      "active_nodes": 32,
+      "error": -0.006904612808572245,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 14,
+      "mean_activity": 0.026582521534399276,
+      "total_activity": 0.8506406891007768,
+      "max_activity": 0.08065870104430559,
+      "active_nodes": 32,
+      "error": -0.006582521534399276,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 15,
+      "mean_activity": 0.026269000501589448,
+      "total_activity": 0.8406080160508623,
+      "max_activity": 0.0797331489417194,
+      "active_nodes": 32,
+      "error": -0.006269000501589447,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 16,
+      "mean_activity": 0.025963765100155266,
+      "total_activity": 0.8308404832049685,
+      "max_activity": 0.07874284636029959,
+      "active_nodes": 32,
+      "error": -0.005963765100155265,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 17,
+      "mean_activity": 0.025666561533930207,
+      "total_activity": 0.8213299690857666,
+      "max_activity": 0.07783284575226795,
+      "active_nodes": 32,
+      "error": -0.005666561533930206,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 18,
+      "mean_activity": 0.025377172967041665,
+      "total_activity": 0.8120695349453333,
+      "max_activity": 0.07691188532427708,
+      "active_nodes": 32,
+      "error": -0.005377172967041665,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 19,
+      "mean_activity": 0.025095378674046726,
+      "total_activity": 0.8030521175694952,
+      "max_activity": 0.076036505193715,
+      "active_nodes": 32,
+      "error": -0.005095378674046726,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 20,
+      "mean_activity": 0.02482098077255087,
+      "total_activity": 0.7942713847216278,
+      "max_activity": 0.07517044736148776,
+      "active_nodes": 32,
+      "error": -0.0048209807725508695,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 21,
+      "mean_activity": 0.024553779417855737,
+      "total_activity": 0.7857209413713836,
+      "max_activity": 0.07433553660371775,
+      "active_nodes": 32,
+      "error": -0.004553779417855737,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 22,
+      "mean_activity": 0.024293587147470517,
+      "total_activity": 0.7773947887190565,
+      "max_activity": 0.07351717920415438,
+      "active_nodes": 32,
+      "error": -0.0042935871474705165,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 23,
+      "mean_activity": 0.024040218006239095,
+      "total_activity": 0.769286976199651,
+      "max_activity": 0.07272359930531824,
+      "active_nodes": 32,
+      "error": -0.004040218006239094,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 24,
+      "mean_activity": 0.02379349374786846,
+      "total_activity": 0.7613917999317907,
+      "max_activity": 0.071948736300983,
+      "active_nodes": 32,
+      "error": -0.00379349374786846,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 25,
+      "mean_activity": 0.023553239330065156,
+      "total_activity": 0.753703658562085,
+      "max_activity": 0.0711954964615409,
+      "active_nodes": 32,
+      "error": -0.0035532393300651555,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 26,
+      "mean_activity": 0.02331928540412965,
+      "total_activity": 0.7462171329321488,
+      "max_activity": 0.07046118817897598,
+      "active_nodes": 32,
+      "error": -0.003319285404129648,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 27,
+      "mean_activity": 0.023091466456830016,
+      "total_activity": 0.7389269266185605,
+      "max_activity": 0.06974664797708412,
+      "active_nodes": 32,
+      "error": -0.003091466456830016,
+      "seed_input": 0.012,
+      "disturbance": 0.0
+    },
+    {
+      "step": 28,
+      "mean_activity": 0.0228696217429536,
+      "total_activity": 0.7318278957745152,
+      "max_activity": 0.0690505233780633,
+      "active_nodes": 32,
+      "error": -0.0028696217429536007,
+      "seed_input": 0.0120303782570464,
+      "disturbance": 0.0
+    },
+    {
+      "step": 29,
+      "mean_activity": 0.02265454380883946,
+      "total_activity": 0.7249454018828627,
+      "max_activity": 0.0683728545411851,
+      "active_nodes": 32,
+      "error": -0.0026545438088394595,
+      "seed_input": 0.01224545619116054,
+      "disturbance": 0.0
+    },
+    {
+      "step": 30,
+      "mean_activity": 0.022451852022333463,
+      "total_activity": 0.7184592647146708,
+      "max_activity": 0.06771386334061835,
+      "active_nodes": 32,
+      "error": -0.0024518520223334624,
+      "seed_input": 0.012448147977666538,
+      "disturbance": 0.0
+    },
+    {
+      "step": 31,
+      "mean_activity": 0.022260997804814577,
+      "total_activity": 0.7123519297540665,
+      "max_activity": 0.06708039621309354,
+      "active_nodes": 32,
+      "error": -0.002260997804814577,
+      "seed_input": 0.012639002195185423,
+      "disturbance": 0.0
+    },
+    {
+      "step": 32,
+      "mean_activity": 0.022081354515425533,
+      "total_activity": 0.7066033444936171,
+      "max_activity": 0.06647704259871298,
+      "active_nodes": 32,
+      "error": -0.0020813545154255327,
+      "seed_input": 0.012818645484574467,
+      "disturbance": 0.0
+    },
+    {
+      "step": 33,
+      "mean_activity": 0.021912204348353847,
+      "total_activity": 0.7011905391473231,
+      "max_activity": 0.06590636488763318,
+      "active_nodes": 32,
+      "error": -0.0019122043483538465,
+      "seed_input": 0.012987795651646154,
+      "disturbance": 0.0
+    },
+    {
+      "step": 34,
+      "mean_activity": 0.02175291068343927,
+      "total_activity": 0.6960931418700567,
+      "max_activity": 0.06536716321055319,
+      "active_nodes": 32,
+      "error": -0.0017529106834392703,
+      "seed_input": 0.01314708931656073,
+      "disturbance": 0.0
+    },
+    {
+      "step": 35,
+      "mean_activity": 0.021602908652648835,
+      "total_activity": 0.6912930768847627,
+      "max_activity": 0.06485901982508306,
+      "active_nodes": 32,
+      "error": -0.0016029086526488344,
+      "seed_input": 0.013297091347351166,
+      "disturbance": 0.0
+    },
+    {
+      "step": 36,
+      "mean_activity": 0.02146164025654081,
+      "total_activity": 0.6867724882093059,
+      "max_activity": 0.06437994767196645,
+      "active_nodes": 32,
+      "error": -0.0014616402565408096,
+      "seed_input": 0.01343835974345919,
+      "disturbance": 0.0
+    },
+    {
+      "step": 37,
+      "mean_activity": 0.021328594499705558,
+      "total_activity": 0.6825150239905778,
+      "max_activity": 0.06392874492135321,
+      "active_nodes": 32,
+      "error": -0.001328594499705557,
+      "seed_input": 0.013571405500294443,
+      "disturbance": 0.0
+    },
+    {
+      "step": 38,
+      "mean_activity": 0.021203289958337347,
+      "total_activity": 0.6785052786667951,
+      "max_activity": 0.06350362707677723,
+      "active_nodes": 32,
+      "error": -0.0012032899583373467,
+      "seed_input": 0.013696710041662653,
+      "disturbance": 0.0
+    },
+    {
+      "step": 39,
+      "mean_activity": 0.02108527538401279,
+      "total_activity": 0.6747288122884093,
+      "max_activity": 0.06310326176029199,
+      "active_nodes": 32,
+      "error": -0.0010852753840127904,
+      "seed_input": 0.01381472461598721,
+      "disturbance": 0.0
+    },
+    {
+      "step": 40,
+      "mean_activity": 0.020974125801240986,
+      "total_activity": 0.6711720256397116,
+      "max_activity": 0.06272612966034938,
+      "active_nodes": 32,
+      "error": -0.000974125801240986,
+      "seed_input": 0.013925874198759014,
+      "disturbance": 0.0
+    },
+    {
+      "step": 41,
+      "mean_activity": 0.020869441589127128,
+      "total_activity": 0.6678221308520681,
+      "max_activity": 0.06237094835198126,
+      "active_nodes": 32,
+      "error": -0.0008694415891271276,
+      "seed_input": 0.014030558410872872,
+      "disturbance": 0.0
+    },
+    {
+      "step": 42,
+      "mean_activity": 0.020770846468185566,
+      "total_activity": 0.6646670869819381,
+      "max_activity": 0.06203640682688525,
+      "active_nodes": 32,
+      "error": -0.0007708464681855653,
+      "seed_input": 0.014129153531814435,
+      "disturbance": 0.0
+    },
+    {
+      "step": 43,
+      "mean_activity": 0.02067798616695579,
+      "total_activity": 0.6616955573425852,
+      "max_activity": 0.061721330791257585,
+      "active_nodes": 32,
+      "error": -0.000677986166955788,
+      "seed_input": 0.014222013833044212,
+      "disturbance": 0.0
+    },
+    {
+      "step": 44,
+      "mean_activity": 0.020590527066598748,
+      "total_activity": 0.6588968661311599,
+      "max_activity": 0.06142457393770032,
+      "active_nodes": 32,
+      "error": -0.0005905270665987478,
+      "seed_input": 0.014309472933401252,
+      "disturbance": 0.0
+    },
+    {
+      "step": 45,
+      "mean_activity": 0.020508154981209555,
+      "total_activity": 0.6562609593987058,
+      "max_activity": 0.06114508079308932,
+      "active_nodes": 32,
+      "error": -0.0005081549812095548,
+      "seed_input": 0.014391845018790445,
+      "disturbance": 0.0
+    },
+    {
+      "step": 46,
+      "mean_activity": 0.020430574013946073,
+      "total_activity": 0.6537783684462743,
+      "max_activity": 0.06088184153778616,
+      "active_nodes": 32,
+      "error": -0.000430574013946073,
+      "seed_input": 0.014469425986053927,
+      "disturbance": 0.0
+    },
+    {
+      "step": 47,
+      "mean_activity": 0.02035750548507887,
+      "total_activity": 0.6514401755225239,
+      "max_activity": 0.06063391465778191,
+      "active_nodes": 32,
+      "error": -0.00035750548507887045,
+      "seed_input": 0.01454249451492113,
+      "disturbance": 0.0
+    },
+    {
+      "step": 48,
+      "mean_activity": 0.020288686928712506,
+      "total_activity": 0.6492379817188002,
+      "max_activity": 0.06040040725081474,
+      "active_nodes": 32,
+      "error": -0.000288686928712506,
+      "seed_input": 0.014611313071287494,
+      "disturbance": 0.0
+    },
+    {
+      "step": 49,
+      "mean_activity": 0.020223871146463894,
+      "total_activity": 0.6471638766868446,
+      "max_activity": 0.06018048212643959,
+      "active_nodes": 32,
+      "error": -0.00022387114646389358,
+      "seed_input": 0.014676128853536106,
+      "disturbance": 0.0
+    },
+    {
+      "step": 50,
+      "mean_activity": 0.020162825319472732,
+      "total_activity": 0.6452104102231274,
+      "max_activity": 0.059973348381967585,
+      "active_nodes": 32,
+      "error": -0.00016282531947273138,
+      "seed_input": 0.014737174680527269,
+      "disturbance": 0.0
+    },
+    {
+      "step": 51,
+      "mean_activity": 0.020105330170862794,
+      "total_activity": 0.6433705654676094,
+      "max_activity": 0.059778262604287216,
+      "active_nodes": 32,
+      "error": -0.00010533017086279337,
+      "seed_input": 0.014794669829137207,
+      "disturbance": 0.0
+    },
+    {
+      "step": 52,
+      "mean_activity": 0.020051179178258563,
+      "total_activity": 0.641637733704274,
+      "max_activity": 0.059594523677725254,
+      "active_nodes": 32,
+      "error": -5.117917825856258e-05,
+      "seed_input": 0.014848820821741437,
+      "disturbance": 0.0
+    },
+    {
+      "step": 53,
+      "mean_activity": 0.020000177831516034,
+      "total_activity": 0.6400056906085131,
+      "max_activity": 0.0594214718514479,
+      "active_nodes": 32,
+      "error": -1.778315160336219e-07,
+      "seed_input": 0.014899822168483966,
+      "disturbance": 0.0
+    },
+    {
+      "step": 54,
+      "mean_activity": 0.019952142934150235,
+      "total_activity": 0.6384685738928075,
+      "max_activity": 0.0592584853790837,
+      "active_nodes": 32,
+      "error": 4.7857065849764985e-05,
+      "seed_input": 0.014947857065849765,
+      "disturbance": 0.0
+    },
+    {
+      "step": 55,
+      "mean_activity": 0.01990690194513672,
+      "total_activity": 0.637020862244375,
+      "max_activity": 0.05910497890755495,
+      "active_nodes": 32,
+      "error": 9.309805486328038e-05,
+      "seed_input": 0.01499309805486328,
+      "disturbance": 0.0
+    },
+    {
+      "step": 56,
+      "mean_activity": 0.019864292359198427,
+      "total_activity": 0.6356573554943497,
+      "max_activity": 0.05896040098551733,
+      "active_nodes": 32,
+      "error": 0.0001357076408015738,
+      "seed_input": 0.015035707640801574,
+      "disturbance": 0.0
+    },
+    {
+      "step": 57,
+      "mean_activity": 0.019824161123030516,
+      "total_activity": 0.6343731559369765,
+      "max_activity": 0.05882423232665739,
+      "active_nodes": 32,
+      "error": 0.00017583887696948422,
+      "seed_input": 0.015075838876969484,
+      "disturbance": 0.0
+    },
+    {
+      "step": 58,
+      "mean_activity": 0.01978636408555771,
+      "total_activity": 0.6331636507378468,
+      "max_activity": 0.058695983791701475,
+      "active_nodes": 32,
+      "error": 0.00021363591444228947,
+      "seed_input": 0.01511363591444229,
+      "disturbance": 0.0
+    },
+    {
+      "step": 59,
+      "mean_activity": 0.01975076548012349,
+      "total_activity": 0.6320244953639517,
+      "max_activity": 0.05857519472721935,
+      "active_nodes": 32,
+      "error": 0.00024923451987651085,
+      "seed_input": 0.015149234519876511,
+      "disturbance": 0.0
+    },
+    {
+      "step": 60,
+      "mean_activity": 0.01971723743682738,
+      "total_activity": 0.6309515979784761,
+      "max_activity": 0.058461431251007376,
+      "active_nodes": 32,
+      "error": 0.000282762563172622,
+      "seed_input": 0.015182762563172622,
+      "disturbance": 0.0
+    },
+    {
+      "step": 61,
+      "mean_activity": 0.019685659523209276,
+      "total_activity": 0.6299411047426968,
+      "max_activity": 0.05835428473117707,
+      "active_nodes": 32,
+      "error": 0.0003143404767907247,
+      "seed_input": 0.015214340476790725,
+      "disturbance": 0.0
+    },
+    {
+      "step": 62,
+      "mean_activity": 0.019655918311661164,
+      "total_activity": 0.6289893859731572,
+      "max_activity": 0.0582533702948182,
+      "active_nodes": 32,
+      "error": 0.00034408168833883687,
+      "seed_input": 0.015244081688338837,
+      "disturbance": 0.0
+    },
+    {
+      "step": 63,
+      "mean_activity": 0.019627906971993028,
+      "total_activity": 0.6280930231037769,
+      "max_activity": 0.05815832546029056,
+      "active_nodes": 32,
+      "error": 0.00037209302800697217,
+      "seed_input": 0.015272093028006972,
+      "disturbance": 0.0
+    },
+    {
+      "step": 64,
+      "mean_activity": 0.01960152488770133,
+      "total_activity": 0.6272487964064426,
+      "max_activity": 0.05806880882595487,
+      "active_nodes": 32,
+      "error": 0.0003984751122986692,
+      "seed_input": 0.01529847511229867,
+      "disturbance": 0.0
+    },
+    {
+      "step": 65,
+      "mean_activity": 0.019576677294554205,
+      "total_activity": 0.6264536734257345,
+      "max_activity": 0.05798449884965043,
+      "active_nodes": 32,
+      "error": 0.0004233227054457958,
+      "seed_input": 0.015323322705445796,
+      "disturbance": 0.0
+    },
+    {
+      "step": 66,
+      "mean_activity": 0.01955327494019975,
+      "total_activity": 0.625704798086392,
+      "max_activity": 0.05790509269009249,
+      "active_nodes": 32,
+      "error": 0.00044672505980025007,
+      "seed_input": 0.01534672505980025,
+      "disturbance": 0.0
+    },
+    {
+      "step": 67,
+      "mean_activity": 0.01953123376357188,
+      "total_activity": 0.6249994804343002,
+      "max_activity": 0.057830305121340735,
+      "active_nodes": 32,
+      "error": 0.00046876623642811907,
+      "seed_input": 0.015368766236428119,
+      "disturbance": 0.0
+    },
+    {
+      "step": 68,
+      "mean_activity": 0.019510474592943916,
+      "total_activity": 0.6243351869742053,
+      "max_activity": 0.057759867506847085,
+      "active_nodes": 32,
+      "error": 0.0004895254070560844,
+      "seed_input": 0.015389525407056084,
+      "disturbance": 0.0
+    },
+    {
+      "step": 69,
+      "mean_activity": 0.01949092286154421,
+      "total_activity": 0.6237095315694147,
+      "max_activity": 0.057693526835407,
+      "active_nodes": 32,
+      "error": 0.0005090771384557921,
+      "seed_input": 0.015409077138455792,
+      "disturbance": 0.0
+    },
+    {
+      "step": 70,
+      "mean_activity": 0.019472508339713018,
+      "total_activity": 0.6231202668708166,
+      "max_activity": 0.05763104481178685,
+      "active_nodes": 32,
+      "error": 0.0005274916602869828,
+      "seed_input": 0.015427491660286983,
+      "disturbance": 0.0
+    },
+    {
+      "step": 71,
+      "mean_activity": 0.01945516488263808,
+      "total_activity": 0.6225652762444186,
+      "max_activity": 0.057572197001119214,
+      "active_nodes": 32,
+      "error": 0.0005448351173619193,
+      "seed_input": 0.01544483511736192,
+      "disturbance": 0.0
+    },
+    {
+      "step": 72,
+      "mean_activity": 0.019438830192763018,
+      "total_activity": 0.6220425661684166,
+      "max_activity": 0.05751677202251555,
+      "active_nodes": 32,
+      "error": 0.0005611698072369824,
+      "seed_input": 0.015461169807236982,
+      "disturbance": 0.0
+    },
+    {
+      "step": 73,
+      "mean_activity": 0.019423445596014995,
+      "total_activity": 0.6215502590724798,
+      "max_activity": 0.05746457078992506,
+      "active_nodes": 32,
+      "error": 0.0005765544039850051,
+      "seed_input": 0.015476554403985005,
+      "disturbance": 0.0
+    },
+    {
+      "step": 74,
+      "mean_activity": 0.019408955831047948,
+      "total_activity": 0.6210865865935343,
+      "max_activity": 0.05741540579693319,
+      "active_nodes": 32,
+      "error": 0.0005910441689520526,
+      "seed_input": 0.015491044168952053,
+      "disturbance": 0.0
+    },
+    {
+      "step": 75,
+      "mean_activity": 0.01939530885074427,
+      "total_activity": 0.6206498832238166,
+      "max_activity": 0.05736910044329402,
+      "active_nodes": 32,
+      "error": 0.0006046911492557303,
+      "seed_input": 0.01550469114925573,
+      "disturbance": 0.0
+    },
+    {
+      "step": 76,
+      "mean_activity": 0.019382455635261992,
+      "total_activity": 0.6202385803283837,
+      "max_activity": 0.05732548840054986,
+      "active_nodes": 32,
+      "error": 0.0006175443647380083,
+      "seed_input": 0.015517544364738008,
+      "disturbance": 0.0
+    },
+    {
+      "step": 77,
+      "mean_activity": 0.019370350015955922,
+      "total_activity": 0.6198512005105895,
+      "max_activity": 0.05728441301460197,
+      "active_nodes": 32,
+      "error": 0.0006296499840440783,
+      "seed_input": 0.015529649984044078,
+      "disturbance": 0.0
+    },
+    {
+      "step": 78,
+      "mean_activity": 0.019358948509540223,
+      "total_activity": 0.6194863523052871,
+      "max_activity": 0.05724572674299701,
+      "active_nodes": 32,
+      "error": 0.0006410514904597771,
+      "seed_input": 0.015541051490459777,
+      "disturbance": 0.0
+    },
+    {
+      "step": 79,
+      "mean_activity": 0.019348210161896827,
+      "total_activity": 0.6191427251806985,
+      "max_activity": 0.05720929062496406,
+      "active_nodes": 32,
+      "error": 0.0006517898381031735,
+      "seed_input": 0.015551789838103174,
+      "disturbance": 0.0
+    },
+    {
+      "step": 80,
+      "mean_activity": 0.01933809640096856,
+      "total_activity": 0.6188190848309939,
+      "max_activity": 0.05717497378226351,
+      "active_nodes": 32,
+      "error": 0.0006619035990314409,
+      "seed_input": 0.015561903599031441,
+      "disturbance": 0.0
+    },
+    {
+      "step": 81,
+      "mean_activity": 0.019328570898208646,
+      "total_activity": 0.6185142687426767,
+      "max_activity": 0.05714265294907668,
+      "active_nodes": 32,
+      "error": 0.0006714291017913543,
+      "seed_input": 0.015571429101791354,
+      "disturbance": 0.0
+    },
+    {
+      "step": 82,
+      "mean_activity": 0.01931959943808884,
+      "total_activity": 0.6182271820188429,
+      "max_activity": 0.05711221202923403,
+      "active_nodes": 32,
+      "error": 0.0006804005619111611,
+      "seed_input": 0.015580400561911161,
+      "disturbance": 0.0
+    },
+    {
+      "step": 83,
+      "mean_activity": 0.019311149795197557,
+      "total_activity": 0.6179567934463218,
+      "max_activity": 0.0570835416791999,
+      "active_nodes": 32,
+      "error": 0.0006888502048024436,
+      "seed_input": 0.015588850204802444,
+      "disturbance": 0.0
+    },
+    {
+      "step": 84,
+      "mean_activity": 0.01930319161848643,
+      "total_activity": 0.6177021317915657,
+      "max_activity": 0.057056538915310664,
+      "active_nodes": 32,
+      "error": 0.0006968083815135709,
+      "seed_input": 0.015596808381513571,
+      "disturbance": 0.0
+    },
+    {
+      "step": 85,
+      "mean_activity": 0.01929569632224961,
+      "total_activity": 0.6174622823119875,
+      "max_activity": 0.05703110674385866,
+      "active_nodes": 32,
+      "error": 0.0007043036777503904,
+      "seed_input": 0.01560430367775039,
+      "disturbance": 0.0
+    },
+    {
+      "step": 86,
+      "mean_activity": 0.019288636983444133,
+      "total_activity": 0.6172363834702123,
+      "max_activity": 0.05700715381269143,
+      "active_nodes": 32,
+      "error": 0.0007113630165558674,
+      "seed_input": 0.015611363016555867,
+      "disturbance": 0.0
+    },
+    {
+      "step": 87,
+      "mean_activity": 0.019281988244982576,
+      "total_activity": 0.6170236238394424,
+      "max_activity": 0.056984594083075504,
+      "active_nodes": 32,
+      "error": 0.0007180117550174246,
+      "seed_input": 0.015618011755017425,
+      "disturbance": 0.0
+    },
+    {
+      "step": 88,
+      "mean_activity": 0.0192757262246506,
+      "total_activity": 0.6168232391888192,
+      "max_activity": 0.056963346520646115,
+      "active_nodes": 32,
+      "error": 0.0007242737753494002,
+      "seed_input": 0.0156242737753494,
+      "disturbance": 0.0
+    },
+    {
+      "step": 89,
+      "mean_activity": 0.019269828429322244,
+      "total_activity": 0.6166345097383118,
+      "max_activity": 0.056943334804332245,
+      "active_nodes": 32,
+      "error": 0.0007301715706777567,
+      "seed_input": 0.015630171570677757,
+      "disturbance": 0.0
+    },
+    {
+      "step": 90,
+      "mean_activity": 0.019264273674164775,
+      "total_activity": 0.6164567575732728,
+      "max_activity": 0.05692448705221211,
+      "active_nodes": 32,
+      "error": 0.0007357263258352259,
+      "seed_input": 0.015635726325835226,
+      "disturbance": 0.0
+    },
+    {
+      "step": 91,
+      "mean_activity": 0.019259042006542965,
+      "total_activity": 0.6162893442093749,
+      "max_activity": 0.05690673556331377,
+      "active_nodes": 32,
+      "error": 0.0007409579934570358,
+      "seed_input": 0.015640957993457036,
+      "disturbance": 0.0
+    },
+    {
+      "step": 92,
+      "mean_activity": 0.019254114634349378,
+      "total_activity": 0.6161316682991801,
+      "max_activity": 0.05689001657443384,
+      "active_nodes": 32,
+      "error": 0.0007458853656506226,
+      "seed_input": 0.015645885365650623,
+      "disturbance": 0.0
+    },
+    {
+      "step": 93,
+      "mean_activity": 0.01924947385850328,
+      "total_activity": 0.6159831634721049,
+      "max_activity": 0.05687427003110064,
+      "active_nodes": 32,
+      "error": 0.000750526141496722,
+      "seed_input": 0.015650526141496722,
+      "disturbance": 0.0
+    },
+    {
+      "step": 94,
+      "mean_activity": 0.019245103009375666,
+      "total_activity": 0.6158432963000213,
+      "max_activity": 0.05685943937185889,
+      "active_nodes": 32,
+      "error": 0.000754896990624334,
+      "seed_input": 0.015654896990624334,
+      "disturbance": 0.0
+    },
+    {
+      "step": 95,
+      "mean_activity": 0.019240986386912122,
+      "total_activity": 0.6157115643811879,
+      "max_activity": 0.05684547132510155,
+      "active_nodes": 32,
+      "error": 0.0007590136130878784,
+      "seed_input": 0.01565901361308788,
+      "disturbance": 0.0
+    },
+    {
+      "step": 96,
+      "mean_activity": 0.01923710920423832,
+      "total_activity": 0.6155874945356262,
+      "max_activity": 0.05683231571771855,
+      "active_nodes": 32,
+      "error": 0.000762890795761681,
+      "seed_input": 0.01566289079576168,
+      "disturbance": 0.0
+    },
+    {
+      "step": 97,
+      "mean_activity": 0.019233457534545716,
+      "total_activity": 0.6154706411054629,
+      "max_activity": 0.05681992529487548,
+      "active_nodes": 32,
+      "error": 0.0007665424654542848,
+      "seed_input": 0.015666542465454285,
+      "disturbance": 0.0
+    },
+    {
+      "step": 98,
+      "mean_activity": 0.01923001826106655,
+      "total_activity": 0.6153605843541295,
+      "max_activity": 0.05680825555027448,
+      "active_nodes": 32,
+      "error": 0.0007699817389334521,
+      "seed_input": 0.015669981738933452,
+      "disturbance": 0.0
+    },
+    {
+      "step": 99,
+      "mean_activity": 0.01922677902995853,
+      "total_activity": 0.615256928958673,
+      "max_activity": 0.05679726456628814,
+      "active_nodes": 32,
+      "error": 0.0007732209700414688,
+      "seed_input": 0.01567322097004147,
+      "disturbance": 0.0
+    },
+    {
+      "step": 100,
+      "mean_activity": 0.019223728205929935,
+      "total_activity": 0.6151593025897579,
+      "max_activity": 0.0567869128633916,
+      "active_nodes": 32,
+      "error": 0.0007762717940700652,
+      "seed_input": 0.015676271794070065,
+      "disturbance": 0.0
+    },
+    {
+      "step": 101,
+      "mean_activity": 0.01922085483044573,
+      "total_activity": 0.6150673545742633,
+      "max_activity": 0.05677716325835245,
+      "active_nodes": 32,
+      "error": 0.0007791451695542718,
+      "seed_input": 0.015679145169554272,
+      "disturbance": 0.0
+    },
+    {
+      "step": 102,
+      "mean_activity": 0.019218148582364602,
+      "total_activity": 0.6149807546356673,
+      "max_activity": 0.056767980730668924,
+      "active_nodes": 32,
+      "error": 0.0007818514176353986,
+      "seed_input": 0.0156818514176354,
+      "disturbance": 0.0
+    },
+    {
+      "step": 103,
+      "mean_activity": 0.019215599740865518,
+      "total_activity": 0.6148991917076966,
+      "max_activity": 0.056759332296776446,
+      "active_nodes": 32,
+      "error": 0.0007844002591344823,
+      "seed_input": 0.015684400259134482,
+      "disturbance": 0.0
+    },
+    {
+      "step": 104,
+      "mean_activity": 0.019213199150530595,
+      "total_activity": 0.614822372816979,
+      "max_activity": 0.05675118689157099,
+      "active_nodes": 32,
+      "error": 0.0007868008494694052,
+      "seed_input": 0.015686800849469405,
+      "disturbance": 0.0
+    },
+    {
+      "step": 105,
+      "mean_activity": 0.019210938188458922,
+      "total_activity": 0.6147500220306855,
+      "max_activity": 0.0567435152568235,
+      "active_nodes": 32,
+      "error": 0.000789061811541078,
+      "seed_input": 0.015689061811541078,
+      "disturbance": 0.0
+    },
+    {
+      "step": 106,
+      "mean_activity": 0.019208808733293184,
+      "total_activity": 0.6146818794653819,
+      "max_activity": 0.0567362898360845,
+      "active_nodes": 32,
+      "error": 0.0007911912667068165,
+      "seed_input": 0.015691191266706817,
+      "disturbance": 0.0
+    },
+    {
+      "step": 107,
+      "mean_activity": 0.019206803136047782,
+      "total_activity": 0.614617700353529,
+      "max_activity": 0.056729484675701644,
+      "active_nodes": 32,
+      "error": 0.0007931968639522183,
+      "seed_input": 0.01569319686395222,
+      "disturbance": 0.0
+    },
+    {
+      "step": 108,
+      "mean_activity": 0.01920491419263377,
+      "total_activity": 0.6145572541642806,
+      "max_activity": 0.05672307533159428,
+      "active_nodes": 32,
+      "error": 0.0007950858073662304,
+      "seed_input": 0.01569508580736623,
+      "disturbance": 0.0
+    },
+    {
+      "step": 109,
+      "mean_activity": 0.019203135117981808,
+      "total_activity": 0.6145003237754179,
+      "max_activity": 0.05671703878145069,
+      "active_nodes": 32,
+      "error": 0.0007968648820181924,
+      "seed_input": 0.015696864882018192,
+      "disturbance": 0.0
+    },
+    {
+      "step": 110,
+      "mean_activity": 0.01920145952167025,
+      "total_activity": 0.614446704693448,
+      "max_activity": 0.05671135334203195,
+      "active_nodes": 32,
+      "error": 0.0007985404783297512,
+      "seed_input": 0.01569854047832975,
+      "disturbance": 0.0
+    },
+    {
+      "step": 111,
+      "mean_activity": 0.01919988138497081,
+      "total_activity": 0.6143962043190659,
+      "max_activity": 0.05670599859128606,
+      "active_nodes": 32,
+      "error": 0.0008001186150291897,
+      "seed_input": 0.01570011861502919,
+      "disturbance": 0.0
+    },
+    {
+      "step": 112,
+      "mean_activity": 0.01919839503922933,
+      "total_activity": 0.6143486412553386,
+      "max_activity": 0.05670095529499198,
+      "active_nodes": 32,
+      "error": 0.0008016049607706688,
+      "seed_input": 0.01570160496077067,
+      "disturbance": 0.0
+    },
+    {
+      "step": 113,
+      "mean_activity": 0.019196995145504037,
+      "total_activity": 0.6143038446561292,
+      "max_activity": 0.05669620533767057,
+      "active_nodes": 32,
+      "error": 0.0008030048544959631,
+      "seed_input": 0.015703004854495963,
+      "disturbance": 0.0
+    },
+    {
+      "step": 114,
+      "mean_activity": 0.019195676675388077,
+      "total_activity": 0.6142616536124185,
+      "max_activity": 0.05669173165751383,
+      "active_nodes": 32,
+      "error": 0.0008043233246119233,
+      "seed_input": 0.015704323324611923,
+      "disturbance": 0.0
+    },
+    {
+      "step": 115,
+      "mean_activity": 0.019194434892947546,
+      "total_activity": 0.6142219165743215,
+      "max_activity": 0.056687518185099164,
+      "active_nodes": 32,
+      "error": 0.0008055651070524548,
+      "seed_input": 0.015705565107052455,
+      "disturbance": 0.0
+    },
+    {
+      "step": 116,
+      "mean_activity": 0.01919326533771004,
+      "total_activity": 0.6141844908067213,
+      "max_activity": 0.05668354978566797,
+      "active_nodes": 32,
+      "error": 0.0008067346622899589,
+      "seed_input": 0.01570673466228996,
+      "disturbance": 0.0
+    },
+    {
+      "step": 117,
+      "mean_activity": 0.019192163808642693,
+      "total_activity": 0.6141492418765662,
+      "max_activity": 0.05667981220476189,
+      "active_nodes": 32,
+      "error": 0.0008078361913573077,
+      "seed_input": 0.015707836191357308,
+      "disturbance": 0.0
+    },
+    {
+      "step": 118,
+      "mean_activity": 0.01919112634906207,
+      "total_activity": 0.6141160431699862,
+      "max_activity": 0.05667629201702078,
+      "active_nodes": 32,
+      "error": 0.0008088736509379302,
+      "seed_input": 0.01570887365093793,
+      "disturbance": 0.0
+    },
+    {
+      "step": 119,
+      "mean_activity": 0.01919014923242182,
+      "total_activity": 0.6140847754374983,
+      "max_activity": 0.05667297657795896,
+      "active_nodes": 32,
+      "error": 0.000809850767578179,
+      "seed_input": 0.01570985076757818,
+      "disturbance": 0.0
+    },
+    {
+      "step": 120,
+      "mean_activity": 0.01918922894892694,
+      "total_activity": 0.6140553263656621,
+      "max_activity": 0.05666985397854637,
+      "active_nodes": 32,
+      "error": 0.0008107710510730608,
+      "seed_input": 0.01571077105107306,
+      "disturbance": 0.0
+    },
+    {
+      "step": 121,
+      "mean_activity": 0.01918836219292662,
+      "total_activity": 0.6140275901736518,
+      "max_activity": 0.05666691300243138,
+      "active_nodes": 32,
+      "error": 0.0008116378070733808,
+      "seed_input": 0.01571163780707338,
+      "disturbance": 0.0
+    },
+    {
+      "step": 122,
+      "mean_activity": 0.01918754585104037,
+      "total_activity": 0.6140014672332919,
+      "max_activity": 0.05666414308565178,
+      "active_nodes": 32,
+      "error": 0.00081245414895963,
+      "seed_input": 0.01571245414895963,
+      "disturbance": 0.0
+    },
+    {
+      "step": 123,
+      "mean_activity": 0.019186776990974798,
+      "total_activity": 0.6139768637111935,
+      "max_activity": 0.05666153427868906,
+      "active_nodes": 32,
+      "error": 0.0008132230090252025,
+      "seed_input": 0.015713223009025203,
+      "disturbance": 0.0
+    },
+    {
+      "step": 124,
+      "mean_activity": 0.019186052850990815,
+      "total_activity": 0.6139536912317061,
+      "max_activity": 0.05665907721072989,
+      "active_nodes": 32,
+      "error": 0.0008139471490091858,
+      "seed_input": 0.015713947149009186,
+      "disturbance": 0.0
+    },
+    {
+      "step": 125,
+      "mean_activity": 0.019185370829983502,
+      "total_activity": 0.6139318665594721,
+      "max_activity": 0.05665676305600623,
+      "active_nodes": 32,
+      "error": 0.0008146291700164981,
+      "seed_input": 0.015714629170016498,
+      "disturbance": 0.0
+    },
+    {
+      "step": 126,
+      "mean_activity": 0.019184728478138968,
+      "total_activity": 0.613911311300447,
+      "max_activity": 0.05665458350209313,
+      "active_nodes": 32,
+      "error": 0.0008152715218610329,
+      "seed_input": 0.015715271521861033,
+      "disturbance": 0.0
+    },
+    {
+      "step": 127,
+      "mean_activity": 0.01918412348813462,
+      "total_activity": 0.6138919516203079,
+      "max_activity": 0.05665253072005074,
+      "active_nodes": 32,
+      "error": 0.00081587651186538,
+      "seed_input": 0.01571587651186538,
+      "disturbance": 0.0
+    },
+    {
+      "step": 128,
+      "mean_activity": 0.0191835536868513,
+      "total_activity": 0.6138737179792416,
+      "max_activity": 0.05665059733630272,
+      "active_nodes": 32,
+      "error": 0.0008164463131486999,
+      "seed_input": 0.0157164463131487,
+      "disturbance": 0.0
+    },
+    {
+      "step": 129,
+      "mean_activity": 0.01918301702756744,
+      "total_activity": 0.6138565448821581,
+      "max_activity": 0.05664877640615036,
+      "active_nodes": 32,
+      "error": 0.0008169829724325589,
+      "seed_input": 0.01571698297243256,
+      "disturbance": 0.0
+    },
+    {
+      "step": 130,
+      "mean_activity": 0.019182511582607274,
+      "total_activity": 0.6138403706434328,
+      "max_activity": 0.05664706138882745,
+      "active_nodes": 32,
+      "error": 0.0008174884173927262,
+      "seed_input": 0.015717488417392726,
+      "disturbance": 0.0
+    },
+    {
+      "step": 131,
+      "mean_activity": 0.019182035536416623,
+      "total_activity": 0.6138251371653319,
+      "max_activity": 0.05664544612400572,
+      "active_nodes": 32,
+      "error": 0.0008179644635833774,
+      "seed_input": 0.015717964463583377,
+      "disturbance": 0.0
+    },
+    {
+      "step": 132,
+      "mean_activity": 0.019181587179041452,
+      "total_activity": 0.6138107897293265,
+      "max_activity": 0.05664392480966713,
+      "active_nodes": 32,
+      "error": 0.0008184128209585487,
+      "seed_input": 0.01571841282095855,
+      "disturbance": 0.0
+    },
+    {
+      "step": 133,
+      "mean_activity": 0.01918116489998573,
+      "total_activity": 0.6137972767995433,
+      "max_activity": 0.056642491981262956,
+      "active_nodes": 32,
+      "error": 0.0008188351000142716,
+      "seed_input": 0.01571883510001427,
+      "disturbance": 0.0
+    },
+    {
+      "step": 134,
+      "mean_activity": 0.019180767182426523,
+      "total_activity": 0.6137845498376487,
+      "max_activity": 0.05664114249208527,
+      "active_nodes": 32,
+      "error": 0.0008192328175734773,
+      "seed_input": 0.015719232817573477,
+      "disturbance": 0.0
+    },
+    {
+      "step": 135,
+      "mean_activity": 0.019180392597765612,
+      "total_activity": 0.6137725631284996,
+      "max_activity": 0.05663987149477995,
+      "active_nodes": 32,
+      "error": 0.0008196074022343881,
+      "seed_input": 0.015719607402234388,
+      "disturbance": 0.0
+    },
+    {
+      "step": 136,
+      "mean_activity": 0.019180039800497945,
+      "total_activity": 0.6137612736159342,
+      "max_activity": 0.05663867442393504,
+      "active_nodes": 32,
+      "error": 0.0008199601995020553,
+      "seed_input": 0.015719960199502055,
+      "disturbance": 0.0
+    },
+    {
+      "step": 137,
+      "mean_activity": 0.019179707523378612,
+      "total_activity": 0.6137506407481156,
+      "max_activity": 0.056637546979681805,
+      "active_nodes": 32,
+      "error": 0.0008202924766213884,
+      "seed_input": 0.01572029247662139,
+      "disturbance": 0.0
+    },
+    {
+      "step": 138,
+      "mean_activity": 0.019179394572870913,
+      "total_activity": 0.6137406263318692,
+      "max_activity": 0.0566364851122497,
+      "active_nodes": 32,
+      "error": 0.0008206054271290876,
+      "seed_input": 0.015720605427129088,
+      "disturbance": 0.0
+    },
+    {
+      "step": 139,
+      "mean_activity": 0.019179099824859172,
+      "total_activity": 0.6137311943954935,
+      "max_activity": 0.05663548500741956,
+      "active_nodes": 32,
+      "error": 0.0008209001751408283,
+      "seed_input": 0.01572090017514083,
+      "disturbance": 0.0
+    },
+    {
+      "step": 140,
+      "mean_activity": 0.019178822220610937,
+      "total_activity": 0.61372231105955,
+      "max_activity": 0.05663454307282303,
+      "active_nodes": 32,
+      "error": 0.000821177779389063,
+      "seed_input": 0.015721177779389063,
+      "disturbance": 0.0
+    },
+    {
+      "step": 141,
+      "mean_activity": 0.019178560762974015,
+      "total_activity": 0.6137139444151685,
+      "max_activity": 0.05663365592503865,
+      "active_nodes": 32,
+      "error": 0.0008214392370259858,
+      "seed_input": 0.015721439237025986,
+      "disturbance": 0.0
+    },
+    {
+      "step": 142,
+      "mean_activity": 0.0191783145127947,
+      "total_activity": 0.6137060644094304,
+      "max_activity": 0.056632820377438865,
+      "active_nodes": 32,
+      "error": 0.0008216854872052995,
+      "seed_input": 0.0157216854872053,
+      "disturbance": 0.0
+    },
+    {
+      "step": 143,
+      "mean_activity": 0.019178082585544362,
+      "total_activity": 0.6136986427374196,
+      "max_activity": 0.05663203342874349,
+      "active_nodes": 32,
+      "error": 0.0008219174144556383,
+      "seed_input": 0.01572191741445564,
+      "disturbance": 0.0
+    },
+    {
+      "step": 144,
+      "mean_activity": 0.019177864148142206,
+      "total_activity": 0.6136916527405506,
+      "max_activity": 0.05663129225223923,
+      "active_nodes": 32,
+      "error": 0.0008221358518577943,
+      "seed_input": 0.015722135851857794,
+      "disturbance": 0.0
+    },
+    {
+      "step": 145,
+      "mean_activity": 0.019177658415962865,
+      "total_activity": 0.6136850693108117,
+      "max_activity": 0.05663059418562613,
+      "active_nodes": 32,
+      "error": 0.0008223415840371354,
+      "seed_input": 0.015722341584037135,
+      "disturbance": 0.0
+    },
+    {
+      "step": 146,
+      "mean_activity": 0.019177464650018027,
+      "total_activity": 0.6136788688005769,
+      "max_activity": 0.0566299367214546,
+      "active_nodes": 32,
+      "error": 0.0008225353499819732,
+      "seed_input": 0.015722535349981973,
+      "disturbance": 0.0
+    },
+    {
+      "step": 147,
+      "mean_activity": 0.019177282154302002,
+      "total_activity": 0.6136730289376641,
+      "max_activity": 0.05662931749811873,
+      "active_nodes": 32,
+      "error": 0.0008227178456979983,
+      "seed_input": 0.015722717845698,
+      "disturbance": 0.0
+    },
+    {
+      "step": 148,
+      "mean_activity": 0.01917711027329166,
+      "total_activity": 0.6136675287453331,
+      "max_activity": 0.056628734291373294,
+      "active_nodes": 32,
+      "error": 0.0008228897267083396,
+      "seed_input": 0.01572288972670834,
+      "disturbance": 0.0
+    },
+    {
+      "step": 149,
+      "mean_activity": 0.019176948389591823,
+      "total_activity": 0.6136623484669383,
+      "max_activity": 0.056628185006344464,
+      "active_nodes": 32,
+      "error": 0.0008230516104081771,
+      "seed_input": 0.015723051610408177,
+      "disturbance": 0.0
+    },
+    {
+      "step": 150,
+      "mean_activity": 0.019176795921717553,
+      "total_activity": 0.6136574694949617,
+      "max_activity": 0.056627667670004864,
+      "active_nodes": 32,
+      "error": 0.0008232040782824475,
+      "seed_input": 0.015723204078282448,
+      "disturbance": 0.0
+    },
+    {
+      "step": 151,
+      "mean_activity": 0.01917665232200549,
+      "total_activity": 0.6136528743041757,
+      "max_activity": 0.05662718042408659,
+      "active_nodes": 32,
+      "error": 0.0008233476779945098,
+      "seed_input": 0.01572334767799451,
+      "disturbance": 0.0
+    },
+    {
+      "step": 152,
+      "mean_activity": 0.019176517074646644,
+      "total_activity": 0.6136485463886926,
+      "max_activity": 0.056626721518406274,
+      "active_nodes": 32,
+      "error": 0.0008234829253533568,
+      "seed_input": 0.015723482925353357,
+      "disturbance": 0.0
+    },
+    {
+      "step": 153,
+      "mean_activity": 0.019176389693833597,
+      "total_activity": 0.6136444702026751,
+      "max_activity": 0.056626289304578484,
+      "active_nodes": 32,
+      "error": 0.0008236103061664037,
+      "seed_input": 0.015723610306166404,
+      "disturbance": 0.0
+    },
+    {
+      "step": 154,
+      "mean_activity": 0.019176269722015516,
+      "total_activity": 0.6136406311044965,
+      "max_activity": 0.05662588223009464,
+      "active_nodes": 32,
+      "error": 0.0008237302779844843,
+      "seed_input": 0.015723730277984484,
+      "disturbance": 0.0
+    },
+    {
+      "step": 155,
+      "mean_activity": 0.019176156728254606,
+      "total_activity": 0.6136370153041474,
+      "max_activity": 0.056625498832746535,
+      "active_nodes": 32,
+      "error": 0.0008238432717453947,
+      "seed_input": 0.015723843271745395,
+      "disturbance": 0.0
+    },
+    {
+      "step": 156,
+      "mean_activity": 0.019176050306678193,
+      "total_activity": 0.6136336098137022,
+      "max_activity": 0.05662513773537399,
+      "active_nodes": 32,
+      "error": 0.0008239496933218071,
+      "seed_input": 0.015723949693321807,
+      "disturbance": 0.0
+    },
+    {
+      "step": 157,
+      "mean_activity": 0.01917595007502085,
+      "total_activity": 0.6136304024006672,
+      "max_activity": 0.056624797640918226,
+      "active_nodes": 32,
+      "error": 0.0008240499249791491,
+      "seed_input": 0.01572404992497915,
+      "disturbance": 0.0
+    },
+    {
+      "step": 158,
+      "mean_activity": 0.01917585567325128,
+      "total_activity": 0.613627381544041,
+      "max_activity": 0.056624477327762705,
+      "active_nodes": 32,
+      "error": 0.0008241443267487207,
+      "seed_input": 0.01572414432674872,
+      "disturbance": 0.0
+    },
+    {
+      "step": 159,
+      "mean_activity": 0.01917576676227909,
+      "total_activity": 0.6136245363929309,
+      "max_activity": 0.05662417564534521,
+      "active_nodes": 32,
+      "error": 0.0008242332377209095,
+      "seed_input": 0.01572423323772091,
+      "disturbance": 0.0
+    },
+    {
+      "step": 160,
+      "mean_activity": 0.0191756830227368,
+      "total_activity": 0.6136218567275776,
+      "max_activity": 0.05662389151002492,
+      "active_nodes": 32,
+      "error": 0.0008243169772631995,
+      "seed_input": 0.0157243169772632,
+      "disturbance": 0.0
+    },
+    {
+      "step": 161,
+      "mean_activity": 0.019175604153832657,
+      "total_activity": 0.613619332922645,
+      "max_activity": 0.056623623901190134,
+      "active_nodes": 32,
+      "error": 0.0008243958461673431,
+      "seed_input": 0.015724395846167343,
+      "disturbance": 0.0
+    },
+    {
+      "step": 162,
+      "mean_activity": 0.019175529872270197,
+      "total_activity": 0.6136169559126463,
+      "max_activity": 0.05662337185759205,
+      "active_nodes": 32,
+      "error": 0.0008244701277298032,
+      "seed_input": 0.015724470127729803,
+      "disturbance": 0.0
+    },
+    {
+      "step": 163,
+      "mean_activity": 0.019175459911230656,
+      "total_activity": 0.613614717159381,
+      "max_activity": 0.05662313447389214,
+      "active_nodes": 32,
+      "error": 0.0008245400887693446,
+      "seed_input": 0.015724540088769345,
+      "disturbance": 0.0
+    },
+    {
+      "step": 164,
+      "mean_activity": 0.019175394019414548,
+      "total_activity": 0.6136126086212655,
+      "max_activity": 0.0566229108974101,
+      "active_nodes": 32,
+      "error": 0.0008246059805854522,
+      "seed_input": 0.015724605980585452,
+      "disturbance": 0.0
+    },
+    {
+      "step": 165,
+      "mean_activity": 0.019175331960139007,
+      "total_activity": 0.6136106227244482,
+      "max_activity": 0.056622700325061004,
+      "active_nodes": 32,
+      "error": 0.0008246680398609936,
+      "seed_input": 0.015724668039860994,
+      "disturbance": 0.0
+    },
+    {
+      "step": 166,
+      "mean_activity": 0.019175273510487624,
+      "total_activity": 0.613608752335604,
+      "max_activity": 0.05662250200047071,
+      "active_nodes": 32,
+      "error": 0.0008247264895123764,
+      "seed_input": 0.015724726489512376,
+      "disturbance": 0.0
+    },
+    {
+      "step": 167,
+      "mean_activity": 0.01917521846050973,
+      "total_activity": 0.6136069907363113,
+      "max_activity": 0.056622315211258906,
+      "active_nodes": 32,
+      "error": 0.000824781539490272,
+      "seed_input": 0.015724781539490272,
+      "disturbance": 0.0
+    },
+    {
+      "step": 168,
+      "mean_activity": 0.01917516661246624,
+      "total_activity": 0.6136053315989197,
+      "max_activity": 0.05662213928648026,
+      "active_nodes": 32,
+      "error": 0.0008248333875337591,
+      "seed_input": 0.01572483338753376,
+      "disturbance": 0.0
+    },
+    {
+      "step": 169,
+      "mean_activity": 0.019175117780119422,
+      "total_activity": 0.6136037689638215,
+      "max_activity": 0.0566219735942144,
+      "active_nodes": 32,
+      "error": 0.000824882219880578,
+      "seed_input": 0.015724882219880578,
+      "disturbance": 0.0
+    },
+    {
+      "step": 170,
+      "mean_activity": 0.019175071788063876,
+      "total_activity": 0.613602297218044,
+      "max_activity": 0.05662181753929607,
+      "active_nodes": 32,
+      "error": 0.000824928211936124,
+      "seed_input": 0.015724928211936124,
+      "disturbance": 0.0
+    },
+    {
+      "step": 171,
+      "mean_activity": 0.019175028471096513,
+      "total_activity": 0.6136009110750884,
+      "max_activity": 0.05662167056117727,
+      "active_nodes": 32,
+      "error": 0.0008249715289034877,
+      "seed_input": 0.015724971528903488,
+      "disturbance": 0.0
+    },
+    {
+      "step": 172,
+      "mean_activity": 0.019174987673623137,
+      "total_activity": 0.6135996055559404,
+      "max_activity": 0.05662153213191378,
+      "active_nodes": 32,
+      "error": 0.000825012326376863,
+      "seed_input": 0.015725012326376863,
+      "disturbance": 0.0
+    },
+    {
+      "step": 173,
+      "mean_activity": 0.019174949249099564,
+      "total_activity": 0.613598375971186,
+      "max_activity": 0.056621401754268844,
+      "active_nodes": 32,
+      "error": 0.0008250507509004364,
+      "seed_input": 0.015725050750900436,
+      "disturbance": 0.0
+    },
+    {
+      "step": 174,
+      "mean_activity": 0.01917491305950521,
+      "total_activity": 0.6135972179041668,
+      "max_activity": 0.05662127895992701,
+      "active_nodes": 32,
+      "error": 0.0008250869404947889,
+      "seed_input": 0.01572508694049479,
+      "disturbance": 0.0
+    },
+    {
+      "step": 175,
+      "mean_activity": 0.019174878974847355,
+      "total_activity": 0.6135961271951154,
+      "max_activity": 0.056621163307811986,
+      "active_nodes": 32,
+      "error": 0.0008251210251526454,
+      "seed_input": 0.015725121025152645,
+      "disturbance": 0.0
+    },
+    {
+      "step": 176,
+      "mean_activity": 0.019174846872694183,
+      "total_activity": 0.6135950999262139,
+      "max_activity": 0.056621054382502346,
+      "active_nodes": 32,
+      "error": 0.0008251531273058173,
+      "seed_input": 0.015725153127305817,
+      "disturbance": 0.0
+    },
+    {
+      "step": 177,
+      "mean_activity": 0.019174816637735022,
+      "total_activity": 0.6135941324075207,
+      "max_activity": 0.056620951792739245,
+      "active_nodes": 32,
+      "error": 0.0008251833622649786,
+      "seed_input": 0.01572518336226498,
+      "disturbance": 0.0
+    },
+    {
+      "step": 178,
+      "mean_activity": 0.01917478816136614,
+      "total_activity": 0.6135932211637165,
+      "max_activity": 0.056620855170021106,
+      "active_nodes": 32,
+      "error": 0.0008252118386338596,
+      "seed_input": 0.01572521183863386,
+      "disturbance": 0.0
+    },
+    {
+      "step": 179,
+      "mean_activity": 0.019174761341300663,
+      "total_activity": 0.6135923629216212,
+      "max_activity": 0.056620764167279895,
+      "active_nodes": 32,
+      "error": 0.0008252386586993371,
+      "seed_input": 0.015725238658699337,
+      "disturbance": 0.0
+    },
+    {
+      "step": 180,
+      "mean_activity": 0.019174736081201123,
+      "total_activity": 0.613591554598436,
+      "max_activity": 0.05662067845763455,
+      "active_nodes": 32,
+      "error": 0.000825263918798877,
+      "seed_input": 0.015725263918798877,
+      "disturbance": 0.0
+    },
+    {
+      "step": 181,
+      "mean_activity": 0.019174712290333455,
+      "total_activity": 0.6135907932906706,
+      "max_activity": 0.05662059773321665,
+      "active_nodes": 32,
+      "error": 0.0008252877096665452,
+      "seed_input": 0.015725287709666545,
+      "disturbance": 0.0
+    },
+    {
+      "step": 182,
+      "mean_activity": 0.019174689883241055,
+      "total_activity": 0.6135900762637138,
+      "max_activity": 0.05662052170406483,
+      "active_nodes": 32,
+      "error": 0.0008253101167589455,
+      "seed_input": 0.015725310116758946,
+      "disturbance": 0.0
+    },
+    {
+      "step": 183,
+      "mean_activity": 0.01917466877943783,
+      "total_activity": 0.6135894009420105,
+      "max_activity": 0.056620450097082935,
+      "active_nodes": 32,
+      "error": 0.0008253312205621713,
+      "seed_input": 0.01572533122056217,
+      "disturbance": 0.0
+    },
+    {
+      "step": 184,
+      "mean_activity": 0.01917464890311909,
+      "total_activity": 0.6135887648998108,
+      "max_activity": 0.056620382655059295,
+      "active_nodes": 32,
+      "error": 0.0008253510968809115,
+      "seed_input": 0.01572535109688091,
+      "disturbance": 0.0
+    },
+    {
+      "step": 185,
+      "mean_activity": 0.01917463018288926,
+      "total_activity": 0.6135881658524563,
+      "max_activity": 0.05662031913574269,
+      "active_nodes": 32,
+      "error": 0.0008253698171107396,
+      "seed_input": 0.01572536981711074,
+      "disturbance": 0.0
+    },
+    {
+      "step": 186,
+      "mean_activity": 0.01917461255150543,
+      "total_activity": 0.6135876016481737,
+      "max_activity": 0.056620259310972275,
+      "active_nodes": 32,
+      "error": 0.0008253874484945717,
+      "seed_input": 0.015725387448494572,
+      "disturbance": 0.0
+    },
+    {
+      "step": 187,
+      "mean_activity": 0.01917459594563581,
+      "total_activity": 0.6135870702603459,
+      "max_activity": 0.05662020296585797,
+      "active_nodes": 32,
+      "error": 0.000825404054364192,
+      "seed_input": 0.015725404054364192,
+      "disturbance": 0.0
+    },
+    {
+      "step": 188,
+      "mean_activity": 0.019174580305632252,
+      "total_activity": 0.6135865697802321,
+      "max_activity": 0.056620149898008565,
+      "active_nodes": 32,
+      "error": 0.0008254196943677482,
+      "seed_input": 0.015725419694367748,
+      "disturbance": 0.0
+    },
+    {
+      "step": 189,
+      "mean_activity": 0.01917456557531599,
+      "total_activity": 0.6135860984101117,
+      "max_activity": 0.05662009991680477,
+      "active_nodes": 32,
+      "error": 0.0008254344246840101,
+      "seed_input": 0.01572543442468401,
+      "disturbance": 0.0
+    },
+    {
+      "step": 190,
+      "mean_activity": 0.019174551701775854,
+      "total_activity": 0.6135856544568273,
+      "max_activity": 0.05662005284271453,
+      "active_nodes": 32,
+      "error": 0.0008254482982241462,
+      "seed_input": 0.015725448298224146,
+      "disturbance": 0.0
+    },
+    {
+      "step": 191,
+      "mean_activity": 0.019174538635178193,
+      "total_activity": 0.6135852363257022,
+      "max_activity": 0.05662000850664808,
+      "active_nodes": 32,
+      "error": 0.0008254613648218077,
+      "seed_input": 0.015725461364821808,
+      "disturbance": 0.0
+    },
+    {
+      "step": 192,
+      "mean_activity": 0.019174526328587897,
+      "total_activity": 0.6135848425148127,
+      "max_activity": 0.05661996674935064,
+      "active_nodes": 32,
+      "error": 0.0008254736714121032,
+      "seed_input": 0.015725473671412103,
+      "disturbance": 0.0
+    },
+    {
+      "step": 193,
+      "mean_activity": 0.019174514737799797,
+      "total_activity": 0.6135844716095935,
+      "max_activity": 0.05661992742083033,
+      "active_nodes": 32,
+      "error": 0.0008254852622002033,
+      "seed_input": 0.015725485262200203,
+      "disturbance": 0.0
+    },
+    {
+      "step": 194,
+      "mean_activity": 0.019174503821179877,
+      "total_activity": 0.613584122277756,
+      "max_activity": 0.056619890379819446,
+      "active_nodes": 32,
+      "error": 0.0008254961788201239,
+      "seed_input": 0.015725496178820124,
+      "disturbance": 0.0
+    },
+    {
+      "step": 195,
+      "mean_activity": 0.01917449353951572,
+      "total_activity": 0.6135837932645031,
+      "max_activity": 0.05661985549326695,
+      "active_nodes": 32,
+      "error": 0.0008255064604842793,
+      "seed_input": 0.01572550646048428,
+      "disturbance": 0.0
+    },
+    {
+      "step": 196,
+      "mean_activity": 0.019174483855875682,
+      "total_activity": 0.6135834833880218,
+      "max_activity": 0.05661982263586067,
+      "active_nodes": 32,
+      "error": 0.0008255161441243185,
+      "seed_input": 0.01572551614412432,
+      "disturbance": 0.0
+    },
+    {
+      "step": 197,
+      "mean_activity": 0.0191744747354762,
+      "total_activity": 0.6135831915352384,
+      "max_activity": 0.056619791689577016,
+      "active_nodes": 32,
+      "error": 0.0008255252645237993,
+      "seed_input": 0.0157255252645238,
+      "disturbance": 0.0
+    },
+    {
+      "step": 198,
+      "mean_activity": 0.01917446614555688,
+      "total_activity": 0.6135829166578202,
+      "max_activity": 0.056619762543257235,
+      "active_nodes": 32,
+      "error": 0.0008255338544431202,
+      "seed_input": 0.01572553385444312,
+      "disturbance": 0.0
+    },
+    {
+      "step": 199,
+      "mean_activity": 0.019174458055262793,
+      "total_activity": 0.6135826577684094,
+      "max_activity": 0.05661973509220798,
+      "active_nodes": 32,
+      "error": 0.0008255419447372077,
+      "seed_input": 0.015725541944737208,
+      "disturbance": 0.0
+    },
+    {
+      "step": 200,
+      "mean_activity": 0.019174450435533674,
+      "total_activity": 0.6135824139370776,
+      "max_activity": 0.05661970923782528,
+      "active_nodes": 32,
+      "error": 0.0008255495644663262,
+      "seed_input": 0.015725549564466326,
+      "disturbance": 0.0
+    },
+    {
+      "step": 201,
+      "mean_activity": 0.01917444325899952,
+      "total_activity": 0.6135821842879846,
+      "max_activity": 0.05661968488724041,
+      "active_nodes": 32,
+      "error": 0.0008255567410004813,
+      "seed_input": 0.01572555674100048,
+      "disturbance": 0.0
+    },
+    {
+      "step": 202,
+      "mean_activity": 0.019174436499882274,
+      "total_activity": 0.6135819679962328,
+      "max_activity": 0.05661966195298628,
+      "active_nodes": 32,
+      "error": 0.0008255635001177264,
+      "seed_input": 0.015725563500117726,
+      "disturbance": 0.0
+    },
+    {
+      "step": 203,
+      "mean_activity": 0.019174430133903245,
+      "total_activity": 0.6135817642849039,
+      "max_activity": 0.056619640352683256,
+      "active_nodes": 32,
+      "error": 0.000825569866096755,
+      "seed_input": 0.015725569866096755,
+      "disturbance": 0.0
+    },
+    {
+      "step": 204,
+      "mean_activity": 0.019174424138195888,
+      "total_activity": 0.6135815724222684,
+      "max_activity": 0.056619620008743175,
+      "active_nodes": 32,
+      "error": 0.0008255758618041127,
+      "seed_input": 0.015725575861804113,
+      "disturbance": 0.0
+    },
+    {
+      "step": 205,
+      "mean_activity": 0.01917441849122367,
+      "total_activity": 0.6135813917191575,
+      "max_activity": 0.0566196008480908,
+      "active_nodes": 32,
+      "error": 0.0008255815087763289,
+      "seed_input": 0.01572558150877633,
+      "disturbance": 0.0
+    },
+    {
+      "step": 206,
+      "mean_activity": 0.019174413172702715,
+      "total_activity": 0.6135812215264869,
+      "max_activity": 0.05661958280190122,
+      "active_nodes": 32,
+      "error": 0.0008255868272972859,
+      "seed_input": 0.015725586827297286,
+      "disturbance": 0.0
+    },
+    {
+      "step": 207,
+      "mean_activity": 0.019174408163528934,
+      "total_activity": 0.6135810612329259,
+      "max_activity": 0.05661956580535266,
+      "active_nodes": 32,
+      "error": 0.0008255918364710665,
+      "seed_input": 0.015725591836471067,
+      "disturbance": 0.0
+    },
+    {
+      "step": 208,
+      "mean_activity": 0.01917440344570942,
+      "total_activity": 0.6135809102627015,
+      "max_activity": 0.05661954979739367,
+      "active_nodes": 32,
+      "error": 0.0008255965542905801,
+      "seed_input": 0.01572559655429058,
+      "disturbance": 0.0
+    },
+    {
+      "step": 209,
+      "mean_activity": 0.019174399002297803,
+      "total_activity": 0.6135807680735297,
+      "max_activity": 0.05661953472052379,
+      "active_nodes": 32,
+      "error": 0.0008256009977021979,
+      "seed_input": 0.015725600997702198,
+      "disturbance": 0.0
+    },
+    {
+      "step": 210,
+      "mean_activity": 0.019174394817333386,
+      "total_activity": 0.6135806341546683,
+      "max_activity": 0.05661952052058703,
+      "active_nodes": 32,
+      "error": 0.0008256051826666146,
+      "seed_input": 0.015725605182666615,
+      "disturbance": 0.0
+    },
+    {
+      "step": 211,
+      "mean_activity": 0.019174390875783806,
+      "total_activity": 0.6135805080250818,
+      "max_activity": 0.05661950714657733,
+      "active_nodes": 32,
+      "error": 0.0008256091242161943,
+      "seed_input": 0.015725609124216194,
+      "disturbance": 0.0
+    },
+    {
+      "step": 212,
+      "mean_activity": 0.019174387163491055,
+      "total_activity": 0.6135803892317138,
+      "max_activity": 0.05661949455045533,
+      "active_nodes": 32,
+      "error": 0.0008256128365089453,
+      "seed_input": 0.015725612836508945,
+      "disturbance": 0.0
+    },
+    {
+      "step": 213,
+      "mean_activity": 0.01917438366712061,
+      "total_activity": 0.6135802773478595,
+      "max_activity": 0.056619482686975905,
+      "active_nodes": 32,
+      "error": 0.000825616332879392,
+      "seed_input": 0.015725616332879392,
+      "disturbance": 0.0
+    },
+    {
+      "step": 214,
+      "mean_activity": 0.019174380374113526,
+      "total_activity": 0.6135801719716328,
+      "max_activity": 0.056619471513525504,
+      "active_nodes": 32,
+      "error": 0.0008256196258864743,
+      "seed_input": 0.015725619625886474,
+      "disturbance": 0.0
+    },
+    {
+      "step": 215,
+      "mean_activity": 0.019174377272641353,
+      "total_activity": 0.6135800727245233,
+      "max_activity": 0.0566194609899692,
+      "active_nodes": 32,
+      "error": 0.0008256227273586471,
+      "seed_input": 0.015725622727358647,
+      "disturbance": 0.0
+    },
+    {
+      "step": 216,
+      "mean_activity": 0.019174374351563633,
+      "total_activity": 0.6135799792500363,
+      "max_activity": 0.05661945107850644,
+      "active_nodes": 32,
+      "error": 0.0008256256484363671,
+      "seed_input": 0.015725625648436367,
+      "disturbance": 0.0
+    },
+    {
+      "step": 217,
+      "mean_activity": 0.019174371600387877,
+      "total_activity": 0.6135798912124121,
+      "max_activity": 0.05661944174353538,
+      "active_nodes": 32,
+      "error": 0.000825628399612123,
+      "seed_input": 0.015725628399612123,
+      "disturbance": 0.0
+    },
+    {
+      "step": 218,
+      "mean_activity": 0.01917436900923188,
+      "total_activity": 0.6135798082954201,
+      "max_activity": 0.056619432951524835,
+      "active_nodes": 32,
+      "error": 0.0008256309907681211,
+      "seed_input": 0.01572563099076812,
+      "disturbance": 0.0
+    },
+    {
+      "step": 219,
+      "mean_activity": 0.019174366568788234,
+      "total_activity": 0.6135797302012235,
+      "max_activity": 0.05661942467089398,
+      "active_nodes": 32,
+      "error": 0.0008256334312117669,
+      "seed_input": 0.015725633431211767,
+      "disturbance": 0.0
+    },
+    {
+      "step": 220,
+      "mean_activity": 0.019174364270290886,
+      "total_activity": 0.6135796566493084,
+      "max_activity": 0.05661941687189888,
+      "active_nodes": 32,
+      "error": 0.0008256357297091142,
+      "seed_input": 0.015725635729709114,
+      "disturbance": 0.0
+    },
+    {
+      "step": 221,
+      "mean_activity": 0.01917436210548365,
+      "total_activity": 0.6135795873754768,
+      "max_activity": 0.05661940952652558,
+      "active_nodes": 32,
+      "error": 0.0008256378945163505,
+      "seed_input": 0.01572563789451635,
+      "disturbance": 0.0
+    },
+    {
+      "step": 222,
+      "mean_activity": 0.019174360066590557,
+      "total_activity": 0.6135795221308978,
+      "max_activity": 0.05661940260838959,
+      "active_nodes": 32,
+      "error": 0.000825639933409443,
+      "seed_input": 0.015725639933409443,
+      "disturbance": 0.0
+    },
+    {
+      "step": 223,
+      "mean_activity": 0.019174358146287918,
+      "total_activity": 0.6135794606812134,
+      "max_activity": 0.056619396092640994,
+      "active_nodes": 32,
+      "error": 0.0008256418537120822,
+      "seed_input": 0.015725641853712082,
+      "disturbance": 0.0
+    },
+    {
+      "step": 224,
+      "mean_activity": 0.019174356337678024,
+      "total_activity": 0.6135794028056968,
+      "max_activity": 0.056619389955875274,
+      "active_nodes": 32,
+      "error": 0.000825643662321976,
+      "seed_input": 0.015725643662321976,
+      "disturbance": 0.0
+    },
+    {
+      "step": 225,
+      "mean_activity": 0.019174354634264364,
+      "total_activity": 0.6135793482964597,
+      "max_activity": 0.05661938417604925,
+      "active_nodes": 32,
+      "error": 0.0008256453657356361,
+      "seed_input": 0.015725645365735636,
+      "disturbance": 0.0
+    },
+    {
+      "step": 226,
+      "mean_activity": 0.019174353029928287,
+      "total_activity": 0.6135792969577052,
+      "max_activity": 0.05661937873240182,
+      "active_nodes": 32,
+      "error": 0.0008256469700717133,
+      "seed_input": 0.015725646970071713,
+      "disturbance": 0.0
+    },
+    {
+      "step": 227,
+      "mean_activity": 0.01917435151890703,
+      "total_activity": 0.613579248605025,
+      "max_activity": 0.05661937360537944,
+      "active_nodes": 32,
+      "error": 0.0008256484810929693,
+      "seed_input": 0.01572564848109297,
+      "disturbance": 0.0
+    },
+    {
+      "step": 228,
+      "mean_activity": 0.01917435009577302,
+      "total_activity": 0.6135792030647367,
+      "max_activity": 0.05661936877656587,
+      "active_nodes": 32,
+      "error": 0.0008256499042269792,
+      "seed_input": 0.01572564990422698,
+      "disturbance": 0.0
+    },
+    {
+      "step": 229,
+      "mean_activity": 0.019174348755414374,
+      "total_activity": 0.61357916017326,
+      "max_activity": 0.05661936422861608,
+      "active_nodes": 32,
+      "error": 0.0008256512445856262,
+      "seed_input": 0.015725651244585626,
+      "disturbance": 0.0
+    },
+    {
+      "step": 230,
+      "mean_activity": 0.019174347493016528,
+      "total_activity": 0.6135791197765289,
+      "max_activity": 0.05661935994519386,
+      "active_nodes": 32,
+      "error": 0.0008256525069834722,
+      "seed_input": 0.015725652506983472,
+      "disturbance": 0.0
+    },
+    {
+      "step": 231,
+      "mean_activity": 0.019174346304044965,
+      "total_activity": 0.6135790817294389,
+      "max_activity": 0.05661935591091319,
+      "active_nodes": 32,
+      "error": 0.0008256536959550358,
+      "seed_input": 0.015725653695955036,
+      "disturbance": 0.0
+    },
+    {
+      "step": 232,
+      "mean_activity": 0.019174345184228902,
+      "total_activity": 0.6135790458953249,
+      "max_activity": 0.05661935211128297,
+      "active_nodes": 32,
+      "error": 0.0008256548157710986,
+      "seed_input": 0.0157256548157711,
+      "disturbance": 0.0
+    },
+    {
+      "step": 233,
+      "mean_activity": 0.019174344129545974,
+      "total_activity": 0.6135790121454712,
+      "max_activity": 0.05661934853265496,
+      "active_nodes": 32,
+      "error": 0.0008256558704540264,
+      "seed_input": 0.015725655870454026,
+      "disturbance": 0.0
+    },
+    {
+      "step": 234,
+      "mean_activity": 0.019174343136207767,
+      "total_activity": 0.6135789803586486,
+      "max_activity": 0.05661934516217477,
+      "active_nodes": 32,
+      "error": 0.0008256568637922332,
+      "seed_input": 0.015725656863792233,
+      "disturbance": 0.0
+    },
+    {
+      "step": 235,
+      "mean_activity": 0.019174342200646222,
+      "total_activity": 0.6135789504206791,
+      "max_activity": 0.05661934198773563,
+      "active_nodes": 32,
+      "error": 0.0008256577993537781,
+      "seed_input": 0.015725657799353778,
+      "disturbance": 0.0
+    },
+    {
+      "step": 236,
+      "mean_activity": 0.019174341319500802,
+      "total_activity": 0.6135789222240257,
+      "max_activity": 0.056619338997935025,
+      "active_nodes": 32,
+      "error": 0.0008256586804991986,
+      "seed_input": 0.0157256586804992,
+      "disturbance": 0.0
+    },
+    {
+      "step": 237,
+      "mean_activity": 0.019174340489606447,
+      "total_activity": 0.6135788956674063,
+      "max_activity": 0.056619336182033554,
+      "active_nodes": 32,
+      "error": 0.0008256595103935532,
+      "seed_input": 0.015725659510393553,
+      "disturbance": 0.0
+    },
+    {
+      "step": 238,
+      "mean_activity": 0.01917433970798218,
+      "total_activity": 0.6135788706554297,
+      "max_activity": 0.056619333529916605,
+      "active_nodes": 32,
+      "error": 0.000825660292017822,
+      "seed_input": 0.015725660292017822,
+      "disturbance": 0.0
+    },
+    {
+      "step": 239,
+      "mean_activity": 0.01917433897182041,
+      "total_activity": 0.6135788470982532,
+      "max_activity": 0.05661933103205771,
+      "active_nodes": 32,
+      "error": 0.000825661028179589,
+      "seed_input": 0.01572566102817959,
+      "disturbance": 0.0
+    },
+    {
+      "step": 240,
+      "mean_activity": 0.01917433827847686,
+      "total_activity": 0.6135788249112595,
+      "max_activity": 0.05661932867948464,
+      "active_nodes": 32,
+      "error": 0.0008256617215231417,
+      "seed_input": 0.01572566172152314,
+      "disturbance": 0.0
+    },
+    {
+      "step": 241,
+      "mean_activity": 0.019174337625461033,
+      "total_activity": 0.6135788040147531,
+      "max_activity": 0.05661932646374694,
+      "active_nodes": 32,
+      "error": 0.0008256623745389671,
+      "seed_input": 0.015725662374538967,
+      "disturbance": 0.0
+    },
+    {
+      "step": 242,
+      "mean_activity": 0.01917433701042731,
+      "total_activity": 0.613578784333674,
+      "max_activity": 0.056619324376885716,
+      "active_nodes": 32,
+      "error": 0.000825662989572689,
+      "seed_input": 0.01572566298957269,
+      "disturbance": 0.0
+    },
+    {
+      "step": 243,
+      "mean_activity": 0.01917433643116649,
+      "total_activity": 0.6135787657973277,
+      "max_activity": 0.05661932241140496,
+      "active_nodes": 32,
+      "error": 0.0008256635688335089,
+      "seed_input": 0.01572566356883351,
+      "disturbance": 0.0
+    },
+    {
+      "step": 244,
+      "mean_activity": 0.01917433588559788,
+      "total_activity": 0.6135787483391322,
+      "max_activity": 0.05661932056024471,
+      "active_nodes": 32,
+      "error": 0.00082566411440212,
+      "seed_input": 0.01572566411440212,
+      "disturbance": 0.0
+    },
+    {
+      "step": 245,
+      "mean_activity": 0.019174335371761796,
+      "total_activity": 0.6135787318963775,
+      "max_activity": 0.05661931881675558,
+      "active_nodes": 32,
+      "error": 0.0008256646282382048,
+      "seed_input": 0.015725664628238205,
+      "disturbance": 0.0
+    },
+    {
+      "step": 246,
+      "mean_activity": 0.01917433488781254,
+      "total_activity": 0.6135787164100013,
+      "max_activity": 0.05661931717467501,
+      "active_nodes": 32,
+      "error": 0.0008256651121874604,
+      "seed_input": 0.01572566511218746,
+      "disturbance": 0.0
+    },
+    {
+      "step": 247,
+      "mean_activity": 0.019174334432011778,
+      "total_activity": 0.6135787018243769,
+      "max_activity": 0.05661931562810462,
+      "active_nodes": 32,
+      "error": 0.0008256655679882222,
+      "seed_input": 0.015725665567988222,
+      "disturbance": 0.0
+    },
+    {
+      "step": 248,
+      "mean_activity": 0.01917433400272227,
+      "total_activity": 0.6135786880871127,
+      "max_activity": 0.05661931417148918,
+      "active_nodes": 32,
+      "error": 0.0008256659972777289,
+      "seed_input": 0.01572566599727773,
+      "disturbance": 0.0
+    },
+    {
+      "step": 249,
+      "mean_activity": 0.01917433359840202,
+      "total_activity": 0.6135786751488647,
+      "max_activity": 0.05661931279959651,
+      "active_nodes": 32,
+      "error": 0.0008256664015979798,
+      "seed_input": 0.01572566640159798,
+      "disturbance": 0.0
+    },
+    {
+      "step": 250,
+      "mean_activity": 0.019174333217598708,
+      "total_activity": 0.6135786629631587,
+      "max_activity": 0.0566193115074988,
+      "active_nodes": 32,
+      "error": 0.0008256667824012923,
+      "seed_input": 0.0657256667824013,
+      "disturbance": 0.05
+    },
+    {
+      "step": 251,
+      "mean_activity": 0.02073683285894449,
+      "total_activity": 0.6635786514862236,
+      "max_activity": 0.07016323618348552,
+      "active_nodes": 32,
+      "error": -0.0007368328589444882,
+      "seed_input": 0.014163167141055512,
+      "disturbance": 0.0
+    },
+    {
+      "step": 252,
+      "mean_activity": 0.020688004396151084,
+      "total_activity": 0.6620161406768347,
+      "max_activity": 0.05831998941650217,
+      "active_nodes": 32,
+      "error": -0.0006880043961510832,
+      "seed_input": 0.014211995603848917,
+      "disturbance": 0.0
+    },
+    {
+      "step": 253,
+      "mean_activity": 0.020619443328510026,
+      "total_activity": 0.6598221865123208,
+      "max_activity": 0.05961904887812521,
+      "active_nodes": 32,
+      "error": -0.0006194433285100255,
+      "seed_input": 0.014280556671489975,
+      "disturbance": 0.0
+    },
+    {
+      "step": 254,
+      "mean_activity": 0.0205197211370916,
+      "total_activity": 0.6566310763869312,
+      "max_activity": 0.06051312417104797,
+      "active_nodes": 32,
+      "error": -0.0005197211370915993,
+      "seed_input": 0.0143802788629084,
+      "disturbance": 0.0
+    },
+    {
+      "step": 255,
+      "mean_activity": 0.020434218082891864,
+      "total_activity": 0.6538949786525396,
+      "max_activity": 0.0604103727103833,
+      "active_nodes": 32,
+      "error": -0.0004342180828918636,
+      "seed_input": 0.014465781917108136,
+      "disturbance": 0.0
+    },
+    {
+      "step": 256,
+      "mean_activity": 0.020364046599069468,
+      "total_activity": 0.651649491170223,
+      "max_activity": 0.06055948532097819,
+      "active_nodes": 32,
+      "error": -0.00036404659906946746,
+      "seed_input": 0.014535953400930533,
+      "disturbance": 0.0
+    },
+    {
+      "step": 257,
+      "mean_activity": 0.02029042440163683,
+      "total_activity": 0.6492935808523785,
+      "max_activity": 0.060263241185035135,
+      "active_nodes": 32,
+      "error": -0.0002904244016368289,
+      "seed_input": 0.014609575598363171,
+      "disturbance": 0.0
+    },
+    {
+      "step": 258,
+      "mean_activity": 0.020224889198408445,
+      "total_activity": 0.6471964543490702,
+      "max_activity": 0.06018400089903976,
+      "active_nodes": 32,
+      "error": -0.00022488919840844487,
+      "seed_input": 0.014675110801591555,
+      "disturbance": 0.0
+    },
+    {
+      "step": 259,
+      "mean_activity": 0.020163011213502436,
+      "total_activity": 0.645216358832078,
+      "max_activity": 0.05992654617536617,
+      "active_nodes": 32,
+      "error": -0.00016301121350243558,
+      "seed_input": 0.014736988786497564,
+      "disturbance": 0.0
+    },
+    {
+      "step": 260,
+      "mean_activity": 0.02010529797138535,
+      "total_activity": 0.6433695350843311,
+      "max_activity": 0.0597852024232552,
+      "active_nodes": 32,
+      "error": -0.00010529797138534788,
+      "seed_input": 0.014794702028614652,
+      "disturbance": 0.0
+    },
+    {
+      "step": 261,
+      "mean_activity": 0.02005091508947338,
+      "total_activity": 0.6416292828631481,
+      "max_activity": 0.059577549891045876,
+      "active_nodes": 32,
+      "error": -5.0915089473378694e-05,
+      "seed_input": 0.014849084910526621,
+      "disturbance": 0.0
+    },
+    {
+      "step": 262,
+      "mean_activity": 0.01999985636627221,
+      "total_activity": 0.6399954037207107,
+      "max_activity": 0.05942471925584512,
+      "active_nodes": 32,
+      "error": 1.4363372779005457e-07,
+      "seed_input": 0.01490014363372779,
+      "disturbance": 0.0
+    },
+    {
+      "step": 263,
+      "mean_activity": 0.01995178641424841,
+      "total_activity": 0.6384571652559491,
+      "max_activity": 0.05925157349798393,
+      "active_nodes": 32,
+      "error": 4.8213585751591403e-05,
+      "seed_input": 0.014948213585751591,
+      "disturbance": 0.0
+    },
+    {
+      "step": 264,
+      "mean_activity": 0.01990654190767866,
+      "total_activity": 0.6370093410457172,
+      "max_activity": 0.05910583172045185,
+      "active_nodes": 32,
+      "error": 9.34580923213392e-05,
+      "seed_input": 0.01499345809232134,
+      "disturbance": 0.0
+    },
+    {
+      "step": 265,
+      "mean_activity": 0.019863939659268276,
+      "total_activity": 0.6356460690965848,
+      "max_activity": 0.05895712911080658,
+      "active_nodes": 32,
+      "error": 0.00013606034073172443,
+      "seed_input": 0.015036060340731724,
+      "disturbance": 0.0
+    },
+    {
+      "step": 266,
+      "mean_activity": 0.019823821982877184,
+      "total_activity": 0.6343623034520699,
+      "max_activity": 0.058823986432927126,
+      "active_nodes": 32,
+      "error": 0.0001761780171228161,
+      "seed_input": 0.015076178017122816,
+      "disturbance": 0.0
+    },
+    {
+      "step": 267,
+      "mean_activity": 0.0197860411883312,
+      "total_activity": 0.6331533180265984,
+      "max_activity": 0.05869411660941186,
+      "active_nodes": 32,
+      "error": 0.00021395881166880182,
+      "seed_input": 0.015113958811668802,
+      "disturbance": 0.0
+    },
+    {
+      "step": 268,
+      "mean_activity": 0.019750459356382737,
+      "total_activity": 0.6320146994042476,
+      "max_activity": 0.05857453447274525,
+      "active_nodes": 32,
+      "error": 0.00024954064361726314,
+      "seed_input": 0.015149540643617263,
+      "disturbance": 0.0
+    },
+    {
+      "step": 269,
+      "mean_activity": 0.019716948245147883,
+      "total_activity": 0.6309423438447322,
+      "max_activity": 0.05846015853090154,
+      "active_nodes": 32,
+      "error": 0.00028305175485211775,
+      "seed_input": 0.015183051754852118,
+      "disturbance": 0.0
+    },
+    {
+      "step": 270,
+      "mean_activity": 0.01968538657766155,
+      "total_activity": 0.6299323704851696,
+      "max_activity": 0.05835351321084749,
+      "active_nodes": 32,
+      "error": 0.0003146134223384507,
+      "seed_input": 0.01521461342233845,
+      "disturbance": 0.0
+    },
+    {
+      "step": 271,
+      "mean_activity": 0.019655661025220487,
+      "total_activity": 0.6289811528070556,
+      "max_activity": 0.05825238593808324,
+      "active_nodes": 32,
+      "error": 0.00034433897477951364,
+      "seed_input": 0.015244338974779514,
+      "disturbance": 0.0
+    },
+    {
+      "step": 272,
+      "mean_activity": 0.019627664484863836,
+      "total_activity": 0.6280852635156428,
+      "max_activity": 0.058157564963722305,
+      "active_nodes": 32,
+      "error": 0.0003723355151361643,
+      "seed_input": 0.015272335515136164,
+      "disturbance": 0.0
+    },
+    {
+      "step": 273,
+      "mean_activity": 0.01960129645322225,
+      "total_activity": 0.627241486503112,
+      "max_activity": 0.05806799083141887,
+      "active_nodes": 32,
+      "error": 0.0003987035467777518,
+      "seed_input": 0.015298703546777752,
+      "disturbance": 0.0
+    },
+    {
+      "step": 274,
+      "mean_activity": 0.019576462098168036,
+      "total_activity": 0.6264467871413771,
+      "max_activity": 0.05798379354097899,
+      "active_nodes": 32,
+      "error": 0.0004235379018319649,
+      "seed_input": 0.015323537901831965,
+      "disturbance": 0.0
+    },
+    {
+      "step": 275,
+      "mean_activity": 0.01955307224926677,
+      "total_activity": 0.6256983119765367,
+      "max_activity": 0.057904388323303135,
+      "active_nodes": 32,
+      "error": 0.0004469277507332288,
+      "seed_input": 0.015346927750733229,
+      "disturbance": 0.0
+    },
+    {
+      "step": 276,
+      "mean_activity": 0.01953104284736586,
+      "total_activity": 0.6249933711157075,
+      "max_activity": 0.057829667201573766,
+      "active_nodes": 32,
+      "error": 0.00046895715263414045,
+      "seed_input": 0.01536895715263414,
+      "disturbance": 0.0
+    },
+    {
+      "step": 277,
+      "mean_activity": 0.019510294779170892,
+      "total_activity": 0.6243294329334685,
+      "max_activity": 0.057759250918858356,
+      "active_nodes": 32,
+      "error": 0.0004897052208291085,
+      "seed_input": 0.015389705220829109,
+      "disturbance": 0.0
+    },
+    {
+      "step": 278,
+      "mean_activity": 0.019490753501952115,
+      "total_activity": 0.6237041120624677,
+      "max_activity": 0.05769295609022455,
+      "active_nodes": 32,
+      "error": 0.0005092464980478856,
+      "seed_input": 0.015409246498047886,
+      "disturbance": 0.0
+    },
+    {
+      "step": 279,
+      "mean_activity": 0.019472348830608516,
+      "total_activity": 0.6231151625794725,
+      "max_activity": 0.05763050106223098,
+      "active_nodes": 32,
+      "error": 0.000527651169391484,
+      "seed_input": 0.015427651169391484,
+      "disturbance": 0.0
+    },
+    {
+      "step": 280,
+      "mean_activity": 0.019455014649788775,
+      "total_activity": 0.6225604687932408,
+      "max_activity": 0.05757168878966803,
+      "active_nodes": 32,
+      "error": 0.0005449853502112259,
+      "seed_input": 0.015444985350211226,
+      "disturbance": 0.0
+    },
+    {
+      "step": 281,
+      "mean_activity": 0.019438688698182074,
+      "total_activity": 0.6220380383418264,
+      "max_activity": 0.05751629093391348,
+      "active_nodes": 32,
+      "error": 0.0005613113018179267,
+      "seed_input": 0.015461311301817927,
+      "disturbance": 0.0
+    },
+    {
+      "step": 282,
+      "mean_activity": 0.019423312330860722,
+      "total_activity": 0.6215459945875431,
+      "max_activity": 0.05746411921713898,
+      "active_nodes": 32,
+      "error": 0.000576687669139278,
+      "seed_input": 0.015476687669139278,
+      "disturbance": 0.0
+    },
+    {
+      "step": 283,
+      "mean_activity": 0.01940883031723276,
+      "total_activity": 0.6210825701514483,
+      "max_activity": 0.05741497953228031,
+      "active_nodes": 32,
+      "error": 0.0005911696827672411,
+      "seed_input": 0.015491169682767241,
+      "disturbance": 0.0
+    },
+    {
+      "step": 284,
+      "mean_activity": 0.019395190637165445,
+      "total_activity": 0.6206461003892942,
+      "max_activity": 0.0573686995735318,
+      "active_nodes": 32,
+      "error": 0.0006048093628345554,
+      "seed_input": 0.015504809362834555,
+      "disturbance": 0.0
+    },
+    {
+      "step": 285,
+      "mean_activity": 0.01938234429752002,
+      "total_activity": 0.6202350175206406,
+      "max_activity": 0.05732511047112791,
+      "active_nodes": 32,
+      "error": 0.0006176557024799821,
+      "seed_input": 0.015517655702479982,
+      "disturbance": 0.0
+    },
+    {
+      "step": 286,
+      "mean_activity": 0.01937024515401857,
+      "total_activity": 0.6198478449285942,
+      "max_activity": 0.05728405730312617,
+      "active_nodes": 32,
+      "error": 0.0006297548459814305,
+      "seed_input": 0.01552975484598143,
+      "disturbance": 0.0
+    },
+    {
+      "step": 287,
+      "mean_activity": 0.01935884974682826,
+      "total_activity": 0.6194831918985043,
+      "max_activity": 0.057245391573577435,
+      "active_nodes": 32,
+      "error": 0.0006411502531717406,
+      "seed_input": 0.01554115025317174,
+      "disturbance": 0.0
+    },
+    {
+      "step": 288,
+      "mean_activity": 0.01934811714361124,
+      "total_activity": 0.6191397485955596,
+      "max_activity": 0.05720897504298713,
+      "active_nodes": 32,
+      "error": 0.0006518828563887615,
+      "seed_input": 0.015551882856388762,
+      "disturbance": 0.0
+    },
+    {
+      "step": 289,
+      "mean_activity": 0.019338008793020476,
+      "total_activity": 0.6188162813766552,
+      "max_activity": 0.0571746764978951,
+      "active_nodes": 32,
+      "error": 0.0006619912069795245,
+      "seed_input": 0.015561991206979525,
+      "disturbance": 0.0
+    },
+    {
+      "step": 290,
+      "mean_activity": 0.019328488385893218,
+      "total_activity": 0.618511628348583,
+      "max_activity": 0.05714237299233508,
+      "active_nodes": 32,
+      "error": 0.0006715116141067824,
+      "seed_input": 0.015571511614106782,
+      "disturbance": 0.0
+    },
+    {
+      "step": 291,
+      "mean_activity": 0.01931952172503484,
+      "total_activity": 0.6182246952011149,
+      "max_activity": 0.057111948333187675,
+      "active_nodes": 32,
+      "error": 0.00068047827496516,
+      "seed_input": 0.01558047827496516,
+      "disturbance": 0.0
+    },
+    {
+      "step": 292,
+      "mean_activity": 0.01931107660225321,
+      "total_activity": 0.6179544512721027,
+      "max_activity": 0.0570832933350668,
+      "active_nodes": 32,
+      "error": 0.0006889233977467914,
+      "seed_input": 0.015588923397746791,
+      "disturbance": 0.0
+    },
+    {
+      "step": 293,
+      "mean_activity": 0.01930312268274805,
+      "total_activity": 0.6176999258479376,
+      "max_activity": 0.05705630500697052,
+      "active_nodes": 32,
+      "error": 0.0006968773172519489,
+      "seed_input": 0.015596877317251949,
+      "disturbance": 0.0
+    },
+    {
+      "step": 294,
+      "mean_activity": 0.019295631396097763,
+      "total_activity": 0.6174602046751284,
+      "max_activity": 0.05703088644619167,
+      "active_nodes": 32,
+      "error": 0.0007043686039022376,
+      "seed_input": 0.015604368603902238,
+      "disturbance": 0.0
+    },
+    {
+      "step": 295,
+      "mean_activity": 0.019288575833666464,
+      "total_activity": 0.6172344266773269,
+      "max_activity": 0.05700694632494309,
+      "active_nodes": 32,
+      "error": 0.0007114241663335359,
+      "seed_input": 0.015611424166333536,
+      "disturbance": 0.0
+    },
+    {
+      "step": 296,
+      "mean_activity": 0.019281930651928465,
+      "total_activity": 0.6170217808617109,
+      "max_activity": 0.05698439866586931,
+      "active_nodes": 32,
+      "error": 0.0007180693480715351,
+      "seed_input": 0.015618069348071535,
+      "disturbance": 0.0
+    },
+    {
+      "step": 297,
+      "mean_activity": 0.01927567198144699,
+      "total_activity": 0.6168215034063037,
+      "max_activity": 0.0569631624683372,
+      "active_nodes": 32,
+      "error": 0.0007243280185530096,
+      "seed_input": 0.01562432801855301,
+      "disturbance": 0.0
+    },
+    {
+      "step": 298,
+      "mean_activity": 0.019269777341127545,
+      "total_activity": 0.6166328749160814,
+      "max_activity": 0.05694316145812898,
+      "active_nodes": 32,
+      "error": 0.0007302226588724557,
+      "seed_input": 0.015630222658872456,
+      "disturbance": 0.0
+    },
+    {
+      "step": 299,
+      "mean_activity": 0.019264225557470895,
+      "total_activity": 0.6164552178390686,
+      "max_activity": 0.056924323788001024,
+      "active_nodes": 32,
+      "error": 0.0007357744425291052,
+      "seed_input": 0.015635774442529105,
+      "disturbance": 0.0
+    },
+    {
+      "step": 300,
+      "mean_activity": 0.019258996688514954,
+      "total_activity": 0.6162878940324785,
+      "max_activity": 0.056906581795562836,
+      "active_nodes": 32,
+      "error": 0.0007410033114850466,
+      "seed_input": 0.015641003311485047,
+      "disturbance": 0.0
+    },
+    {
+      "step": 301,
+      "mean_activity": 0.019254071952205364,
+      "total_activity": 0.6161303024705717,
+      "max_activity": 0.05688987175023938,
+      "active_nodes": 32,
+      "error": 0.0007459280477946362,
+      "seed_input": 0.015645928047794636,
+      "disturbance": 0.0
+    },
+    {
+      "step": 302,
+      "mean_activity": 0.019249433658929276,
+      "total_activity": 0.6159818770857368,
+      "max_activity": 0.05687413363061314,
+      "active_nodes": 32,
+      "error": 0.0007505663410707249,
+      "seed_input": 0.015650566341070725,
+      "disturbance": 0.0
+    },
+    {
+      "step": 303,
+      "mean_activity": 0.01924506514797518,
+      "total_activity": 0.6158420847352057,
+      "max_activity": 0.05685931090490473,
+      "active_nodes": 32,
+      "error": 0.000754934852024821,
+      "seed_input": 0.01565493485202482,
+      "disturbance": 0.0
+    },
+    {
+      "step": 304,
+      "mean_activity": 0.019240950727687275,
+      "total_activity": 0.6157104232859928,
+      "max_activity": 0.056845350330368936,
+      "active_nodes": 32,
+      "error": 0.0007590492723127257,
+      "seed_input": 0.015659049272312726,
+      "disturbance": 0.0
+    },
+    {
+      "step": 305,
+      "mean_activity": 0.01923707561910149,
+      "total_activity": 0.6155864198112477,
+      "max_activity": 0.056832201760507406,
+      "active_nodes": 32,
+      "error": 0.0007629243808985088,
+      "seed_input": 0.01566292438089851,
+      "disturbance": 0.0
+    },
+    {
+      "step": 306,
+      "mean_activity": 0.01923342590285936,
+      "total_activity": 0.6154696288914995,
+      "max_activity": 0.05681981796590753,
+      "active_nodes": 32,
+      "error": 0.0007665740971406418,
+      "seed_input": 0.015666574097140642,
+      "disturbance": 0.0
+    },
+    {
+      "step": 307,
+      "mean_activity": 0.019229988469209907,
+      "total_activity": 0.615359631014717,
+      "max_activity": 0.05680815446399043,
+      "active_nodes": 32,
+      "error": 0.0007700115307900934,
+      "seed_input": 0.015670011530790093,
+      "disturbance": 0.0
+    },
+    {
+      "step": 308,
+      "mean_activity": 0.019226750970919495,
+      "total_activity": 0.6152560310694238,
+      "max_activity": 0.05679716935960852,
+      "active_nodes": 32,
+      "error": 0.0007732490290805055,
+      "seed_input": 0.015673249029080506,
+      "disturbance": 0.0
+    },
+    {
+      "step": 309,
+      "mean_activity": 0.01922370177892067,
+      "total_activity": 0.6151584569254614,
+      "max_activity": 0.056786823194321226,
+      "active_nodes": 32,
+      "error": 0.0007762982210793301,
+      "seed_input": 0.01567629822107933,
+      "disturbance": 0.0
+    },
+    {
+      "step": 310,
+      "mean_activity": 0.019220829940540626,
+      "total_activity": 0.6150665580973,
+      "max_activity": 0.05677707880480925,
+      "active_nodes": 32,
+      "error": 0.0007791700594593741,
+      "seed_input": 0.015679170059459374,
+      "disturbance": 0.0
+    },
+    {
+      "step": 311,
+      "mean_activity": 0.01921812514015933,
+      "total_activity": 0.6149800044850986,
+      "max_activity": 0.05676790118929114,
+      "active_nodes": 32,
+      "error": 0.0007818748598406693,
+      "seed_input": 0.01568187485984067,
+      "disturbance": 0.0
+    },
+    {
+      "step": 312,
+      "mean_activity": 0.019215577662155866,
+      "total_activity": 0.6148984851889877,
+      "max_activity": 0.05675925738185542,
+      "active_nodes": 32,
+      "error": 0.0007844223378441345,
+      "seed_input": 0.015684422337844135,
+      "disturbance": 0.0
+    },
+    {
+      "step": 313,
+      "mean_activity": 0.019213178356010018,
+      "total_activity": 0.6148217073923206,
+      "max_activity": 0.056751116334010865,
+      "active_nodes": 32,
+      "error": 0.0007868216439899829,
+      "seed_input": 0.015686821643989983,
+      "disturbance": 0.0
+    },
+    {
+      "step": 314,
+      "mean_activity": 0.019210918603433675,
+      "total_activity": 0.6147493953098776,
+      "max_activity": 0.05674344880318341,
+      "active_nodes": 32,
+      "error": 0.0007890813965663254,
+      "seed_input": 0.015689081396566325,
+      "disturbance": 0.0
+    },
+    {
+      "step": 315,
+      "mean_activity": 0.019208790287414013,
+      "total_activity": 0.6146812891972484,
+      "max_activity": 0.056736227247662675,
+      "active_nodes": 32,
+      "error": 0.0007912097125859878,
+      "seed_input": 0.015691209712585988,
+      "disturbance": 0.0
+    },
+    {
+      "step": 316,
+      "mean_activity": 0.01920678576305724,
+      "total_activity": 0.6146171444178317,
+      "max_activity": 0.05672942572768149,
+      "active_nodes": 32,
+      "error": 0.000793214236942761,
+      "seed_input": 0.01569321423694276,
+      "disturbance": 0.0
+    },
+    {
+      "step": 317,
+      "mean_activity": 0.019204897830128215,
+      "total_activity": 0.6145567305641029,
+      "max_activity": 0.056723019812234696,
+      "active_nodes": 32,
+      "error": 0.0007951021698717857,
+      "seed_input": 0.015695102169871786,
+      "disturbance": 0.0
+    },
+    {
+      "step": 318,
+      "mean_activity": 0.019203119707187254,
+      "total_activity": 0.6144998306299921,
+      "max_activity": 0.056716986491326775,
+      "active_nodes": 32,
+      "error": 0.0007968802928127461,
+      "seed_input": 0.015696880292812746,
+      "disturbance": 0.0
+    },
+    {
+      "step": 319,
+      "mean_activity": 0.019201445007231248,
+      "total_activity": 0.6144462402313999,
+      "max_activity": 0.05671130409331787,
+      "active_nodes": 32,
+      "error": 0.0007985549927687526,
+      "seed_input": 0.015698554992768753,
+      "disturbance": 0.0
+    },
+    {
+      "step": 320,
+      "mean_activity": 0.019199867714751618,
+      "total_activity": 0.6143957668720518,
+      "max_activity": 0.05670595220708094,
+      "active_nodes": 32,
+      "error": 0.0008001322852483825,
+      "seed_input": 0.015700132285248383,
+      "disturbance": 0.0
+    },
+    {
+      "step": 321,
+      "mean_activity": 0.019198382164126632,
+      "total_activity": 0.6143482292520522,
+      "max_activity": 0.05670091160868406,
+      "active_nodes": 32,
+      "error": 0.000801617835873368,
+      "seed_input": 0.015701617835873368,
+      "disturbance": 0.0
+    },
+    {
+      "step": 322,
+      "mean_activity": 0.019196983019270565,
+      "total_activity": 0.6143034566166581,
+      "max_activity": 0.05669616419233901,
+      "active_nodes": 32,
+      "error": 0.0008030169807294353,
+      "seed_input": 0.015703016980729435,
+      "disturbance": 0.0
+    },
+    {
+      "step": 323,
+      "mean_activity": 0.019195665254466497,
+      "total_activity": 0.6142612881429279,
+      "max_activity": 0.05669169290536495,
+      "active_nodes": 32,
+      "error": 0.0008043347455335033,
+      "seed_input": 0.015704334745533503,
+      "disturbance": 0.0
+    },
+    {
+      "step": 324,
+      "mean_activity": 0.019194424136314007,
+      "total_activity": 0.6142215723620482,
+      "max_activity": 0.05668748168693555,
+      "active_nodes": 32,
+      "error": 0.0008055758636859936,
+      "seed_input": 0.015705575863685994,
+      "disturbance": 0.0
+    },
+    {
+      "step": 325,
+      "mean_activity": 0.0191932552067268,
+      "total_activity": 0.6141841666152577,
+      "max_activity": 0.05668351541038853,
+      "active_nodes": 32,
+      "error": 0.0008067447932731987,
+      "seed_input": 0.0157067447932732,
+      "disturbance": 0.0
+    },
+    {
+      "step": 326,
+      "mean_activity": 0.019192154266919344,
+      "total_activity": 0.614148936541419,
+      "max_activity": 0.05667977982889088,
+      "active_nodes": 32,
+      "error": 0.0008078457330806567,
+      "seed_input": 0.015707845733080657,
+      "disturbance": 0.0
+    },
+    {
+      "step": 327,
+      "mean_activity": 0.019191117362324817,
+      "total_activity": 0.6141157555943941,
+      "max_activity": 0.05667626152426433,
+      "active_nodes": 32,
+      "error": 0.0008088826376751838,
+      "seed_input": 0.015708882637675184,
+      "disturbance": 0.0
+    },
+    {
+      "step": 328,
+      "mean_activity": 0.019190140768390377,
+      "total_activity": 0.6140845045884921,
+      "max_activity": 0.05667294785878736,
+      "active_nodes": 32,
+      "error": 0.0008098592316096234,
+      "seed_input": 0.015709859231609623,
+      "disturbance": 0.0
+    },
+    {
+      "step": 329,
+      "mean_activity": 0.019189220977198575,
+      "total_activity": 0.6140550712703544,
+      "max_activity": 0.056669826929800576,
+      "active_nodes": 32,
+      "error": 0.000810779022801425,
+      "seed_input": 0.015710779022801425,
+      "disturbance": 0.0
+    },
+    {
+      "step": 330,
+      "mean_activity": 0.01918835468486695,
+      "total_activity": 0.6140273499157424,
+      "max_activity": 0.056666887526952536,
+      "active_nodes": 32,
+      "error": 0.0008116453151330513,
+      "seed_input": 0.01571164531513305,
+      "disturbance": 0.0
+    },
+    {
+      "step": 331,
+      "mean_activity": 0.019187538779680505,
+      "total_activity": 0.6140012409497762,
+      "max_activity": 0.05666411909193214,
+      "active_nodes": 32,
+      "error": 0.0008124612203194957,
+      "seed_input": 0.015712461220319496,
+      "disturbance": 0.0
+    },
+    {
+      "step": 332,
+      "mean_activity": 0.01918677033091447,
+      "total_activity": 0.6139766505892631,
+      "max_activity": 0.0566615116805434,
+      "active_nodes": 32,
+      "error": 0.0008132296690855287,
+      "seed_input": 0.01571322966908553,
+      "disturbance": 0.0
+    },
+    {
+      "step": 333,
+      "mean_activity": 0.019186046578307143,
+      "total_activity": 0.6139534905058286,
+      "max_activity": 0.056659055926985884,
+      "active_nodes": 32,
+      "error": 0.0008139534216928569,
+      "seed_input": 0.015713953421692857,
+      "disturbance": 0.0
+    },
+    {
+      "step": 334,
+      "mean_activity": 0.01918536492214506,
+      "total_activity": 0.613931677508642,
+      "max_activity": 0.056656743010212784,
+      "active_nodes": 32,
+      "error": 0.0008146350778549388,
+      "seed_input": 0.01571463507785494,
+      "disturbance": 0.0
+    },
+    {
+      "step": 335,
+      "mean_activity": 0.019184722913924847,
+      "total_activity": 0.6139111332455951,
+      "max_activity": 0.056654564622245954,
+      "active_nodes": 32,
+      "error": 0.0008152770860751536,
+      "seed_input": 0.015715277086075154,
+      "disturbance": 0.0
+    },
+    {
+      "step": 336,
+      "mean_activity": 0.019184118247558207,
+      "total_activity": 0.6138917839218626,
+      "max_activity": 0.056652512938333566,
+      "active_nodes": 32,
+      "error": 0.0008158817524417938,
+      "seed_input": 0.015715881752441794,
+      "disturbance": 0.0
+    },
+    {
+      "step": 337,
+      "mean_activity": 0.019183548751088485,
+      "total_activity": 0.6138735600348315,
+      "max_activity": 0.05665058058884375,
+      "active_nodes": 32,
+      "error": 0.0008164512489115157,
+      "seed_input": 0.015716451248911516,
+      "disturbance": 0.0
+    },
+    {
+      "step": 338,
+      "mean_activity": 0.01918301237888901,
+      "total_activity": 0.6138563961244483,
+      "max_activity": 0.056648760632792894,
+      "active_nodes": 32,
+      "error": 0.0008169876211109907,
+      "seed_input": 0.01571698762111099,
+      "disturbance": 0.0
+    },
+    {
+      "step": 339,
+      "mean_activity": 0.01918250720431521,
+      "total_activity": 0.6138402305380867,
+      "max_activity": 0.05664704653291368,
+      "active_nodes": 32,
+      "error": 0.0008174927956847919,
+      "seed_input": 0.015717492795684792,
+      "disturbance": 0.0
+    },
+    {
+      "step": 340,
+      "mean_activity": 0.019182031412784132,
+      "total_activity": 0.6138250052090922,
+      "max_activity": 0.056645432132173365,
+      "active_nodes": 32,
+      "error": 0.0008179685872158685,
+      "seed_input": 0.01571796858721587,
+      "disturbance": 0.0
+    },
+    {
+      "step": 341,
+      "mean_activity": 0.019181583295256485,
+      "total_activity": 0.6138106654482075,
+      "max_activity": 0.0566439116316576,
+      "active_nodes": 32,
+      "error": 0.0008184167047435159,
+      "seed_input": 0.015718416704743516,
+      "disturbance": 0.0
+    },
+    {
+      "step": 342,
+      "mean_activity": 0.019181161242097757,
+      "total_activity": 0.6137971597471282,
+      "max_activity": 0.056642479569740986,
+      "active_nodes": 32,
+      "error": 0.0008188387579022433,
+      "seed_input": 0.015718838757902243,
+      "disturbance": 0.0
+    },
+    {
+      "step": 343,
+      "mean_activity": 0.01918076373729645,
+      "total_activity": 0.6137844395934864,
+      "max_activity": 0.056641130802468756,
+      "active_nodes": 32,
+      "error": 0.0008192362627035508,
+      "seed_input": 0.01571923626270355,
+      "disturbance": 0.0
+    },
+    {
+      "step": 344,
+      "mean_activity": 0.01918038935301855,
+      "total_activity": 0.6137724592965936,
+      "max_activity": 0.05663986048507988,
+      "active_nodes": 32,
+      "error": 0.0008196106469814494,
+      "seed_input": 0.01571961064698145,
+      "disturbance": 0.0
+    },
+    {
+      "step": 345,
+      "mean_activity": 0.019180036744478796,
+      "total_activity": 0.6137611758233215,
+      "max_activity": 0.05663866405460466,
+      "active_nodes": 32,
+      "error": 0.0008199632555212048,
+      "seed_input": 0.015719963255521205,
+      "disturbance": 0.0
+    },
+    {
+      "step": 346,
+      "mean_activity": 0.019179704645110176,
+      "total_activity": 0.6137505486435256,
+      "max_activity": 0.056637537213474566,
+      "active_nodes": 32,
+      "error": 0.0008202953548898245,
+      "seed_input": 0.015720295354889825,
+      "disturbance": 0.0
+    },
+    {
+      "step": 347,
+      "mean_activity": 0.01917939186201447,
+      "total_activity": 0.6137405395844631,
+      "max_activity": 0.05663647591408547,
+      "active_nodes": 32,
+      "error": 0.0008206081379855297,
+      "seed_input": 0.01572060813798553,
+      "disturbance": 0.0
+    },
+    {
+      "step": 348,
+      "mean_activity": 0.019179097271677357,
+      "total_activity": 0.6137311126936754,
+      "max_activity": 0.056635476344258626,
+      "active_nodes": 32,
+      "error": 0.0008209027283226436,
+      "seed_input": 0.015720902728322644,
+      "disturbance": 0.0
+    },
+    {
+      "step": 349,
+      "mean_activity": 0.019178819815932738,
+      "total_activity": 0.6137222341098476,
+      "max_activity": 0.05663453491354734,
+      "active_nodes": 32,
+      "error": 0.0008211801840672626,
+      "seed_input": 0.015721180184067263,
+      "disturbance": 0.0
+    },
+    {
+      "step": 350,
+      "mean_activity": 0.019178558498161843,
+      "total_activity": 0.613713871941179,
+      "max_activity": 0.0566336482403402,
+      "active_nodes": 32,
+      "error": 0.000821441501838157,
+      "seed_input": 0.015721441501838157,
+      "disturbance": 0.0
+    },
+    {
+      "step": 351,
+      "mean_activity": 0.019178312379713375,
+      "total_activity": 0.613705996150828,
+      "max_activity": 0.05663281313971426,
+      "active_nodes": 32,
+      "error": 0.0008216876202866256,
+      "seed_input": 0.015721687620286626,
+      "disturbance": 0.0
+    },
+    {
+      "step": 352,
+      "mean_activity": 0.019178080576531868,
+      "total_activity": 0.6136985784490198,
+      "max_activity": 0.05663202661199489,
+      "active_nodes": 32,
+      "error": 0.0008219194234681329,
+      "seed_input": 0.015721919423468133,
+      "disturbance": 0.0
+    },
+    {
+      "step": 353,
+      "mean_activity": 0.019177862255982187,
+      "total_activity": 0.61369159219143,
+      "max_activity": 0.05663128583198091,
+      "active_nodes": 32,
+      "error": 0.0008221377440178132,
+      "seed_input": 0.015722137744017813,
+      "disturbance": 0.0
+    },
+    {
+      "step": 354,
+      "mean_activity": 0.0191776566338587,
+      "total_activity": 0.6136850122834784,
+      "max_activity": 0.0566305881387966,
+      "active_nodes": 32,
+      "error": 0.000822343366141301,
+      "seed_input": 0.0157223433661413,
+      "disturbance": 0.0
+    },
+    {
+      "step": 355,
+      "mean_activity": 0.019177462971568412,
+      "total_activity": 0.6136788150901892,
+      "max_activity": 0.0566299310263337,
+      "active_nodes": 32,
+      "error": 0.0008225370284315886,
+      "seed_input": 0.01572253702843159,
+      "disturbance": 0.0
+    },
+    {
+      "step": 356,
+      "mean_activity": 0.019177280573477958,
+      "total_activity": 0.6136729783512946,
+      "max_activity": 0.056629312134249585,
+      "active_nodes": 32,
+      "error": 0.0008227194265220429,
+      "seed_input": 0.015722719426522043,
+      "disturbance": 0.0
+    },
+    {
+      "step": 357,
+      "mean_activity": 0.019177108784414882,
+      "total_activity": 0.6136674811012762,
+      "max_activity": 0.05662872923948897,
+      "active_nodes": 32,
+      "error": 0.0008228912155851184,
+      "seed_input": 0.01572289121558512,
+      "disturbance": 0.0
+    },
+    {
+      "step": 358,
+      "mean_activity": 0.019176946987314276,
+      "total_activity": 0.6136623035940568,
+      "max_activity": 0.05662818024829862,
+      "active_nodes": 32,
+      "error": 0.0008230530126857247,
+      "seed_input": 0.015723053012685725,
+      "disturbance": 0.0
+    },
+    {
+      "step": 359,
+      "mean_activity": 0.019176794601002266,
+      "total_activity": 0.6136574272320725,
+      "max_activity": 0.05662766318870666,
+      "active_nodes": 32,
+      "error": 0.0008232053989977346,
+      "seed_input": 0.015723205398997735,
+      "disturbance": 0.0
+    },
+    {
+      "step": 360,
+      "mean_activity": 0.01917665107810847,
+      "total_activity": 0.6136528344994711,
+      "max_activity": 0.05662717620343923,
+      "active_nodes": 32,
+      "error": 0.0008233489218915299,
+      "seed_input": 0.01572334892189153,
+      "disturbance": 0.0
+    },
+    {
+      "step": 361,
+      "mean_activity": 0.01917651590309982,
+      "total_activity": 0.6136485088991942,
+      "max_activity": 0.05662671754324923,
+      "active_nodes": 32,
+      "error": 0.0008234840969001817,
+      "seed_input": 0.01572348409690018,
+      "disturbance": 0.0
+    },
+    {
+      "step": 362,
+      "mean_activity": 0.01917638859042878,
+      "total_activity": 0.613644434893721,
+      "max_activity": 0.056626285560633004,
+      "active_nodes": 32,
+      "error": 0.0008236114095712191,
+      "seed_input": 0.01572361140957122,
+      "disturbance": 0.0
+    },
+    {
+      "step": 363,
+      "mean_activity": 0.01917626868278929,
+      "total_activity": 0.6136405978492573,
+      "max_activity": 0.056625878703912516,
+      "active_nodes": 32,
+      "error": 0.0008237313172107102,
+      "seed_input": 0.01572373131721071,
+      "disturbance": 0.0
+    },
+    {
+      "step": 364,
+      "mean_activity": 0.01917615574947407,
+      "total_activity": 0.6136369839831702,
+      "max_activity": 0.05662549551166173,
+      "active_nodes": 32,
+      "error": 0.0008238442505259305,
+      "seed_input": 0.01572384425052593,
+      "disturbance": 0.0
+    },
+    {
+      "step": 365,
+      "mean_activity": 0.019176049384827584,
+      "total_activity": 0.6136335803144827,
+      "max_activity": 0.056625134607457224,
+      "active_nodes": 32,
+      "error": 0.0008239506151724169,
+      "seed_input": 0.015723950615172417,
+      "disturbance": 0.0
+    },
+    {
+      "step": 366,
+      "mean_activity": 0.019175949206788886,
+      "total_activity": 0.6136303746172443,
+      "max_activity": 0.05662479469493404,
+      "active_nodes": 32,
+      "error": 0.0008240507932111146,
+      "seed_input": 0.015724050793211115,
+      "disturbance": 0.0
+    },
+    {
+      "step": 367,
+      "mean_activity": 0.019175854855519276,
+      "total_activity": 0.6136273553766168,
+      "max_activity": 0.05662447455312914,
+      "active_nodes": 32,
+      "error": 0.0008241451444807243,
+      "seed_input": 0.015724145144480724,
+      "disturbance": 0.0
+    },
+    {
+      "step": 368,
+      "mean_activity": 0.019175765992109767,
+      "total_activity": 0.6136245117475125,
+      "max_activity": 0.056624173032095826,
+      "active_nodes": 32,
+      "error": 0.0008242340078902337,
+      "seed_input": 0.015724234007890234,
+      "disturbance": 0.0
+    },
+    {
+      "step": 369,
+      "mean_activity": 0.019175682297363713,
+      "total_activity": 0.6136218335156388,
+      "max_activity": 0.05662388904877294,
+      "active_nodes": 32,
+      "error": 0.0008243177026362875,
+      "seed_input": 0.015724317702636288,
+      "disturbance": 0.0
+    },
+    {
+      "step": 370,
+      "mean_activity": 0.019175603470650268,
+      "total_activity": 0.6136193110608086,
+      "max_activity": 0.05662362158309474,
+      "active_nodes": 32,
+      "error": 0.0008243965293497323,
+      "seed_input": 0.015724396529349732,
+      "disturbance": 0.0
+    },
+    {
+      "step": 371,
+      "mean_activity": 0.019175529228824522,
+      "total_activity": 0.6136169353223847,
+      "max_activity": 0.05662336967432667,
+      "active_nodes": 32,
+      "error": 0.0008244707711754784,
+      "seed_input": 0.01572447077117548,
+      "disturbance": 0.0
+    },
+    {
+      "step": 372,
+      "mean_activity": 0.019175459305210443,
+      "total_activity": 0.6136146977667342,
+      "max_activity": 0.05662313241761451,
+      "active_nodes": 32,
+      "error": 0.0008245406947895578,
+      "seed_input": 0.015724540694789558,
+      "disturbance": 0.0
+    },
+    {
+      "step": 373,
+      "mean_activity": 0.019175393448642976,
+      "total_activity": 0.6136125903565752,
+      "max_activity": 0.05662290896073407,
+      "active_nodes": 32,
+      "error": 0.0008246065513570246,
+      "seed_input": 0.015724606551357025,
+      "disturbance": 0.0
+    },
+    {
+      "step": 374,
+      "mean_activity": 0.01917533142256587,
+      "total_activity": 0.6136106055221079,
+      "max_activity": 0.056622698501030064,
+      "active_nodes": 32,
+      "error": 0.0008246685774341289,
+      "seed_input": 0.01572466857743413,
+      "disturbance": 0.0
+    },
+    {
+      "step": 375,
+      "mean_activity": 0.019175273004181963,
+      "total_activity": 0.6136087361338228,
+      "max_activity": 0.05662250028253296,
+      "active_nodes": 32,
+      "error": 0.000824726995818037,
+      "seed_input": 0.015724726995818037,
+      "disturbance": 0.0
+    },
+    {
+      "step": 376,
+      "mean_activity": 0.0191752179836529,
+      "total_activity": 0.6136069754768928,
+      "max_activity": 0.05662231359324353,
+      "active_nodes": 32,
+      "error": 0.0008247820163471004,
+      "seed_input": 0.0157247820163471,
+      "disturbance": 0.0
+    },
+    {
+      "step": 377,
+      "mean_activity": 0.01917516616334538,
+      "total_activity": 0.6136053172270521,
+      "max_activity": 0.05662213776257535,
+      "active_nodes": 32,
+      "error": 0.0008248338366546211,
+      "seed_input": 0.01572483383665462,
+      "disturbance": 0.0
+    },
+    {
+      "step": 378,
+      "mean_activity": 0.019175117357121286,
+      "total_activity": 0.6136037554278811,
+      "max_activity": 0.0566219721589461,
+      "active_nodes": 32,
+      "error": 0.0008248826428787145,
+      "seed_input": 0.015724882642878715,
+      "disturbance": 0.0
+    },
+    {
+      "step": 379,
+      "mean_activity": 0.01917507138966906,
+      "total_activity": 0.6136022844694099,
+      "max_activity": 0.05662181618750891,
+      "active_nodes": 32,
+      "error": 0.0008249286103309411,
+      "seed_input": 0.01572492861033094,
+      "disturbance": 0.0
+    },
+    {
+      "step": 380,
+      "mean_activity": 0.019175028095873986,
+      "total_activity": 0.6136008990679676,
+      "max_activity": 0.05662166928801564,
+      "active_nodes": 32,
+      "error": 0.0008249719041260144,
+      "seed_input": 0.015724971904126014,
+      "disturbance": 0.0
+    },
+    {
+      "step": 381,
+      "mean_activity": 0.019174987320225108,
+      "total_activity": 0.6135995942472035,
+      "max_activity": 0.05662153093280451,
+      "active_nodes": 32,
+      "error": 0.0008250126797748926,
+      "seed_input": 0.015725012679774893,
+      "disturbance": 0.0
+    },
+    {
+      "step": 382,
+      "mean_activity": 0.019174948916256623,
+      "total_activity": 0.613598365320212,
+      "max_activity": 0.056621400624904714,
+      "active_nodes": 32,
+      "error": 0.0008250510837433771,
+      "seed_input": 0.015725051083743377,
+      "disturbance": 0.0
+    },
+    {
+      "step": 383,
+      "mean_activity": 0.019174912746021795,
+      "total_activity": 0.6135972078726974,
+      "max_activity": 0.056621277896251355,
+      "active_nodes": 32,
+      "error": 0.0008250872539782052,
+      "seed_input": 0.015725087253978205,
+      "disturbance": 0.0
+    },
+    {
+      "step": 384,
+      "mean_activity": 0.019174878679597433,
+      "total_activity": 0.6135961177471179,
+      "max_activity": 0.05662116230600413,
+      "active_nodes": 32,
+      "error": 0.0008251213204025672,
+      "seed_input": 0.015725121320402567,
+      "disturbance": 0.0
+    },
+    {
+      "step": 385,
+      "mean_activity": 0.019174846594617215,
+      "total_activity": 0.6135950910277509,
+      "max_activity": 0.056621053438963766,
+      "active_nodes": 32,
+      "error": 0.000825153405382785,
+      "seed_input": 0.015725153405382785,
+      "disturbance": 0.0
+    },
+    {
+      "step": 386,
+      "mean_activity": 0.01917481637583216,
+      "total_activity": 0.6135941240266292,
+      "max_activity": 0.05662095090408078,
+      "active_nodes": 32,
+      "error": 0.0008251836241678391,
+      "seed_input": 0.01572518362416784,
+      "disturbance": 0.0
+    },
+    {
+      "step": 387,
+      "mean_activity": 0.019174787914696633,
+      "total_activity": 0.6135932132702923,
+      "max_activity": 0.05662085433305068,
+      "active_nodes": 32,
+      "error": 0.0008252120853033673,
+      "seed_input": 0.015725212085303367,
+      "disturbance": 0.0
+    },
+    {
+      "step": 388,
+      "mean_activity": 0.01917476110897847,
+      "total_activity": 0.6135923554873111,
+      "max_activity": 0.05662076337899115,
+      "active_nodes": 32,
+      "error": 0.0008252388910215298,
+      "seed_input": 0.01572523889102153,
+      "disturbance": 0.0
+    },
+    {
+      "step": 389,
+      "mean_activity": 0.01917473586239175,
+      "total_activity": 0.613591547596536,
+      "max_activity": 0.05662067771519591,
+      "active_nodes": 32,
+      "error": 0.0008252641376082503,
+      "seed_input": 0.01572526413760825,
+      "disturbance": 0.0
+    },
+    {
+      "step": 390,
+      "mean_activity": 0.01917471208425094,
+      "total_activity": 0.6135907866960301,
+      "max_activity": 0.05662059703396133,
+      "active_nodes": 32,
+      "error": 0.0008252879157490609,
+      "seed_input": 0.01572528791574906,
+      "disturbance": 0.0
+    },
+    {
+      "step": 391,
+      "mean_activity": 0.019174689689145152,
+      "total_activity": 0.6135900700526449,
+      "max_activity": 0.05662052104548108,
+      "active_nodes": 32,
+      "error": 0.000825310310854848,
+      "seed_input": 0.015725310310854848,
+      "disturbance": 0.0
+    },
+    {
+      "step": 392,
+      "mean_activity": 0.019174668596631347,
+      "total_activity": 0.6135893950922031,
+      "max_activity": 0.05662044947680515,
+      "active_nodes": 32,
+      "error": 0.000825331403368653,
+      "seed_input": 0.015725331403368653,
+      "disturbance": 0.0
+    },
+    {
+      "step": 393,
+      "mean_activity": 0.01917464873094539,
+      "total_activity": 0.6135887593902525,
+      "max_activity": 0.05662038207085942,
+      "active_nodes": 32,
+      "error": 0.0008253512690546104,
+      "seed_input": 0.01572535126905461,
+      "disturbance": 0.0
+    },
+    {
+      "step": 394,
+      "mean_activity": 0.01917463002072989,
+      "total_activity": 0.6135881606633565,
+      "max_activity": 0.05662031858552231,
+      "active_nodes": 32,
+      "error": 0.0008253699792701089,
+      "seed_input": 0.01572536997927011,
+      "disturbance": 0.0
+    },
+    {
+      "step": 395,
+      "mean_activity": 0.01917461239877792,
+      "total_activity": 0.6135875967608935,
+      "max_activity": 0.05662025879275498,
+      "active_nodes": 32,
+      "error": 0.0008253876012220794,
+      "seed_input": 0.01572538760122208,
+      "disturbance": 0.0
+    },
+    {
+      "step": 396,
+      "mean_activity": 0.019174595801791566,
+      "total_activity": 0.6135870656573301,
+      "max_activity": 0.05662020247778233,
+      "active_nodes": 32,
+      "error": 0.0008254041982084341,
+      "seed_input": 0.015725404198208434,
+      "disturbance": 0.0
+    },
+    {
+      "step": 397,
+      "mean_activity": 0.019174580170154585,
+      "total_activity": 0.6135865654449467,
+      "max_activity": 0.056620149438321415,
+      "active_nodes": 32,
+      "error": 0.0008254198298454155,
+      "seed_input": 0.015725419829845416,
+      "disturbance": 0.0
+    },
+    {
+      "step": 398,
+      "mean_activity": 0.019174565447718263,
+      "total_activity": 0.6135860943269844,
+      "max_activity": 0.05662009948385493,
+      "active_nodes": 32,
+      "error": 0.0008254345522817376,
+      "seed_input": 0.015725434552281738,
+      "disturbance": 0.0
+    },
+    {
+      "step": 399,
+      "mean_activity": 0.019174551581599735,
+      "total_activity": 0.6135856506111915,
+      "max_activity": 0.05662005243494684,
+      "active_nodes": 32,
+      "error": 0.0008254484184002653,
+      "seed_input": 0.015725448418400265,
+      "disturbance": 0.0
+    },
+    {
+      "step": 400,
+      "mean_activity": 0.019174538521992017,
+      "total_activity": 0.6135852327037445,
+      "max_activity": 0.05662000812259785,
+      "active_nodes": 32,
+      "error": 0.0008254614780079834,
+      "seed_input": 0.015725461478007983,
+      "disturbance": 0.0
+    },
+    {
+      "step": 401,
+      "mean_activity": 0.0191745262219851,
+      "total_activity": 0.6135848391035232,
+      "max_activity": 0.05661996638763836,
+      "active_nodes": 32,
+      "error": 0.0008254737780148992,
+      "seed_input": 0.0157254737780149,
+      "disturbance": 0.0
+    },
+    {
+      "step": 402,
+      "mean_activity": 0.019174514637397458,
+      "total_activity": 0.6135844683967187,
+      "max_activity": 0.056619927080156736,
+      "active_nodes": 32,
+      "error": 0.0008254853626025425,
+      "seed_input": 0.015725485362602543,
+      "disturbance": 0.0
+    },
+    {
+      "step": 403,
+      "mean_activity": 0.019174503726617352,
+      "total_activity": 0.6135841192517553,
+      "max_activity": 0.05661989005896085,
+      "active_nodes": 32,
+      "error": 0.0008254962733826483,
+      "seed_input": 0.01572549627338265,
+      "disturbance": 0.0
+    },
+    {
+      "step": 404,
+      "mean_activity": 0.019174493450453346,
+      "total_activity": 0.6135837904145071,
+      "max_activity": 0.05661985519107081,
+      "active_nodes": 32,
+      "error": 0.0008255065495466549,
+      "seed_input": 0.015725506549546655,
+      "disturbance": 0.0
+    },
+    {
+      "step": 405,
+      "mean_activity": 0.019174483771993545,
+      "total_activity": 0.6135834807037934,
+      "max_activity": 0.056619822351241494,
+      "active_nodes": 32,
+      "error": 0.0008255162280064558,
+      "seed_input": 0.015725516228006456,
+      "disturbance": 0.0
+    },
+    {
+      "step": 406,
+      "mean_activity": 0.019174474656472998,
+      "total_activity": 0.6135831890071359,
+      "max_activity": 0.05661979142151249,
+      "active_nodes": 32,
+      "error": 0.0008255253435270025,
+      "seed_input": 0.015725525343527003,
+      "disturbance": 0.0
+    },
+    {
+      "step": 407,
+      "mean_activity": 0.019174466071148828,
+      "total_activity": 0.6135829142767625,
+      "max_activity": 0.05661976229078445,
+      "active_nodes": 32,
+      "error": 0.0008255339288511729,
+      "seed_input": 0.015725533928851173,
+      "disturbance": 0.0
+    },
+    {
+      "step": 408,
+      "mean_activity": 0.019174457985182622,
+      "total_activity": 0.6135826555258439,
+      "max_activity": 0.05661973485442004,
+      "active_nodes": 32,
+      "error": 0.0008255420148173785,
+      "seed_input": 0.01572554201481738,
+      "disturbance": 0.0
+    },
+    {
+      "step": 409,
+      "mean_activity": 0.019174450369529656,
+      "total_activity": 0.613582411824949,
+      "max_activity": 0.05661970901386809,
+      "active_nodes": 32,
+      "error": 0.0008255496304703444,
+      "seed_input": 0.015725549630470344,
+      "disturbance": 0.0
+    },
+    {
+      "step": 410,
+      "mean_activity": 0.01917444319683457,
+      "total_activity": 0.6135821822987062,
+      "max_activity": 0.056619684676309484,
+      "active_nodes": 32,
+      "error": 0.0008255568031654316,
+      "seed_input": 0.01572555680316543,
+      "disturbance": 0.0
+    },
+    {
+      "step": 411,
+      "mean_activity": 0.019174436441333095,
+      "total_activity": 0.613581966122659,
+      "max_activity": 0.05661966175432399,
+      "active_nodes": 32,
+      "error": 0.0008255635586669058,
+      "seed_input": 0.015725563558666906,
+      "disturbance": 0.0
+    },
+    {
+      "step": 412,
+      "mean_activity": 0.019174430078759526,
+      "total_activity": 0.6135817625203048,
+      "max_activity": 0.05661964016557596,
+      "active_nodes": 32,
+      "error": 0.0008255699212404745,
+      "seed_input": 0.015725569921240475,
+      "disturbance": 0.0
+    },
+    {
+      "step": 413,
+      "mean_activity": 0.019174424086259557,
+      "total_activity": 0.6135815707603058,
+      "max_activity": 0.05661961983251883,
+      "active_nodes": 32,
+      "error": 0.000825575913740443,
+      "seed_input": 0.015725575913740443,
+      "disturbance": 0.0
+    },
+    {
+      "step": 414,
+      "mean_activity": 0.019174418442308168,
+      "total_activity": 0.6135813901538614,
+      "max_activity": 0.05661960068211637,
+      "active_nodes": 32,
+      "error": 0.0008255815576918325,
+      "seed_input": 0.015725581557691833,
+      "disturbance": 0.0
+    },
+    {
+      "step": 415,
+      "mean_activity": 0.01917441312663234,
+      "total_activity": 0.6135812200522349,
+      "max_activity": 0.05661958264558056,
+      "active_nodes": 32,
+      "error": 0.0008255868733676591,
+      "seed_input": 0.01572558687336766,
+      "disturbance": 0.0
+    },
+    {
+      "step": 416,
+      "mean_activity": 0.019174408120138205,
+      "total_activity": 0.6135810598444226,
+      "max_activity": 0.05661956565812426,
+      "active_nodes": 32,
+      "error": 0.000825591879861795,
+      "seed_input": 0.015725591879861795,
+      "disturbance": 0.0
+    },
+    {
+      "step": 417,
+      "mean_activity": 0.019174403404842475,
+      "total_activity": 0.6135809089549592,
+      "max_activity": 0.056619549658728674,
+      "active_nodes": 32,
+      "error": 0.0008255965951575253,
+      "seed_input": 0.015725596595157525,
+      "disturbance": 0.0
+    },
+    {
+      "step": 418,
+      "mean_activity": 0.019174398963807848,
+      "total_activity": 0.6135807668418511,
+      "max_activity": 0.056619534589924136,
+      "active_nodes": 32,
+      "error": 0.0008256010361921522,
+      "seed_input": 0.015725601036192152,
+      "disturbance": 0.0
+    },
+    {
+      "step": 419,
+      "mean_activity": 0.019174394781082165,
+      "total_activity": 0.6135806329946293,
+      "max_activity": 0.0566195203975836,
+      "active_nodes": 32,
+      "error": 0.0008256052189178353,
+      "seed_input": 0.015725605218917835,
+      "disturbance": 0.0
+    },
+    {
+      "step": 420,
+      "mean_activity": 0.01917439084164111,
+      "total_activity": 0.6135805069325155,
+      "max_activity": 0.056619507030728274,
+      "active_nodes": 32,
+      "error": 0.00082560915835889,
+      "seed_input": 0.01572560915835889,
+      "disturbance": 0.0
+    },
+    {
+      "step": 421,
+      "mean_activity": 0.01917438713133424,
+      "total_activity": 0.6135803882026957,
+      "max_activity": 0.05661949444134454,
+      "active_nodes": 32,
+      "error": 0.0008256128686657607,
+      "seed_input": 0.01572561286866576,
+      "disturbance": 0.0
+    },
+    {
+      "step": 422,
+      "mean_activity": 0.01917438363683416,
+      "total_activity": 0.6135802763786932,
+      "max_activity": 0.05661948258421145,
+      "active_nodes": 32,
+      "error": 0.0008256163631658389,
+      "seed_input": 0.01572561636316584,
+      "disturbance": 0.0
+    },
+    {
+      "step": 423,
+      "mean_activity": 0.019174380345588663,
+      "total_activity": 0.6135801710588372,
+      "max_activity": 0.056619471416738246,
+      "active_nodes": 32,
+      "error": 0.0008256196544113373,
+      "seed_input": 0.015725619654411337,
+      "disturbance": 0.0
+    },
+    {
+      "step": 424,
+      "mean_activity": 0.019174377245775618,
+      "total_activity": 0.6135800718648198,
+      "max_activity": 0.05661946089881148,
+      "active_nodes": 32,
+      "error": 0.0008256227542243824,
+      "seed_input": 0.015725622754224382,
+      "disturbance": 0.0
+    },
+    {
+      "step": 425,
+      "mean_activity": 0.01917437432626052,
+      "total_activity": 0.6135799784403366,
+      "max_activity": 0.056619450992650845,
+      "active_nodes": 32,
+      "error": 0.0008256256737394808,
+      "seed_input": 0.01572562567373948,
+      "disturbance": 0.0
+    },
+    {
+      "step": 426,
+      "mean_activity": 0.019174371576556496,
+      "total_activity": 0.6135798904498079,
+      "max_activity": 0.056619441662673506,
+      "active_nodes": 32,
+      "error": 0.0008256284234435043,
+      "seed_input": 0.015725628423443504,
+      "disturbance": 0.0
+    },
+    {
+      "step": 427,
+      "mean_activity": 0.019174368986786632,
+      "total_activity": 0.6135798075771722,
+      "max_activity": 0.05661943287536621,
+      "active_nodes": 32,
+      "error": 0.0008256310132133682,
+      "seed_input": 0.015725631013213368,
+      "disturbance": 0.0
+    },
+    {
+      "step": 428,
+      "mean_activity": 0.019174366547648494,
+      "total_activity": 0.6135797295247518,
+      "max_activity": 0.056619424599165066,
+      "active_nodes": 32,
+      "error": 0.0008256334523515062,
+      "seed_input": 0.015725633452351506,
+      "disturbance": 0.0
+    },
+    {
+      "step": 429,
+      "mean_activity": 0.01917436425038072,
+      "total_activity": 0.613579656012183,
+      "max_activity": 0.056619416804342,
+      "active_nodes": 32,
+      "error": 0.0008256357496192815,
+      "seed_input": 0.01572563574961928,
+      "disturbance": 0.0
+    },
+    {
+      "step": 430,
+      "mean_activity": 0.01917436208673154,
+      "total_activity": 0.6135795867754092,
+      "max_activity": 0.05661940946289812,
+      "active_nodes": 32,
+      "error": 0.0008256379132684614,
+      "seed_input": 0.01572563791326846,
+      "disturbance": 0.0
+    },
+    {
+      "step": 431,
+      "mean_activity": 0.019174360048929147,
+      "total_activity": 0.6135795215657327,
+      "max_activity": 0.05661940254846294,
+      "active_nodes": 32,
+      "error": 0.0008256399510708536,
+      "seed_input": 0.015725639951070854,
+      "disturbance": 0.0
+    },
+    {
+      "step": 432,
+      "mean_activity": 0.01917435812965377,
+      "total_activity": 0.6135794601489206,
+      "max_activity": 0.05661939603619995,
+      "active_nodes": 32,
+      "error": 0.0008256418703462311,
+      "seed_input": 0.01572564187034623,
+      "disturbance": 0.0
+    },
+    {
+      "step": 433,
+      "mean_activity": 0.01917435632201139,
+      "total_activity": 0.6135794023043645,
+      "max_activity": 0.05661938990271707,
+      "active_nodes": 32,
+      "error": 0.0008256436779886106,
+      "seed_input": 0.01572564367798861,
+      "disturbance": 0.0
+    },
+    {
+      "step": 434,
+      "mean_activity": 0.019174354619508963,
+      "total_activity": 0.6135793478242868,
+      "max_activity": 0.05661938412598294,
+      "active_nodes": 32,
+      "error": 0.0008256453804910378,
+      "seed_input": 0.015725645380491038,
+      "disturbance": 0.0
+    },
+    {
+      "step": 435,
+      "mean_activity": 0.019174353016031122,
+      "total_activity": 0.6135792965129959,
+      "max_activity": 0.056619378685247565,
+      "active_nodes": 32,
+      "error": 0.0008256469839688779,
+      "seed_input": 0.015725646983968878,
+      "disturbance": 0.0
+    },
+    {
+      "step": 436,
+      "mean_activity": 0.019174351505818185,
+      "total_activity": 0.6135792481861819,
+      "max_activity": 0.05661937356096786,
+      "active_nodes": 32,
+      "error": 0.0008256484941818153,
+      "seed_input": 0.015725648494181815,
+      "disturbance": 0.0
+    },
+    {
+      "step": 437,
+      "mean_activity": 0.019174350083445476,
+      "total_activity": 0.6135792026702552,
+      "max_activity": 0.05661936873473747,
+      "active_nodes": 32,
+      "error": 0.0008256499165545245,
+      "seed_input": 0.015725649916554525,
+      "disturbance": 0.0
+    },
+    {
+      "step": 438,
+      "mean_activity": 0.01917434874380385,
+      "total_activity": 0.6135791598017232,
+      "max_activity": 0.05661936418922059,
+      "active_nodes": 32,
+      "error": 0.0008256512561961513,
+      "seed_input": 0.01572565125619615,
+      "disturbance": 0.0
+    },
+    {
+      "step": 439,
+      "mean_activity": 0.01917434748208132,
+      "total_activity": 0.6135791194266023,
+      "max_activity": 0.05661935990808978,
+      "active_nodes": 32,
+      "error": 0.0008256525179186798,
+      "seed_input": 0.01572565251791868,
+      "disturbance": 0.0
+    },
+    {
+      "step": 440,
+      "mean_activity": 0.019174346293745793,
+      "total_activity": 0.6135790813998654,
+      "max_activity": 0.056619355875967226,
+      "active_nodes": 32,
+      "error": 0.000825653706254207,
+      "seed_input": 0.015725653706254207,
+      "disturbance": 0.0
+    },
+    {
+      "step": 441,
+      "mean_activity": 0.019174345174528772,
+      "total_activity": 0.6135790455849207,
+      "max_activity": 0.05661935207836962,
+      "active_nodes": 32,
+      "error": 0.0008256548254712281,
+      "seed_input": 0.015725654825471228,
+      "disturbance": 0.0
+    },
+    {
+      "step": 442,
+      "mean_activity": 0.019174344120410046,
+      "total_activity": 0.6135790118531215,
+      "max_activity": 0.056619348501655994,
+      "active_nodes": 32,
+      "error": 0.0008256558795899545,
+      "seed_input": 0.015725655879589955,
+      "disturbance": 0.0
+    },
+    {
+      "step": 443,
+      "mean_activity": 0.019174343127603223,
+      "total_activity": 0.6135789800833031,
+      "max_activity": 0.056619345132978824,
+      "active_nodes": 32,
+      "error": 0.0008256568723967773,
+      "seed_input": 0.015725656872396777,
+      "disturbance": 0.0
+    },
+    {
+      "step": 444,
+      "mean_activity": 0.019174342192542153,
+      "total_activity": 0.6135789501613489,
+      "max_activity": 0.05661934196023786,
+      "active_nodes": 32,
+      "error": 0.0008256578074578476,
+      "seed_input": 0.015725657807457848,
+      "disturbance": 0.0
+    },
+    {
+      "step": 445,
+      "mean_activity": 0.019174341311868102,
+      "total_activity": 0.6135789219797793,
+      "max_activity": 0.05661933897203662,
+      "active_nodes": 32,
+      "error": 0.0008256586881318986,
+      "seed_input": 0.0157256586881319,
+      "disturbance": 0.0
+    },
+    {
+      "step": 446,
+      "mean_activity": 0.019174340482417698,
+      "total_activity": 0.6135788954373663,
+      "max_activity": 0.05661933615764153,
+      "active_nodes": 32,
+      "error": 0.0008256595175823028,
+      "seed_input": 0.015725659517582303,
+      "disturbance": 0.0
+    },
+    {
+      "step": 447,
+      "mean_activity": 0.019174339701211556,
+      "total_activity": 0.6135788704387698,
+      "max_activity": 0.0566193335069433,
+      "active_nodes": 32,
+      "error": 0.0008256602987884443,
+      "seed_input": 0.015725660298788444,
+      "disturbance": 0.0
+    },
+    {
+      "step": 448,
+      "mean_activity": 0.0191743389654436,
+      "total_activity": 0.6135788468941952,
+      "max_activity": 0.056619331010420645,
+      "active_nodes": 32,
+      "error": 0.0008256610345564012,
+      "seed_input": 0.0157256610345564,
+      "disturbance": 0.0
+    },
+    {
+      "step": 449,
+      "mean_activity": 0.019174338272470948,
+      "total_activity": 0.6135788247190703,
+      "max_activity": 0.05661932865910607,
+      "active_nodes": 32,
+      "error": 0.0008256617275290527,
+      "seed_input": 0.015725661727529053,
+      "disturbance": 0.0
+    },
+    {
+      "step": 450,
+      "mean_activity": 0.01917433761980445,
+      "total_activity": 0.6135788038337424,
+      "max_activity": 0.05661932644455367,
+      "active_nodes": 32,
+      "error": 0.00082566238019555,
+      "seed_input": 0.01572566238019555,
+      "disturbance": 0.0
+    },
+    {
+      "step": 451,
+      "mean_activity": 0.01917433700509974,
+      "total_activity": 0.6135787841631917,
+      "max_activity": 0.05661932435880881,
+      "active_nodes": 32,
+      "error": 0.0008256629949002607,
+      "seed_input": 0.01572566299490026,
+      "disturbance": 0.0
+    },
+    {
+      "step": 452,
+      "mean_activity": 0.019174336426148793,
+      "total_activity": 0.6135787656367614,
+      "max_activity": 0.05661932239437949,
+      "active_nodes": 32,
+      "error": 0.0008256635738512069,
+      "seed_input": 0.015725663573851207,
+      "disturbance": 0.0
+    },
+    {
+      "step": 453,
+      "mean_activity": 0.019174335880872032,
+      "total_activity": 0.613578748187905,
+      "max_activity": 0.056619320544209505,
+      "active_nodes": 32,
+      "error": 0.0008256641191279682,
+      "seed_input": 0.015725664119127968,
+      "disturbance": 0.0
+    },
+    {
+      "step": 454,
+      "mean_activity": 0.01917433536731082,
+      "total_activity": 0.6135787317539463,
+      "max_activity": 0.05661931880165305,
+      "active_nodes": 32,
+      "error": 0.0008256646326891791,
+      "seed_input": 0.01572566463268918,
+      "disturbance": 0.0
+    },
+    {
+      "step": 455,
+      "mean_activity": 0.019174334883620452,
+      "total_activity": 0.6135787162758545,
+      "max_activity": 0.0566193171604509,
+      "active_nodes": 32,
+      "error": 0.0008256651163795481,
+      "seed_input": 0.015725665116379548,
+      "disturbance": 0.0
+    },
+    {
+      "step": 456,
+      "mean_activity": 0.01917433442806352,
+      "total_activity": 0.6135787016980326,
+      "max_activity": 0.05661931561470786,
+      "active_nodes": 32,
+      "error": 0.0008256655719364805,
+      "seed_input": 0.01572566557193648,
+      "disturbance": 0.0
+    },
+    {
+      "step": 457,
+      "mean_activity": 0.019174333999003663,
+      "total_activity": 0.6135786879681172,
+      "max_activity": 0.056619314158871614,
+      "active_nodes": 32,
+      "error": 0.0008256660009963376,
+      "seed_input": 0.015725666000996338,
+      "disturbance": 0.0
+    },
+    {
+      "step": 458,
+      "mean_activity": 0.019174333594899697,
+      "total_activity": 0.6135786750367903,
+      "max_activity": 0.05661931278771284,
+      "active_nodes": 32,
+      "error": 0.0008256664051003032,
+      "seed_input": 0.015725666405100303,
+      "disturbance": 0.0
+    },
+    {
+      "step": 459,
+      "mean_activity": 0.019174333214300093,
+      "total_activity": 0.613578662857603,
+      "max_activity": 0.05661931149630631,
+      "active_nodes": 32,
+      "error": 0.0008256667856999071,
+      "seed_input": 0.015725666785699907,
+      "disturbance": 0.0
+    },
+    {
+      "step": 460,
+      "mean_activity": 0.019174332855837736,
+      "total_activity": 0.6135786513868076,
+      "max_activity": 0.056619310280013345,
+      "active_nodes": 32,
+      "error": 0.0008256671441622641,
+      "seed_input": 0.015725667144162264,
+      "disturbance": 0.0
+    },
+    {
+      "step": 461,
+      "mean_activity": 0.01917433251822503,
+      "total_activity": 0.613578640583201,
+      "max_activity": 0.056619309134465,
+      "active_nodes": 32,
+      "error": 0.0008256674817749693,
+      "seed_input": 0.01572566748177497,
+      "disturbance": 0.0
+    },
+    {
+      "step": 462,
+      "mean_activity": 0.01917433220024928,
+      "total_activity": 0.613578630407977,
+      "max_activity": 0.05661930805554649,
+      "active_nodes": 32,
+      "error": 0.0008256677997507192,
+      "seed_input": 0.01572566779975072,
+      "disturbance": 0.0
+    },
+    {
+      "step": 463,
+      "mean_activity": 0.019174331900768313,
+      "total_activity": 0.613578620824586,
+      "max_activity": 0.05661930703938234,
+      "active_nodes": 32,
+      "error": 0.000825668099231687,
+      "seed_input": 0.015725668099231687,
+      "disturbance": 0.0
+    },
+    {
+      "step": 464,
+      "mean_activity": 0.019174331618706394,
+      "total_activity": 0.6135786117986046,
+      "max_activity": 0.0566193060823225,
+      "active_nodes": 32,
+      "error": 0.000825668381293606,
+      "seed_input": 0.015725668381293606,
+      "disturbance": 0.0
+    },
+    {
+      "step": 465,
+      "mean_activity": 0.019174331353050366,
+      "total_activity": 0.6135786032976117,
+      "max_activity": 0.056619305180929225,
+      "active_nodes": 32,
+      "error": 0.0008256686469496344,
+      "seed_input": 0.015725668646949634,
+      "disturbance": 0.0
+    },
+    {
+      "step": 466,
+      "mean_activity": 0.01917433110284599,
+      "total_activity": 0.6135785952910717,
+      "max_activity": 0.0566193043319647,
+      "active_nodes": 32,
+      "error": 0.000825668897154009,
+      "seed_input": 0.01572566889715401,
+      "disturbance": 0.0
+    },
+    {
+      "step": 467,
+      "mean_activity": 0.019174330867194538,
+      "total_activity": 0.6135785877502252,
+      "max_activity": 0.05661930353237948,
+      "active_nodes": 32,
+      "error": 0.0008256691328054622,
+      "seed_input": 0.015725669132805462,
+      "disturbance": 0.0
+    },
+    {
+      "step": 468,
+      "mean_activity": 0.01917433064524955,
+      "total_activity": 0.6135785806479856,
+      "max_activity": 0.05661930277930143,
+      "active_nodes": 32,
+      "error": 0.0008256693547504489,
+      "seed_input": 0.01572566935475045,
+      "disturbance": 0.0
+    },
+    {
+      "step": 469,
+      "mean_activity": 0.019174330436213798,
+      "total_activity": 0.6135785739588415,
+      "max_activity": 0.056619302070025516,
+      "active_nodes": 32,
+      "error": 0.0008256695637862028,
+      "seed_input": 0.015725669563786203,
+      "disturbance": 0.0
+    },
+    {
+      "step": 470,
+      "mean_activity": 0.019174330239336432,
+      "total_activity": 0.6135785676587658,
+      "max_activity": 0.05661930140200403,
+      "active_nodes": 32,
+      "error": 0.000825669760663568,
+      "seed_input": 0.015725669760663568,
+      "disturbance": 0.0
+    },
+    {
+      "step": 471,
+      "mean_activity": 0.019174330053910265,
+      "total_activity": 0.6135785617251285,
+      "max_activity": 0.05661930077283742,
+      "active_nodes": 32,
+      "error": 0.0008256699460897354,
+      "seed_input": 0.015725669946089735,
+      "disturbance": 0.0
+    },
+    {
+      "step": 472,
+      "mean_activity": 0.01917432987926925,
+      "total_activity": 0.613578556136616,
+      "max_activity": 0.056619300180265765,
+      "active_nodes": 32,
+      "error": 0.0008256701207307489,
+      "seed_input": 0.01572567012073075,
+      "disturbance": 0.0
+    },
+    {
+      "step": 473,
+      "mean_activity": 0.01917432971478608,
+      "total_activity": 0.6135785508731546,
+      "max_activity": 0.05661929962216051,
+      "active_nodes": 32,
+      "error": 0.000825670285213919,
+      "seed_input": 0.01572567028521392,
+      "disturbance": 0.0
+    },
+    {
+      "step": 474,
+      "mean_activity": 0.019174329559869936,
+      "total_activity": 0.6135785459158379,
+      "max_activity": 0.05661929909651697,
+      "active_nodes": 32,
+      "error": 0.0008256704401300649,
+      "seed_input": 0.015725670440130065,
+      "disturbance": 0.0
+    },
+    {
+      "step": 475,
+      "mean_activity": 0.01917432941396435,
+      "total_activity": 0.6135785412468592,
+      "max_activity": 0.056619298601447036,
+      "active_nodes": 32,
+      "error": 0.0008256705860356511,
+      "seed_input": 0.01572567058603565,
+      "disturbance": 0.0
+    },
+    {
+      "step": 476,
+      "mean_activity": 0.01917432927654524,
+      "total_activity": 0.6135785368494476,
+      "max_activity": 0.05661929813517242,
+      "active_nodes": 32,
+      "error": 0.0008256707234547619,
+      "seed_input": 0.015725670723454762,
+      "disturbance": 0.0
+    },
+    {
+      "step": 477,
+      "mean_activity": 0.01917432914711899,
+      "total_activity": 0.6135785327078077,
+      "max_activity": 0.056619297696018256,
+      "active_nodes": 32,
+      "error": 0.0008256708528810094,
+      "seed_input": 0.01572567085288101,
+      "disturbance": 0.0
+    },
+    {
+      "step": 478,
+      "mean_activity": 0.01917432902522071,
+      "total_activity": 0.6135785288070628,
+      "max_activity": 0.056619297282407124,
+      "active_nodes": 32,
+      "error": 0.0008256709747792891,
+      "seed_input": 0.01572567097477929,
+      "disturbance": 0.0
+    },
+    {
+      "step": 479,
+      "mean_activity": 0.019174328910412538,
+      "total_activity": 0.6135785251332012,
+      "max_activity": 0.05661929689285333,
+      "active_nodes": 32,
+      "error": 0.0008256710895874625,
+      "seed_input": 0.015725671089587463,
+      "disturbance": 0.0
+    },
+    {
+      "step": 480,
+      "mean_activity": 0.019174328802282082,
+      "total_activity": 0.6135785216730266,
+      "max_activity": 0.05661929652595758,
+      "active_nodes": 32,
+      "error": 0.0008256711977179185,
+      "seed_input": 0.01572567119771792,
+      "disturbance": 0.0
+    },
+    {
+      "step": 481,
+      "mean_activity": 0.019174328700440942,
+      "total_activity": 0.6135785184141102,
+      "max_activity": 0.05661929618040201,
+      "active_nodes": 32,
+      "error": 0.0008256712995590582,
+      "seed_input": 0.015725671299559058,
+      "disturbance": 0.0
+    },
+    {
+      "step": 482,
+      "mean_activity": 0.0191743286045233,
+      "total_activity": 0.6135785153447456,
+      "max_activity": 0.05661929585494538,
+      "active_nodes": 32,
+      "error": 0.0008256713954767,
+      "seed_input": 0.0157256713954767,
+      "disturbance": 0.0
+    },
+    {
+      "step": 483,
+      "mean_activity": 0.01917432851418463,
+      "total_activity": 0.6135785124539082,
+      "max_activity": 0.056619295548418665,
+      "active_nodes": 32,
+      "error": 0.0008256714858153706,
+      "seed_input": 0.01572567148581537,
+      "disturbance": 0.0
+    },
+    {
+      "step": 484,
+      "mean_activity": 0.01917432842910043,
+      "total_activity": 0.6135785097312138,
+      "max_activity": 0.056619295259720794,
+      "active_nodes": 32,
+      "error": 0.0008256715708995707,
+      "seed_input": 0.01572567157089957,
+      "disturbance": 0.0
+    },
+    {
+      "step": 485,
+      "mean_activity": 0.019174328348965076,
+      "total_activity": 0.6135785071668824,
+      "max_activity": 0.05661929498781481,
+      "active_nodes": 32,
+      "error": 0.0008256716510349239,
+      "seed_input": 0.015725671651034924,
+      "disturbance": 0.0
+    },
+    {
+      "step": 486,
+      "mean_activity": 0.019174328273490727,
+      "total_activity": 0.6135785047517033,
+      "max_activity": 0.056619294731723974,
+      "active_nodes": 32,
+      "error": 0.0008256717265092729,
+      "seed_input": 0.015725671726509273,
+      "disturbance": 0.0
+    },
+    {
+      "step": 487,
+      "mean_activity": 0.01917432820240628,
+      "total_activity": 0.613578502477001,
+      "max_activity": 0.056619294490528466,
+      "active_nodes": 32,
+      "error": 0.0008256717975937203,
+      "seed_input": 0.01572567179759372,
+      "disturbance": 0.0
+    },
+    {
+      "step": 488,
+      "mean_activity": 0.019174328135456397,
+      "total_activity": 0.6135785003346047,
+      "max_activity": 0.05661929426336187,
+      "active_nodes": 32,
+      "error": 0.0008256718645436034,
+      "seed_input": 0.015725671864543603,
+      "disturbance": 0.0
+    },
+    {
+      "step": 489,
+      "mean_activity": 0.019174328072400597,
+      "total_activity": 0.6135784983168191,
+      "max_activity": 0.056619294049408214,
+      "active_nodes": 32,
+      "error": 0.0008256719275994036,
+      "seed_input": 0.015725671927599404,
+      "disturbance": 0.0
+    },
+    {
+      "step": 490,
+      "mean_activity": 0.01917432801301238,
+      "total_activity": 0.6135784964163962,
+      "max_activity": 0.056619293847899016,
+      "active_nodes": 32,
+      "error": 0.0008256719869876201,
+      "seed_input": 0.01572567198698762,
+      "disturbance": 0.0
+    },
+    {
+      "step": 491,
+      "mean_activity": 0.019174327957078432,
+      "total_activity": 0.6135784946265098,
+      "max_activity": 0.0566192936581104,
+      "active_nodes": 32,
+      "error": 0.0008256720429215686,
+      "seed_input": 0.01572567204292157,
+      "disturbance": 0.0
+    },
+    {
+      "step": 492,
+      "mean_activity": 0.019174327904397832,
+      "total_activity": 0.6135784929407306,
+      "max_activity": 0.05661929347936069,
+      "active_nodes": 32,
+      "error": 0.0008256720956021681,
+      "seed_input": 0.015725672095602168,
+      "disturbance": 0.0
+    },
+    {
+      "step": 493,
+      "mean_activity": 0.019174327854781355,
+      "total_activity": 0.6135784913530034,
+      "max_activity": 0.056619293311007804,
+      "active_nodes": 32,
+      "error": 0.0008256721452186457,
+      "seed_input": 0.015725672145218646,
+      "disturbance": 0.0
+    },
+    {
+      "step": 494,
+      "mean_activity": 0.019174327808050774,
+      "total_activity": 0.6135784898576248,
+      "max_activity": 0.05661929315244701,
+      "active_nodes": 32,
+      "error": 0.0008256721919492269,
+      "seed_input": 0.015725672191949227,
+      "disturbance": 0.0
+    },
+    {
+      "step": 495,
+      "mean_activity": 0.019174327764038237,
+      "total_activity": 0.6135784884492236,
+      "max_activity": 0.05661929300310877,
+      "active_nodes": 32,
+      "error": 0.0008256722359617635,
+      "seed_input": 0.015725672235961764,
+      "disturbance": 0.0
+    },
+    {
+      "step": 496,
+      "mean_activity": 0.019174327722585652,
+      "total_activity": 0.6135784871227409,
+      "max_activity": 0.05661929286245667,
+      "active_nodes": 32,
+      "error": 0.000825672277414348,
+      "seed_input": 0.015725672277414348,
+      "disturbance": 0.0
+    },
+    {
+      "step": 497,
+      "mean_activity": 0.019174327683544122,
+      "total_activity": 0.6135784858734119,
+      "max_activity": 0.05661929272998546,
+      "active_nodes": 32,
+      "error": 0.0008256723164558784,
+      "seed_input": 0.01572567231645588,
+      "disturbance": 0.0
+    },
+    {
+      "step": 498,
+      "mean_activity": 0.01917432764677341,
+      "total_activity": 0.6135784846967491,
+      "max_activity": 0.05661929260521932,
+      "active_nodes": 32,
+      "error": 0.0008256723532265899,
+      "seed_input": 0.01572567235322659,
+      "disturbance": 0.0
+    },
+    {
+      "step": 499,
+      "mean_activity": 0.019174327612141433,
+      "total_activity": 0.6135784835885258,
+      "max_activity": 0.05661929248771012,
+      "active_nodes": 32,
+      "error": 0.0008256723878585677,
+      "seed_input": 0.015725672387858568,
+      "disturbance": 0.0
+    }
+  ]
+}

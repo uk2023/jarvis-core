@@ -1,0 +1,98 @@
+{
+  "experiment": "phase3_connectome_actuator_fine_sweep",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "target_activity": 0.02,
+  "steps": 100,
+  "results": [
+    {
+      "input": 0.013,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03165625,
+      "final_activity": 0.017011771767470353,
+      "tail_mean": 0.01736273796112138,
+      "tail_min": 0.017011771767470353,
+      "tail_max": 0.017774229560250085,
+      "tail_range": 0.0007624577927797319,
+      "target_error": 0.0026372620388786204
+    },
+    {
+      "input": 0.014,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03169982993197279,
+      "final_activity": 0.018143283176753018,
+      "tail_mean": 0.018467707723743627,
+      "tail_min": 0.018143283176753018,
+      "tail_max": 0.018848080472038897,
+      "tail_range": 0.0007047972952858791,
+      "target_error": 0.001532292276256373
+    },
+    {
+      "input": 0.015,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03176232993197279,
+      "final_activity": 0.019274794586035673,
+      "tail_mean": 0.019572677486365868,
+      "tail_min": 0.019274794586035673,
+      "tail_max": 0.01992193138382771,
+      "tail_range": 0.0006471367977920368,
+      "target_error": 0.00042732251363413257
+    },
+    {
+      "input": 0.0155,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.031793579931972786,
+      "final_activity": 0.01984055029067701,
+      "tail_mean": 0.020125162367676995,
+      "tail_min": 0.01984055029067701,
+      "tail_max": 0.020458856839722123,
+      "tail_range": 0.000618306549045114,
+      "target_error": 0.0001251623676769946
+    },
+    {
+      "input": 0.016,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03182482993197279,
+      "final_activity": 0.02040630599531834,
+      "tail_mean": 0.020677647248988122,
+      "tail_min": 0.02040630599531834,
+      "tail_max": 0.02099578229561653,
+      "tail_range": 0.0005894763002981876,
+      "target_error": 0.0006776472489881218
+    },
+    {
+      "input": 0.0165,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.031856079931972786,
+      "final_activity": 0.020972061699959674,
+      "tail_mean": 0.021230132130299246,
+      "tail_min": 0.020972061699959674,
+      "tail_max": 0.02153270775151094,
+      "tail_range": 0.0005606460515512647,
+      "target_error": 0.0012301321302992455
+    },
+    {
+      "input": 0.017,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03188732993197279,
+      "final_activity": 0.021537817404601006,
+      "tail_mean": 0.021782617011610366,
+      "tail_min": 0.021537817404601006,
+      "tail_max": 0.022069633207405345,
+      "tail_range": 0.0005318158028043384,
+      "target_error": 0.0017826170116103657
+    },
+    {
+      "input": 0.018,
+      "initial_activity": 0.03125,
+      "peak_activity": 0.03194982993197279,
+      "final_activity": 0.022669328813883668,
+      "tail_mean": 0.022887586774232617,
+      "tail_min": 0.022669328813883668,
+      "tail_max": 0.02314348411919416,
+      "tail_range": 0.0004741553053104926,
+      "target_error": 0.0028875867742326165
+    }
+  ]
+}

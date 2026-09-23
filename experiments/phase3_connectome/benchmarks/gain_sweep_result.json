@@ -1,0 +1,583 @@
+{
+  "experiment": "phase3_connectome_gain_sweep",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "target_activity": 0.2,
+  "results": [
+    {
+      "gain": 1e-09,
+      "initial_activity": 7.8125e-12,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-12,
+          "active_nodes": 0,
+          "max_state": 2.5e-10
+        },
+        {
+          "step": 1,
+          "mean_activity": 1.154296875e-09,
+          "active_nodes": 0,
+          "max_state": 4.25e-09
+        },
+        {
+          "step": 2,
+          "mean_activity": 4.616259765625e-08,
+          "active_nodes": 0,
+          "max_state": 2.04375e-07
+        },
+        {
+          "step": 3,
+          "mean_activity": 1.6320594482421876e-06,
+          "active_nodes": 0,
+          "max_state": 4.812531250000001e-06
+        },
+        {
+          "step": 4,
+          "mean_activity": 5.828316177368164e-05,
+          "active_nodes": 0,
+          "max_state": 0.0001803336484375
+        },
+        {
+          "step": 5,
+          "mean_activity": 0.002017179496330261,
+          "active_nodes": 0,
+          "max_state": 0.006041833986328125
+        },
+        {
+          "step": 6,
+          "mean_activity": 0.0708890846925602,
+          "active_nodes": 32,
+          "max_state": 0.2165684872397461
+        },
+        {
+          "step": 7,
+          "mean_activity": 0.954409526604414,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 1e-08,
+      "initial_activity": 7.8125e-11,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-11,
+          "active_nodes": 0,
+          "max_state": 2.5e-09
+        },
+        {
+          "step": 1,
+          "mean_activity": 1.154296875e-08,
+          "active_nodes": 0,
+          "max_state": 4.2500000000000003e-08
+        },
+        {
+          "step": 2,
+          "mean_activity": 4.616259765625e-07,
+          "active_nodes": 0,
+          "max_state": 2.04375e-06
+        },
+        {
+          "step": 3,
+          "mean_activity": 1.6320594482421877e-05,
+          "active_nodes": 0,
+          "max_state": 4.8125312499999996e-05
+        },
+        {
+          "step": 4,
+          "mean_activity": 0.0005828316177368165,
+          "active_nodes": 0,
+          "max_state": 0.001803336484375
+        },
+        {
+          "step": 5,
+          "mean_activity": 0.020171794963302615,
+          "active_nodes": 21,
+          "max_state": 0.060418339863281253
+        },
+        {
+          "step": 6,
+          "mean_activity": 0.5813004266002846,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 1e-07,
+      "initial_activity": 7.8125e-10,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-10,
+          "active_nodes": 0,
+          "max_state": 2.5e-08
+        },
+        {
+          "step": 1,
+          "mean_activity": 1.154296875e-07,
+          "active_nodes": 0,
+          "max_state": 4.2499999999999995e-07
+        },
+        {
+          "step": 2,
+          "mean_activity": 4.616259765625e-06,
+          "active_nodes": 0,
+          "max_state": 2.04375e-05
+        },
+        {
+          "step": 3,
+          "mean_activity": 0.00016320594482421873,
+          "active_nodes": 0,
+          "max_state": 0.00048125312499999994
+        },
+        {
+          "step": 4,
+          "mean_activity": 0.005828316177368164,
+          "active_nodes": 6,
+          "max_state": 0.01803336484375
+        },
+        {
+          "step": 5,
+          "mean_activity": 0.2017179496330261,
+          "active_nodes": 32,
+          "max_state": 0.6041833986328125
+        },
+        {
+          "step": 6,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 1e-06,
+      "initial_activity": 7.8125e-09,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-09,
+          "active_nodes": 0,
+          "max_state": 2.5e-07
+        },
+        {
+          "step": 1,
+          "mean_activity": 1.1542968749999999e-06,
+          "active_nodes": 0,
+          "max_state": 4.25e-06
+        },
+        {
+          "step": 2,
+          "mean_activity": 4.616259765625e-05,
+          "active_nodes": 0,
+          "max_state": 0.000204375
+        },
+        {
+          "step": 3,
+          "mean_activity": 0.0016320594482421874,
+          "active_nodes": 0,
+          "max_state": 0.00481253125
+        },
+        {
+          "step": 4,
+          "mean_activity": 0.05828316177368164,
+          "active_nodes": 31,
+          "max_state": 0.1803336484375
+        },
+        {
+          "step": 5,
+          "mean_activity": 0.9218987215576172,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 6,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 1e-05,
+      "initial_activity": 7.8125e-08,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-08,
+          "active_nodes": 0,
+          "max_state": 2.5e-06
+        },
+        {
+          "step": 1,
+          "mean_activity": 1.154296875e-05,
+          "active_nodes": 0,
+          "max_state": 4.25e-05
+        },
+        {
+          "step": 2,
+          "mean_activity": 0.00046162597656250004,
+          "active_nodes": 0,
+          "max_state": 0.00204375
+        },
+        {
+          "step": 3,
+          "mean_activity": 0.016320594482421878,
+          "active_nodes": 19,
+          "max_state": 0.0481253125
+        },
+        {
+          "step": 4,
+          "mean_activity": 0.509319034729004,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 5,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 6,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 0.0001,
+      "initial_activity": 7.8125e-07,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-07,
+          "active_nodes": 0,
+          "max_state": 2.5e-05
+        },
+        {
+          "step": 1,
+          "mean_activity": 0.0001154296875,
+          "active_nodes": 0,
+          "max_state": 0.00042500000000000003
+        },
+        {
+          "step": 2,
+          "mean_activity": 0.004616259765625,
+          "active_nodes": 3,
+          "max_state": 0.0204375
+        },
+        {
+          "step": 3,
+          "mean_activity": 0.16320594482421877,
+          "active_nodes": 32,
+          "max_state": 0.48125312500000006
+        },
+        {
+          "step": 4,
+          "mean_activity": 0.9954233520507813,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 5,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 6,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    },
+    {
+      "gain": 0.001,
+      "initial_activity": 7.8125e-06,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32,
+      "history": [
+        {
+          "step": 0,
+          "mean_activity": 7.8125e-06,
+          "active_nodes": 0,
+          "max_state": 0.00025
+        },
+        {
+          "step": 1,
+          "mean_activity": 0.001154296875,
+          "active_nodes": 0,
+          "max_state": 0.00425
+        },
+        {
+          "step": 2,
+          "mean_activity": 0.04616259765625,
+          "active_nodes": 31,
+          "max_state": 0.204375
+        },
+        {
+          "step": 3,
+          "mean_activity": 0.8673914794921875,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 4,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 5,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 6,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 7,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 8,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 9,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 10,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        },
+        {
+          "step": 11,
+          "mean_activity": 1.0,
+          "active_nodes": 32,
+          "max_state": 1.0
+        }
+      ]
+    }
+  ]
+}

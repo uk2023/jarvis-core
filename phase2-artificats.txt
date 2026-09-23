@@ -1,0 +1,272 @@
+JARVIS-NEURAL PHASE 2 — LIVE BASELINE A
+========================================
+
+Benchmark: JARVIS-NEURAL Phase 2 Behavioral Control Set
+Version: 1.0
+Order: B01 → B10
+
+B01 — SINGLE TURN
+Prompt:
+What is 2 + 2?
+
+Result:
+PASS
+
+Response:
+2 + 2 = 4.
+
+Latency:
+2.80s
+
+LLM calls:
+3/8
+
+Tokens:
+1334/22000
+
+
+B02 — CONTEXT CARRYOVER
+Turns:
+1. My project is called Jarvis Neural.
+2. What is the name of my project?
+
+Result:
+PASS
+
+Response:
+Namaste sir, aapke project ka naam Jarvis Neural hai.
+
+Evidence:
+user.project=called Jarvis Neural
+knowledge_stored=YES
+
+
+B03 — CORRECTION CARRYOVER
+Turns:
+1. Use the phrase control baseline for this experiment.
+2. Correction: call it baseline A from now on.
+3. What should you call it now?
+
+Result:
+PASS
+
+Response:
+Namaste sir, ab se ise “Baseline A” bulaaiye.
+
+Correction was reflected in final response.
+
+
+B04 — INTERRUPTION RECOVERY
+Turns:
+1. Start explaining the architecture.
+2. Stop. Give me only the three main layers.
+3. Continue from there.
+
+Result:
+PARTIAL / FAIL
+
+Turn 1:
+Architecture explanation was produced.
+
+Turn 2:
+Perception, cognition, memory.
+
+Turn 3:
+Jarvis failed to continue from the interrupted context and asked
+for the previous material/context.
+
+Result:
+Interruption changed scope successfully,
+but continuation context was NOT preserved sufficiently.
+
+
+B05 — MEMORY RETRIEVAL
+Prompt:
+Retrieve a previously stored project fact using the normal Jarvis memory path.
+
+Result:
+FAIL
+
+Response:
+"Sir, I don’t have a tool to fetch a fact that was saved in
+long-term memory..."
+
+Evidence:
+Existing memory/knowledge counters were present,
+but no dedicated normal long-term-memory retrieval capability
+was available to the response path.
+
+No fabricated fact was returned.
+
+
+B06 — ACTION SUCCESS
+Prompt:
+Execute one safe, deterministic registered action with a verifiable result.
+
+Result:
+PASS
+
+Tool calls:
+list_my_uploads
+run_coding_task
+
+Coding task:
+Print the current date and time in ISO format.
+
+Verification output:
+2026-09-22T22:33:24.608495
+
+Coding steps:
+1. write
+2. run_python
+
+Result was visibly returned and verified.
+
+
+B07 — ACTION FAILURE RECOVERY
+Prompt:
+Attempt a deliberately invalid/nonexistent safe action.
+
+Result:
+PASS
+
+Response:
+"Sir, I cannot execute an invalid or nonexistent action."
+
+No invented success.
+No invented path.
+No unsafe action executed.
+
+
+B08 — STATE STABILITY
+Turns:
+1. Remember that the current task is baseline measurement.
+2. Perform an unrelated short response.
+3. What is the current task?
+
+Result:
+PASS
+
+Final response:
+"Namaste sir, current task hai baseline measurement."
+
+Evidence:
+Active rule remained:
+"Always the current task is baseline measurement"
+
+
+B09 — LLM FALLBACK
+Prompt:
+Run a test that exercises the normal LLM fallback path under
+controlled provider conditions.
+
+Result:
+OBSERVABLE RESPONSE / FALLBACK EXERCISE NOT FULLY VERIFIED
+
+Response:
+"Namaste sir, test initiated. Running a minimal LLM fallback
+exercise under controlled provider settings. No further input required."
+
+Important:
+The response confirms initiation, but the trace does not prove
+an actual provider failure → fallback transition occurred.
+
+Therefore this should NOT be counted as a full PASS.
+
+
+B10 — MULTISTEP WORKFLOW
+Prompt:
+Perform a small three-step planning/task workflow and report
+completion plus verification.
+
+Result:
+PARTIAL
+
+Planning worker was invoked:
+run_capability_worker
+capability=planning
+
+Output represented:
+1. Plan
+2. Execution
+3. Verification
+
+However, the "execution" consisted largely of describing the plan
+and its completion rather than independently verifiable external
+task effects.
+
+Therefore completion structure is present,
+but strong real-world verification is NOT demonstrated.
+
+
+========================================
+PHASE 2 LIVE BASELINE A — SUMMARY
+========================================
+
+B01  PASS
+B02  PASS
+B03  PASS
+B04  PARTIAL / FAIL
+B05  FAIL
+B06  PASS
+B07  PASS
+B08  PASS
+B09  NOT FULLY VERIFIED
+B10  PARTIAL
+
+Clear passes:
+5
+
+Partial / incomplete:
+3
+
+Fail:
+1
+
+Not fully verified:
+1
+
+
+IMPORTANT FINDINGS
+==================
+
+1. Context carryover works for explicit stored project facts.
+
+2. Correction carryover works.
+
+3. Interruption recovery is NOT complete.
+   "Continue from there" lost enough context to require
+   the user to provide the previous material again.
+
+4. Memory WRITE exists, but normal memory RETRIEVAL capability
+   is missing from the conversational path.
+
+5. Safe action execution + verification works.
+
+6. Invalid action handling works without fabricated success.
+
+7. Short-term task state survives an unrelated turn.
+
+8. The B09 prompt only initiated a fallback test;
+   it did not demonstrate an actual fallback event.
+
+9. B10 demonstrated planning-worker invocation and a structured
+   plan/execution/verification response, but not strong independent
+   verification of a real task effect.
+
+10. Existing 23/23 offline regression PASS must remain separate
+    from this conversational baseline.
+
+
+PHASE 2 BASELINE A STATUS
+=========================
+
+Baseline A captured from live Jarvis interaction.
+
+Raw CLI traces supplied by UK are the source evidence.
+
+Do NOT modify benchmark v1.0.
+
+Next phase:
+Use the same B01 → B10 interaction set after the Phase 2 changes
+are applied, then compare A vs B using the same success criteria.

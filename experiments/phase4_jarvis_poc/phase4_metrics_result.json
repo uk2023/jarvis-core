@@ -1,0 +1,56 @@
+{
+  "experiment": "phase4_jarvis_metrics_harness",
+  "model": "experimental_computational_model",
+  "brain_authority": "existing_jarvis_brain",
+  "neural_role": "state_feedback_only",
+  "results": [
+    {
+      "case": "idle",
+      "input_signal": 0.0,
+      "repeats": 20,
+      "latency_mean_ms": 0.024596402363386005,
+      "latency_min_ms": 0.021927000489085913,
+      "latency_max_ms": 0.03474000550340861,
+      "latency_variance": 7.649955493169887e-12,
+      "activity_mean": 0.0,
+      "activity_variance": 0.0,
+      "deterministic": true
+    },
+    {
+      "case": "simple_query",
+      "input_signal": 0.2,
+      "repeats": 20,
+      "latency_mean_ms": 0.05776069956482388,
+      "latency_min_ms": 0.030677998438477516,
+      "latency_max_ms": 0.09666700498200953,
+      "latency_variance": 3.994983776858904e-10,
+      "activity_mean": 0.00625,
+      "activity_variance": 0.0,
+      "deterministic": true
+    },
+    {
+      "case": "complex_query",
+      "input_signal": 0.5,
+      "repeats": 20,
+      "latency_mean_ms": 0.09452339945710264,
+      "latency_min_ms": 0.05244799831416458,
+      "latency_max_ms": 0.2278649917570874,
+      "latency_variance": 1.8735355814120902e-09,
+      "activity_mean": 0.015625,
+      "activity_variance": 0.0,
+      "deterministic": true
+    },
+    {
+      "case": "high_load",
+      "input_signal": 1.0,
+      "repeats": 20,
+      "latency_mean_ms": 0.08717700038687326,
+      "latency_min_ms": 0.070677007897757,
+      "latency_max_ms": 0.10874999861698598,
+      "latency_variance": 9.426875941847902e-11,
+      "activity_mean": 0.03125,
+      "activity_variance": 0.0,
+      "deterministic": true
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "experiment": "phase4_jarvis_workflow_poc",
+  "model": "experimental_computational_model",
+  "brain_authority": "existing_jarvis_brain",
+  "neural_role": "experimental_state_feedback_only",
+  "autonomous_action": false,
+  "results": [
+    {
+      "case": "idle",
+      "workflow_signal": 0.0,
+      "neural": {
+        "mean_activity": 0.0,
+        "total_activity": 0.0,
+        "max_activity": 0.0,
+        "active_nodes": 0,
+        "input_signal": 0.0
+      }
+    },
+    {
+      "case": "simple_query",
+      "workflow_signal": 0.2,
+      "neural": {
+        "mean_activity": 0.00625,
+        "total_activity": 0.2,
+        "max_activity": 0.023129251700680274,
+        "active_nodes": 31,
+        "input_signal": 0.2
+      }
+    },
+    {
+      "case": "complex_query",
+      "workflow_signal": 0.5,
+      "neural": {
+        "mean_activity": 0.015625,
+        "total_activity": 0.5,
+        "max_activity": 0.05782312925170068,
+        "active_nodes": 31,
+        "input_signal": 0.5
+      }
+    },
+    {
+      "case": "high_load",
+      "workflow_signal": 1.0,
+      "neural": {
+        "mean_activity": 0.03125,
+        "total_activity": 1.0,
+        "max_activity": 0.11564625850340136,
+        "active_nodes": 31,
+        "input_signal": 1.0
+      }
+    }
+  ]
+}

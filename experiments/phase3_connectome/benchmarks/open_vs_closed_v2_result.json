@@ -1,0 +1,180 @@
+{
+  "experiment": "phase3_open_vs_closed_loop_v2",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 12,
+  "target_activity": 0.2,
+  "open_loop": {
+    "metrics": {
+      "initial_activity": 7.8125e-09,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "mean_activity": 0.5818217722905477,
+      "activity_variance": 0.23259149574754162,
+      "activity_range": 0.9999999921875,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32
+    },
+    "history": [
+      {
+        "step": 0,
+        "mean_activity": 7.8125e-09,
+        "active_nodes": 0
+      },
+      {
+        "step": 1,
+        "mean_activity": 1.1542968749999999e-06,
+        "active_nodes": 0
+      },
+      {
+        "step": 2,
+        "mean_activity": 4.616259765625e-05,
+        "active_nodes": 0
+      },
+      {
+        "step": 3,
+        "mean_activity": 0.0016320594482421874,
+        "active_nodes": 0
+      },
+      {
+        "step": 4,
+        "mean_activity": 0.05828316177368164,
+        "active_nodes": 31
+      },
+      {
+        "step": 5,
+        "mean_activity": 0.9218987215576172,
+        "active_nodes": 32
+      },
+      {
+        "step": 6,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 7,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 8,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 9,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 10,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      },
+      {
+        "step": 11,
+        "mean_activity": 1.0,
+        "active_nodes": 32
+      }
+    ]
+  },
+  "closed_loop_v2": {
+    "metrics": {
+      "initial_activity": 7.8125e-09,
+      "peak_activity": 1.0,
+      "final_activity": 1.0,
+      "mean_activity": 0.5826092404200236,
+      "activity_variance": 0.23288251712264155,
+      "activity_range": 0.9999999921875,
+      "final_target_error": 0.8,
+      "final_active_nodes": 32
+    },
+    "history": [
+      {
+        "step": 0,
+        "mean_activity": 7.8125e-09,
+        "target_error": 0.1999999921875,
+        "input_scale": 1.0,
+        "active_nodes": 0
+      },
+      {
+        "step": 1,
+        "mean_activity": 1.1621093749999999e-06,
+        "target_error": 0.199998837890625,
+        "input_scale": 1.0,
+        "active_nodes": 0
+      },
+      {
+        "step": 2,
+        "mean_activity": 4.732470703125e-05,
+        "target_error": 0.19995267529296876,
+        "input_scale": 1.0,
+        "active_nodes": 0
+      },
+      {
+        "step": 3,
+        "mean_activity": 0.0016793841552734375,
+        "target_error": 0.19832061584472657,
+        "input_scale": 1.0,
+        "active_nodes": 0
+      },
+      {
+        "step": 4,
+        "mean_activity": 0.05996254592895508,
+        "target_error": 0.14003745407104493,
+        "input_scale": 1.0,
+        "active_nodes": 31
+      },
+      {
+        "step": 5,
+        "mean_activity": 0.9296204603271484,
+        "target_error": -0.7296204603271483,
+        "input_scale": 0.6351897698364258,
+        "active_nodes": 32
+      },
+      {
+        "step": 6,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      },
+      {
+        "step": 7,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      },
+      {
+        "step": 8,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      },
+      {
+        "step": 9,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      },
+      {
+        "step": 10,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      },
+      {
+        "step": 11,
+        "mean_activity": 1.0,
+        "target_error": -0.8,
+        "input_scale": 0.6,
+        "active_nodes": 32
+      }
+    ]
+  }
+}

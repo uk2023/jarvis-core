@@ -1,0 +1,49 @@
+{
+  "experiment": "phase5_real_runtime_probe",
+  "brain_authority": "existing_jarvis_brain",
+  "neural_role": "observation_only",
+  "results": [
+    {
+      "id": "simple_query",
+      "prompt": "Hello Jarvis",
+      "A_current_jarvis": {
+        "response": "Engine Not Initialized in CLI Process.",
+        "latency_ms": 0.006771006155759096
+      },
+      "B_neural_observation": {
+        "neural_activity": 0.00625,
+        "neural_max_activity": 0.023129251700680274,
+        "active_nodes": 31,
+        "neural_overhead_ms": 0.18364499555900693
+      }
+    },
+    {
+      "id": "context_query",
+      "prompt": "What did we just discuss?",
+      "A_current_jarvis": {
+        "response": "Engine Not Initialized in CLI Process.",
+        "latency_ms": 0.003334003849886358
+      },
+      "B_neural_observation": {
+        "neural_activity": 0.02178996598639456,
+        "neural_max_activity": 0.06176831721290245,
+        "active_nodes": 32,
+        "neural_overhead_ms": 0.3690619923872873
+      }
+    },
+    {
+      "id": "complex_query",
+      "prompt": "Analyze this task and explain the required steps.",
+      "A_current_jarvis": {
+        "response": "Engine Not Initialized in CLI Process.",
+        "latency_ms": 0.0029679940780624747
+      },
+      "B_neural_observation": {
+        "neural_activity": 0.052507179215090266,
+        "neural_max_activity": 0.13089377139139052,
+        "active_nodes": 32,
+        "neural_overhead_ms": 0.2786459954222664
+      }
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "experiment": "phase3_connectome_normalized_operator",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 20,
+  "seed": "0",
+  "history": [
+    {
+      "step": 0,
+      "mean_activity": 0.03125,
+      "total_activity": 1.0,
+      "max_activity": 1.0,
+      "nonzero_nodes": 1
+    },
+    {
+      "step": 1,
+      "mean_activity": 0.03125,
+      "total_activity": 1.0,
+      "max_activity": 0.11564625850340136,
+      "nonzero_nodes": 31
+    },
+    {
+      "step": 2,
+      "mean_activity": 0.03082482993197279,
+      "total_activity": 0.9863945578231292,
+      "max_activity": 0.08713274420772965,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 3,
+      "mean_activity": 0.02972029998524417,
+      "total_activity": 0.9510495995278134,
+      "max_activity": 0.10978562229778145,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 4,
+      "mean_activity": 0.028803724896270363,
+      "total_activity": 0.9217191966806516,
+      "max_activity": 0.0840119650725096,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 5,
+      "mean_activity": 0.02811336032462447,
+      "total_activity": 0.899627530387983,
+      "max_activity": 0.08646687954935049,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 6,
+      "mean_activity": 0.027291807883596475,
+      "total_activity": 0.8733378522750872,
+      "max_activity": 0.08287407361704827,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 7,
+      "mean_activity": 0.026565168791080514,
+      "total_activity": 0.8500854013145764,
+      "max_activity": 0.08337001917032975,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 8,
+      "mean_activity": 0.025854069453504203,
+      "total_activity": 0.8273302225121345,
+      "max_activity": 0.0801908819792558,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 9,
+      "mean_activity": 0.025172325835456616,
+      "total_activity": 0.8055144267346117,
+      "max_activity": 0.07911575793661445,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 10,
+      "mean_activity": 0.02450779391971536,
+      "total_activity": 0.7842494054308915,
+      "max_activity": 0.07657426466600048,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 11,
+      "mean_activity": 0.023863776474085042,
+      "total_activity": 0.7636408471707213,
+      "max_activity": 0.07495376865823056,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 12,
+      "mean_activity": 0.023236970250220153,
+      "total_activity": 0.7435830480070449,
+      "max_activity": 0.0727898947833503,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 13,
+      "mean_activity": 0.02262716327562301,
+      "total_activity": 0.7240692248199363,
+      "max_activity": 0.07102938635203211,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 14,
+      "mean_activity": 0.022033546042142565,
+      "total_activity": 0.7050734733485621,
+      "max_activity": 0.06908555725710928,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 15,
+      "mean_activity": 0.021455622456827025,
+      "total_activity": 0.6865799186184648,
+      "max_activity": 0.06733097846743777,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 16,
+      "mean_activity": 0.020892919585910916,
+      "total_activity": 0.6685734267491493,
+      "max_activity": 0.0655327041444087,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 17,
+      "mean_activity": 0.02034500098465493,
+      "total_activity": 0.6510400315089577,
+      "max_activity": 0.06383631108664416,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 18,
+      "mean_activity": 0.019811472405950527,
+      "total_activity": 0.6339671169904169,
+      "max_activity": 0.062149314925613555,
+      "nonzero_nodes": 32
+    },
+    {
+      "step": 19,
+      "mean_activity": 0.019291940444084183,
+      "total_activity": 0.6173420942106939,
+      "max_activity": 0.06052814301594413,
+      "nonzero_nodes": 32
+    }
+  ]
+}

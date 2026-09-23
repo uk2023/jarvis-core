@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "id": "T01",
+      "name": "simple_query",
+      "workflow_signal": 0.20
+    },
+    {
+      "id": "T02",
+      "name": "complex_query",
+      "workflow_signal": 0.50
+    },
+    {
+      "id": "T03",
+      "name": "high_load",
+      "workflow_signal": 1.00
+    },
+    {
+      "id": "T04",
+      "name": "idle_recovery",
+      "workflow_signal": 0.00
+    }
+  ]
+}

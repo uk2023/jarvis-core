@@ -1,0 +1,323 @@
+{
+  "experiment": "phase3_connectome_closed_loop_v3",
+  "model": "experimental_computational_model",
+  "controller": "bounded_proportional_seed_feedback",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 30,
+  "target_activity": 0.02,
+  "metrics": {
+    "initial_activity": 0.03125,
+    "peak_activity": 0.396958839616563,
+    "final_activity": 0.396958839616563,
+    "mean_activity": 0.293261572154638,
+    "activity_variance": 0.012834221498849828,
+    "activity_range": 0.365708839616563,
+    "final_target_error": 0.37695883961656296,
+    "final_active_nodes": 32,
+    "max_seed_input": 0.98875,
+    "min_seed_input": 0.623041160383437
+  },
+  "history": [
+    {
+      "step": 0,
+      "mean_activity": 0.03125,
+      "total_activity": 1.0,
+      "max_activity": 1.0,
+      "active_nodes": 1,
+      "target_activity": 0.02,
+      "error": -0.01125,
+      "seed_input": 0.98875
+    },
+    {
+      "step": 1,
+      "mean_activity": 0.0621484375,
+      "total_activity": 1.98875,
+      "max_activity": 0.98875,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.0421484375,
+      "seed_input": 0.9578515625
+    },
+    {
+      "step": 2,
+      "mean_activity": 0.0916561287600978,
+      "total_activity": 2.9329961203231294,
+      "max_activity": 0.9737388821711946,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.07165612876009779,
+      "seed_input": 0.9283438712399023
+    },
+    {
+      "step": 3,
+      "mean_activity": 0.11914195788485422,
+      "total_activity": 3.812542652315335,
+      "max_activity": 0.9517154522946388,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.09914195788485422,
+      "seed_input": 0.9008580421151458
+    },
+    {
+      "step": 4,
+      "mean_activity": 0.1448778428131627,
+      "total_activity": 4.636090970021207,
+      "max_activity": 0.9313818749882317,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.1248778428131627,
+      "seed_input": 0.8751221571868373
+    },
+    {
+      "step": 5,
+      "mean_activity": 0.16917610227219287,
+      "total_activity": 5.413635272710172,
+      "max_activity": 0.9114519730459777,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.14917610227219288,
+      "seed_input": 0.8508238977278071
+    },
+    {
+      "step": 6,
+      "mean_activity": 0.19197385430212643,
+      "total_activity": 6.143163337668046,
+      "max_activity": 0.8928203116338806,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.17197385430212644,
+      "seed_input": 0.8280261456978736
+    },
+    {
+      "step": 7,
+      "mean_activity": 0.21343145820420617,
+      "total_activity": 6.8298066625345975,
+      "max_activity": 0.8751091992207545,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.19343145820420618,
+      "seed_input": 0.8065685417957938
+    },
+    {
+      "step": 8,
+      "mean_activity": 0.2336252928624611,
+      "total_activity": 7.476009371598755,
+      "max_activity": 0.8584949214918265,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.2136252928624611,
+      "seed_input": 0.7863747071375389
+    },
+    {
+      "step": 9,
+      "mean_activity": 0.25264011575619005,
+      "total_activity": 8.084483704198082,
+      "max_activity": 0.8428171123424534,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.23264011575619006,
+      "seed_input": 0.76735988424381
+    },
+    {
+      "step": 10,
+      "mean_activity": 0.27054419973814664,
+      "total_activity": 8.657414391620692,
+      "max_activity": 0.8280743558132595,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.2505441997381466,
+      "seed_input": 0.7494558002618534
+    },
+    {
+      "step": 11,
+      "mean_activity": 0.28740535989261645,
+      "total_activity": 9.196971516563726,
+      "max_activity": 0.8141777399946916,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.26740535989261643,
+      "seed_input": 0.7325946401073835
+    },
+    {
+      "step": 12,
+      "mean_activity": 0.3032847010862297,
+      "total_activity": 9.70511043475935,
+      "max_activity": 0.8010995177489886,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.28328470108622966,
+      "seed_input": 0.7167152989137704
+    },
+    {
+      "step": 13,
+      "mean_activity": 0.31823992752895636,
+      "total_activity": 10.183677680926603,
+      "max_activity": 0.8446925946768707,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.29823992752895634,
+      "seed_input": 0.7017600724710437
+    },
+    {
+      "step": 14,
+      "mean_activity": 0.3323250143666572,
+      "total_activity": 10.63440045973303,
+      "max_activity": 0.8887742996650619,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.31232501436665716,
+      "seed_input": 0.6876749856333428
+    },
+    {
+      "step": 15,
+      "mean_activity": 0.3455907097588452,
+      "total_activity": 11.058902712283047,
+      "max_activity": 0.930285560824565,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3255907097588452,
+      "seed_input": 0.6744092902411548
+    },
+    {
+      "step": 16,
+      "mean_activity": 0.3580847449978038,
+      "total_activity": 11.458711839929721,
+      "max_activity": 0.9693821770036265,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3380847449978038,
+      "seed_input": 0.6619152550021963
+    },
+    {
+      "step": 17,
+      "mean_activity": 0.36940042375332705,
+      "total_activity": 11.820813560106465,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.349400423753327,
+      "seed_input": 0.650599576246673
+    },
+    {
+      "step": 18,
+      "mean_activity": 0.37778706663150613,
+      "total_activity": 12.089186132208196,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3577870666315061,
+      "seed_input": 0.6422129333684938
+    },
+    {
+      "step": 19,
+      "mean_activity": 0.3836090609628693,
+      "total_activity": 12.275489950811817,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.36360906096286927,
+      "seed_input": 0.6363909390371307
+    },
+    {
+      "step": 20,
+      "mean_activity": 0.3876438096262721,
+      "total_activity": 12.404601908040707,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3676438096262721,
+      "seed_input": 0.6323561903737279
+    },
+    {
+      "step": 21,
+      "mean_activity": 0.390494412243557,
+      "total_activity": 12.495821191793825,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.370494412243557,
+      "seed_input": 0.629505587756443
+    },
+    {
+      "step": 22,
+      "mean_activity": 0.3925142818835574,
+      "total_activity": 12.560457020273837,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3725142818835574,
+      "seed_input": 0.6274857181164426
+    },
+    {
+      "step": 23,
+      "mean_activity": 0.3939426674689768,
+      "total_activity": 12.606165359007258,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3739426674689768,
+      "seed_input": 0.6260573325310232
+    },
+    {
+      "step": 24,
+      "mean_activity": 0.39495291718696146,
+      "total_activity": 12.638493349982767,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.37495291718696144,
+      "seed_input": 0.6250470828130386
+    },
+    {
+      "step": 25,
+      "mean_activity": 0.3956669623364474,
+      "total_activity": 12.661342794766316,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.37566696233644736,
+      "seed_input": 0.6243330376635526
+    },
+    {
+      "step": 26,
+      "mean_activity": 0.3961717451300902,
+      "total_activity": 12.677495844162886,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.37617174513009016,
+      "seed_input": 0.6238282548699099
+    },
+    {
+      "step": 27,
+      "mean_activity": 0.396528490441037,
+      "total_activity": 12.688911694113184,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.376528490441037,
+      "seed_input": 0.623471509558963
+    },
+    {
+      "step": 28,
+      "mean_activity": 0.3967806396334283,
+      "total_activity": 12.696980468269706,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.3767806396334283,
+      "seed_input": 0.6232193603665717
+    },
+    {
+      "step": 29,
+      "mean_activity": 0.396958839616563,
+      "total_activity": 12.702682867730015,
+      "max_activity": 1.0,
+      "active_nodes": 32,
+      "target_activity": 0.02,
+      "error": -0.37695883961656296,
+      "seed_input": 0.623041160383437
+    }
+  ]
+}

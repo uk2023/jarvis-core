@@ -1,0 +1,116 @@
+{
+  "experiment": "phase3_connectome_closed_loop_feedback",
+  "model": "experimental_computational_model",
+  "nodes": 32,
+  "edges": 364,
+  "steps": 12,
+  "target_activity": 0.2,
+  "metrics": {
+    "initial_activity": 7.8125e-09,
+    "peak_activity": 1.0,
+    "final_activity": 1.0,
+    "mean_activity": 0.5818611456713374,
+    "activity_variance": 0.23260582906939023,
+    "activity_range": 0.9999999921875,
+    "final_active_nodes": 32,
+    "max_abs_correction": 0.2
+  },
+  "history": [
+    {
+      "step": 0,
+      "mean_activity": 7.8125e-09,
+      "feedback_error": 0.1999999921875,
+      "correction": 0.049999998046875,
+      "active_nodes": 0,
+      "total_activity": 2.5e-07
+    },
+    {
+      "step": 1,
+      "mean_activity": 1.1546874999847412e-06,
+      "feedback_error": 0.19999884531250003,
+      "correction": 0.04999971132812501,
+      "active_nodes": 0,
+      "total_activity": 3.694999999951172e-05
+    },
+    {
+      "step": 2,
+      "mean_activity": 4.6220703120490265e-05,
+      "feedback_error": 0.19995377929687952,
+      "correction": 0.04998844482421988,
+      "active_nodes": 0,
+      "total_activity": 0.0014790624998556885
+    },
+    {
+      "step": 3,
+      "mean_activity": 0.0016344256830801008,
+      "feedback_error": 0.19836557431691992,
+      "correction": 0.04959139357922998,
+      "active_nodes": 0,
+      "total_activity": 0.05230162185856323
+    },
+    {
+      "step": 4,
+      "mean_activity": 0.058367130948401506,
+      "feedback_error": 0.1416328690515985,
+      "correction": 0.035408217262899624,
+      "active_nodes": 31,
+      "total_activity": 1.8677481903488482
+    },
+    {
+      "step": 5,
+      "mean_activity": 0.9222848082214465,
+      "feedback_error": -0.7222848082214466,
+      "correction": -0.18057120205536165,
+      "active_nodes": 32,
+      "total_activity": 29.51311386308629
+    },
+    {
+      "step": 6,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    },
+    {
+      "step": 7,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    },
+    {
+      "step": 8,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    },
+    {
+      "step": 9,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    },
+    {
+      "step": 10,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    },
+    {
+      "step": 11,
+      "mean_activity": 1.0,
+      "feedback_error": -0.8,
+      "correction": -0.2,
+      "active_nodes": 32,
+      "total_activity": 32.0
+    }
+  ]
+}
