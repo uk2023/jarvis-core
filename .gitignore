@@ -13,3 +13,4 @@ models/*.gguf
 *.db-wal
 *.db-shm
 *.db-journal
+experiments/phase3_connectome/data/raw/connectome.mat
